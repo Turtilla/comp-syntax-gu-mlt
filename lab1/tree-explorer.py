@@ -6,6 +6,7 @@ parser.add_argument('filename', help='The name or the path of the file you want 
 parser.add_argument('count', type=int, help='The top X tags to be displayed.')
 parser.add_argument('--upos', action='store_true', help='Retrieve upos tag counts.')
 parser.add_argument('--xpos', action='store_true', help='Retrieve xpos tag counts.')
+parser.add_argument('--deprel', action='store_true', help='Retrieve deprel tag counts.')
 args = parser.parse_args()
 
 def read_file(filename):
@@ -55,6 +56,26 @@ def count_xpos(sentences):
     
     return sorted_list
 
+def count_deprel(sentences):
+    count_dictionary = {}
+    for sentence in sentences:
+        for token in sentence:
+            pos_tag = token['deprel']
+
+            if pos_tag not in count_dictionary:
+                count_dictionary[pos_tag] = 1
+            else:
+                count_dictionary[pos_tag] += 1
+
+    count_list = []
+    for k,v in count_dictionary.items():
+        pair = (k,v)
+        count_list.append(pair)
+
+    sorted_list = sorted(count_list, reverse=True, key=lambda x: x[1])
+    
+    return sorted_list
+
 def top_x(sorted_list, count):
     if len(sorted_list) < count:
         print(f'This list has less than {count} entries!')
@@ -83,4 +104,9 @@ if __name__ == "__main__":
     if args.upos:
         print(f'Retrieving top {count} upos counts from {filename}:')
         sorted_list = count_upos(sentences)
+        top_x(sorted_list, count)    
+        
+    if args.deprel:
+        print(f'Retrieving top {count} deprel counts from {filename}:')
+        sorted_list = count_deprel(sentences)
         top_x(sorted_list, count)
