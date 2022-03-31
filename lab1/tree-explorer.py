@@ -10,13 +10,19 @@ parser.add_argument('--deprel', action='store_true', help='Retrieve deprel tag c
 args = parser.parse_args()
 
 def read_file(filename):
-    with open(filename,'r',encoding = 'utf-8') as f:
-        data = f.read()
-    sentences = parse(data)
+    '''Reads the data from the .conllu file and parses it using the conllu module. Returns a list of conllu objects.'''
+    if filename.endswith(".conllu"):
+        with open(filename,'r',encoding = 'utf-8') as f:
+            data = f.read()
+        sentences = parse(data)
+    else:
+        print("This type of file is not allowed!")
+        quit()
 
     return sentences
 
 def count_upos(sentences):
+    '''Counts the upos tags in the conllu sentences. Returns a list sorted from the largest item.'''
     count_dictionary = {}
     for sentence in sentences:
         for token in sentence:
@@ -37,6 +43,7 @@ def count_upos(sentences):
     return sorted_list
 
 def count_xpos(sentences):
+    '''Counts the xpos tags in the conllu sentences. Returns a list sorted from the largest item.'''
     count_dictionary = {}
     for sentence in sentences:
         for token in sentence:
@@ -57,6 +64,7 @@ def count_xpos(sentences):
     return sorted_list
 
 def count_deprel(sentences):
+    '''Counts the deprel tags in the conllu sentences. Returns a list sorted from the largest item.'''
     count_dictionary = {}
     for sentence in sentences:
         for token in sentence:
@@ -77,6 +85,7 @@ def count_deprel(sentences):
     return sorted_list
 
 def top_x(sorted_list, count):
+    '''Prints the top X elements from a list of tuples.'''
     if len(sorted_list) < count:
         print(f'This list has less than {count} entries!')
         for i in range(0,len(sorted_list)):
