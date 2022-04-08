@@ -123,12 +123,12 @@ def count_individual_feats(sentences):
             if hasattr(pos_tag, '__len__'):
                 for k,v in pos_tag.items():
                     pair = f'{k}={v}'
-                if pair not in count_dictionary:
-                    count_dictionary[pair] = 1
-                else:
-                    count_dictionary[pair] += 1
+                    if pair not in count_dictionary:
+                        count_dictionary[pair] = 1
+                    else:
+                        count_dictionary[pair] += 1
             else:
-                continue
+                pass
 
     count_list = []
     for k,v in count_dictionary.items():
