@@ -1,5 +1,23 @@
-Who:<PRON> are:<AUX> they:<PRON> ?:<PUNCT>
-A:<DET> small:<ADJ> town:<NOUN> with:<ADP> two:<NUM> minarets:<NOUN> glides:<VERB> by:<ADV> .:<PUNCT>
+# sent_id = 1
+# text = Who are they?
+# position word _ postag _ _ head label _ _
+1	who	_	PRON	_	_	3	nsubj	_	_ 
+2	are	_	AUX	_	_	3	cop	_	_ 
+3	they	_	PRON	_	_	0	root	_	_ 
+4	?	_	PUNCT	_	_	3	punct	_	_
+
+# sent_id = 2
+# text = A small town with two minarets glides by.
+1	A	_	DET	_	_	head	label	_	_ 
+2	small	_	ADJ	_	_	head	label	_	_ 
+3	town	_	NOUN	_	_	head	label	_	_ 
+4	with	_	ADP	_	_	head	label	_	_ 
+5	two	_	NUM	_	_	 head	label	_	_ 
+6	minarets	_	NOUN	_	_	head	label	_	_ 
+7	glides	_	VERB	_	_	head	label	_	_ 
+8	by	_	ADV	_	_	head	label	_	_ 
+9	.	_	PUNCT	_	_	head	label	_	_
+
 I:<PRON> was:<AUX> just:<ADV> a:<DET> boy:<NOUN> with:<ADP> muddy:<ADJ> shoes:<NOUN> .:<PUNCT>
 Shenzhen:<PROPN> 's:<PART> traffic:<NOUN> police:<NOUN> have:<AUX> opted:<VERB> for:<ADP> unconventional:<ADJ> penalties:<NOUN> before:<ADV> .:<PUNCT>.:<PUNCT>
 The:<DET> study:<NOUN> of:<ADP> volcanoes:<NOUN> is:<AUX> called:<VERB> volcanology:<NOUN> ,:<PUNCT> sometimes:<ADV> spelled:<VERB> vulcanology:<NOUN> .:<PUNCT>
