@@ -17,7 +17,7 @@ Te:<DET> myśli:<NOUN> mam:<VERB> gdzieś:<NOUN> z:<ADP> tyłu:<NOUN> głowy:<NO
 Adam:<NOUN> byłby:<AUX>:<AUX> przeniesiony:<ADJ> do:<ADP> życia:<NOUN> wiecznego:<ADJ> .:<PUNCT>
 Osłonki:<NOUN> przegniły:<VERB> i:<CCONJ> musiały:<AUX> być:<AUX> wymienione:<ADJ> .:<PUNCT> 
 Była:<AUX> rozwścieczona:<ADJ> ,:<PUNCT> że:<SCONJ> to:<DET> dziewczę:<NOUN> odważyło:<VERB> się:<PRON> ośmieszyć:<VERB> ją:<PRON> przed:<ADP> klasą:<NOUN> .:<PUNCT>
-Przewaga:<NOUN> ,:<PUNCT> jaką:<DET> miał:<VERB> w:<ADP> kolegium:<NOUN> elektorów:<NOUN> przyćmiła:<VERB> fakt:<NOUN> ,:<PUNCT> że:<SCONJ> wygrana:<NOUN> oparta:<ADJ> była:<AUX> o:<ADP> ledwie:<PART> 43%:<NUM> głosów:<NOUN> .:<PUNCT>
+Przewaga:<NOUN> ,:<PUNCT> jaką:<DET> miał:<VERB> w:<ADP> kolegium:<NOUN> elektorów:<NOUN> przyćmiła:<VERB> fakt:<NOUN> ,:<PUNCT> że:<SCONJ> wygrana:<NOUN> oparta:<ADJ> była:<AUX> o:<ADP> ledwie:<PART> 43:<NUM> %:<SYM> głosów:<NOUN> .:<PUNCT>
 Amerykańscy:<ADJ> żołnierze:<NOUN> mogą:<AUX> teraz:<ADV> mieć:<VERB> atropinę:<NOUN> i:<CCONJ> automatyczne:<ADJ> wstrzykiwacze:<NOUN> w:<ADP> swoich:<DET> apteczkach:<NOUN> ,:<PUNCT> na:<ADP> wypadek:<NOUN> zatrucia:<NOUN> neurotoksycznymi:<NOUN> estrami:<NOUN> fosforanowymi:<ADJ> .:<PUNCT>
 Na:<ADP> dłuższą:<ADJ> metę:<NOUN> poprzez:<ADP> przebiegłość:<NOUN> osiągnąć:<VERB> to:<PRON> ,:<PUNCT> czego:<PRON> nie:<PART> może:<AUX> od:<ADP> razu:<NOUN> osiągnąć:<VERB> siłą:<NOUN> i:<CCONJ> przemocą:<NOUN> .:<PUNCT>
 Twierdzi:<VERB> się:<PRON> ,:<PUNCT> że:<SCONJ> tylko:<PART> hierarchiczne:<ADJ> społeczeństwo:<NOUN> z:<ADP> klasą:<NOUN> mającą:<ADJ> wiele:<DET> wolnego:<ADJ> czasu:<NOUN> u:<ADP> szczytu:<NOUN> może:<AUX> produkować:<VERB> dzieła:<NOUN> sztuki:<NOUN> .:<PUNCT>

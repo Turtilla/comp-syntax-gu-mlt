@@ -1,24 +1,362 @@
-﻿Kto:<PRON> to:<PRON> jest:<AUX> ?:<PUNCT>
-Mijamy:<VERB> niewielkie:<ADJ> miasto:<NOUN> z:<ADP> dwoma:<NUM> minaretami:<NOUN> .:<PUNCT>
-Byłem:<AUX> tylko:<PART> chłopcem:<NOUN> w:<ADP> zabłoconych:<ADJ> butach:<NOUN> .:<PUNCT>
-Shenzheńska:<ADJ> policja:<NOUN> drogowa:<ADJ> decydowała:<VERB> się:<PRON> już:<PART> wcześniej:<ADVERB> na:<ADP> niekonwencjonalne:<ADJ> kary:<NOUN> .:<PUNCT> 
-Dziedzina:<NOUN> nauki:<NOUN> poświęcona:<ADJ> badaniu:<NOUN> wulkanów:<NOUN> nazywa:<VERB> się:<PRON> wulkanologia:<NOUN> .:<PUNCT>
-Odbywało:<VERB> się:<PRON> to:<PRON> tuż:<PART> przy:<ADP> meksykańskim:<ADJ> wybrzeżu:<NOUN> od:<ADP> kwietnia:<NOUN> do:<ADP> czerwca:<NOUN> .:<PUNCT>
--:<PUNCT> jej:<DET> głos:<NOUN> dosłownie:<ADV> okrążył:<VERB> świat:<NOUN> -:<PUNCT> powiedziała:<VERB> Leive:<NOUN> .:<PUNCT>
-Świadek:<NOUN> zeznał:<VERB> policji:<NOUN> że:<SCONJ> ofiara:<NOUN> zaatakowała:<VERB> podejrzanego:<NOUN> w:<ADP> kwietniu:<NOUN> .:<PUNCT>
-Jest:<AUX> to:<PRON> najbardziej:<ADV> oczywiste:<ADJ> gdy:<ADV> imię:<NOUN> gwiazdy:<NOUN> jest:<AUX> z:<ADP> początku:<NOUN> dość:<PART> rzadkie:<ADJ> .:<PUNCT>
-Nie:<PART> powstrzymało:<VERB> to:<PRON> inwestorów:<NOUN> od:<ADP> masowego:<ADJ> wpłacania:<NOUN> pieniędzy:<NOUN> na:<ADP> fundusze:<NOUN> .:<PUNCT>
-Ta:<DET> różnica:<NOUN> między:<ADP> ekonomicznymi:<ADJ> danymi:<NOUN> a:<CCONJ> polityczną:<ADJ> retoryką:<NOUN> jest:<AUX> znajoma:<ADJ> ,:<PUNCT> a:<CCONJ> przynajmniej:<PART> powinna:<VERB> być:<AUX> .:<PUNCT>
-Badanie:<NOUN> oszacowało:<VERB> ,:<PUNCT> że:<SCONJ> pokonanie:<NOUN> rzeki:<NOUN> Potomac:<NOUN> na:<ADP> gondoli:<NOUN> powinno:<VERB> zająć:<VERB> pasażerom:<NOUN> około:<ADP> czterech:<NUM> minut:<NOUN> .:<PUNCT>
-Kolekcjonował:<VERB> on:<PRON> karty:<NOUN> i:<CCONJ> wymieniał:<VERB> się:<PRON> nimi:<PRON> z:<ADP> innymi:<ADJ> chłopcami:<NOUN> .:<PUNCT>
-To:<DET> przestępstwo:<NOUN> karane:<ADJ> jest:<AUX> pięcioma:<NUM> latami:<NOUN> w:<ADP> więzieniu:<NOUN> .:<PUNCT>
-Wiadomość:<NOUN> dostarczona:<ADJ> była:<AUX> do:<ADP> każdej:<DET> wsi:<NOUN> w:<ADP> prowincji:<NOUN> .:<PUNCT>
-Te:<DET> myśli:<NOUN> mam:<VERB> gdzieś:<NOUN> z:<ADP> tyłu:<NOUN> głowy:<NOUN> .:<PUNCT>
-Adam:<NOUN> byłby:<AUX>:<AUX> przeniesiony:<ADJ> do:<ADP> życia:<NOUN> wiecznego:<ADJ> .:<PUNCT>
-Osłonki:<NOUN> przegniły:<VERB> i:<CCONJ> musiały:<AUX> być:<AUX> wymienione:<ADJ> .:<PUNCT> 
-Była:<AUX> rozwścieczona:<ADJ> ,:<PUNCT> że:<SCONJ> to:<DET> dziewczę:<NOUN> odważyło:<VERB> się:<PRON> ośmieszyć:<VERB> ją:<PRON> przed:<ADP> klasą:<NOUN> .:<PUNCT>
-Przewaga:<NOUN> ,:<PUNCT> jaką:<DET> miał:<VERB> w:<ADP> kolegium:<NOUN> elektorów:<NOUN> przyćmiła:<VERB> fakt:<NOUN> ,:<PUNCT> że:<SCONJ> wygrana:<NOUN> oparta:<ADJ> była:<AUX> o:<ADP> ledwie:<PART> 43%:<NUM> głosów:<NOUN> .:<PUNCT>
-Amerykańscy:<ADJ> żołnierze:<NOUN> mogą:<AUX> teraz:<ADV> mieć:<VERB> atropinę:<NOUN> i:<CCONJ> automatyczne:<ADJ> wstrzykiwacze:<NOUN> w:<ADP> swoich:<DET> apteczkach:<NOUN> ,:<PUNCT> na:<ADP> wypadek:<NOUN> zatrucia:<NOUN> neurotoksycznymi:<NOUN> estrami:<NOUN> fosforanowymi:<ADJ> .:<PUNCT>
-Na:<ADP> dłuższą:<ADJ> metę:<NOUN> poprzez:<ADP> przebiegłość:<NOUN> osiągnąć:<VERB> to:<PRON> ,:<PUNCT> czego:<PRON> nie:<PART> może:<AUX> od:<ADP> razu:<NOUN> osiągnąć:<VERB> siłą:<NOUN> i:<CCONJ> przemocą:<NOUN> .:<PUNCT>
-Twierdzi:<VERB> się:<PRON> ,:<PUNCT> że:<SCONJ> tylko:<PART> hierarchiczne:<ADJ> społeczeństwo:<NOUN> z:<ADP> klasą:<NOUN> mającą:<ADJ> wiele:<DET> wolnego:<ADJ> czasu:<NOUN> u:<ADP> szczytu:<NOUN> może:<AUX> produkować:<VERB> dzieła:<NOUN> sztuki:<NOUN> .:<PUNCT>
-Jego:<DET> naiwne:<ADJ> tłumaczenie:<NOUN> ,:<PUNCT> że:<SCONJ> nie:<PART> spaliłby:<VERB>:<AUX> kościoła:<NOUN> ,:<PUNCT> gdyby:<SCONJ> nie:<PART> sądził:<VERB> ,:<PUNCT> że:<SCONJ> biskup:<NOUN> był:<VERB> w:<ADP> środku:<NOUN> .:<PUNCT>
+﻿# sent_id = 1
+# text = Kto to jest?
+1	Kto	_	PRON	_	_	head	label	_	_
+2	to	_	PRON	_	_	head	label	_	_
+3	jest	_	AUX	_	_	head	label	_	_
+4	?	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 2
+# text = Mijamy niewielkie miasto z dwoma minaretami.
+1	Mijamy	_	VERB	_	_	head	label	_	_
+2	niewielkie	_	ADJ	_	_	head	label	_	_
+3	miasto	_	NOUN	_	_	head	label	_	_
+4	z	_	ADP	_	_	head	label	_	_
+5	dwoma	_	NUM	_	_	head	label	_	_
+6	minaretami	_	NOUN	_	_	head	label	_	_
+7	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 3
+# text = Byłem tylko chłopcem w zabłoconych butach.
+1	Byłem	_	AUX	_	_	head	label	_	_
+2	tylko	_	PART	_	_	head	label	_	_
+3	chłopcem	_	NOUN	_	_	head	label	_	_
+4	w	_	ADP	_	_	head	label	_	_
+5	zabłoconych	_	ADJ	_	_	head	label	_	_
+6	butach	_	NOUN	_	_	head	label	_	_
+7	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 4
+# text = Shenzheńska policja drogowa decydowała się już wcześniej na niekonwencjonalne kary.
+1	Shenzheńska	_	ADJ	_	_	head	label	_	_
+2	policja	_	NOUN	_	_	head	label	_	_
+3	drogowa	_	ADJ	_	_	head	label	_	_
+4	decydowała	_	VERB	_	_	head	label	_	_
+5	się	_	PRON	_	_	head	label	_	_
+6	już	_	PART	_	_	head	label	_	_
+7	wcześniej	_	ADVERB	_	_	head	label	_	_
+8	na	_	ADP	_	_	head	label	_	_
+9	niekonwencjonalne	_	ADJ	_	_	head	label	_	_
+10	kary	_	NOUN	_	_	head	label	_	_
+11	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 5
+# text = Dziedzina nauki poświęcona badaniu wulkanów nazywa się wulkanologia.
+1	Dziedzina	_	NOUN	_	_	head	label	_	_
+2	nauki	_	NOUN	_	_	head	label	_	_
+3	poświęcona	_	ADJ	_	_	head	label	_	_
+4	badaniu	_	NOUN	_	_	head	label	_	_
+5	wulkanów	_	NOUN	_	_	head	label	_	_
+6	nazywa	_	VERB	_	_	head	label	_	_
+7	się	_	PRON	_	_	head	label	_	_
+8	wulkanologia	_	NOUN	_	_	head	label	_	_
+9	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 6
+# text = Odbywało się to tuż przy meksykańskim wybrzeżu od kwietnia do czerwca.
+1	Odbywało	_	VERB	_	_	head	label	_	_
+2	się	_	PRON	_	_	head	label	_	_
+3	to	_	PRON	_	_	head	label	_	_
+4	tuż	_	PART	_	_	head	label	_	_
+5	przy	_	ADP	_	_	head	label	_	_
+6	meksykańskim	_	ADJ	_	_	head	label	_	_
+7	wybrzeżu	_	NOUN	_	_	head	label	_	_
+8	od	_	ADP	_	_	head	label	_	_
+9	kwietnia	_	NOUN	_	_	head	label	_	_
+10	do	_	ADP	_	_	head	label	_	_
+11	czerwca	_	NOUN	_	_	head	label	_	_
+12	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 7
+# text = - jej głos dosłownie okrążył świat - powiedziała Leive.
+1	-	_	PUNCT	_	_	head	label	_	_
+2	jej	_	DET	_	_	head	label	_	_
+3	głos	_	NOUN	_	_	head	label	_	_
+4	dosłownie	_	ADV	_	_	head	label	_	_
+5	okrążył	_	VERB	_	_	head	label	_	_
+6	świat	_	NOUN	_	_	head	label	_	_
+7	-	_	PUNCT	_	_	head	label	_	_
+8	powiedziała	_	VERB	_	_	head	label	_	_
+9	Leive	_	NOUN	_	_	head	label	_	_
+10	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 8
+# text = Świadek zeznał policji, że ofiara zaatakowała podejrzanego w kwietniu.
+1	Świadek	_	NOUN	_	_	head	label	_	_
+2	zeznał	_	VERB	_	_	head	label	_	_
+3	policji	_	NOUN	_	_	head	label	_	_
+4	,	_	PUNCT	_	_	head	label	_	_
+5	że	_	SCONJ	_	_	head	label	_	_
+6	ofiara	_	NOUN	_	_	head	label	_	_
+7	zaatakowała	_	VERB	_	_	head	label	_	_
+8	podejrzanego	_	NOUN	_	_	head	label	_	_
+9	w	_	ADP	_	_	head	label	_	_
+10	kwietniu	_	NOUN	_	_	head	label	_	_
+11	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 9
+# text = Jest to najbardziej oczywiste gdy imię gwiazdy jest z początku dość rzadkie.
+1	Jest	_	AUX	_	_	head	label	_	_
+2	to	_	PRON	_	_	head	label	_	_
+3	najbardziej	_	ADV	_	_	head	label	_	_
+4	oczywiste	_	ADJ	_	_	head	label	_	_
+5	gdy	_	ADV	_	_	head	label	_	_
+6	imię	_	NOUN	_	_	head	label	_	_
+7	gwiazdy	_	NOUN	_	_	head	label	_	_
+8	jest	_	AUX	_	_	head	label	_	_
+9	z	_	ADP	_	_	head	label	_	_
+10	początku	_	NOUN	_	_	head	label	_	_
+11	dość	_	PART	_	_	head	label	_	_
+12	rzadkie	_	ADJ	_	_	head	label	_	_
+13	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 10
+# text = Nie powstrzymało to inwestorów od masowego wpłacania pieniędzy na fundusze.
+1	Nie	_	PART	_	_	head	label	_	_
+2	powstrzymało	_	VERB	_	_	head	label	_	_
+3	to:<PRON> inwestorów	_	NOUN	_	_	head	label	_	_
+4	od	_	ADP	_	_	head	label	_	_
+5	masowego	_	ADJ	_	_	head	label	_	_
+6	wpłacania	_	NOUN	_	_	head	label	_	_
+7	pieniędzy	_	NOUN	_	_	head	label	_	_
+8	na	_	ADP	_	_	head	label	_	_
+9	fundusze	_	NOUN	_	_	head	label	_	_
+10	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 11
+# text = Ta różnica między ekonomicznymi danymi a polityczną retoryką jest znajoma, a przynajmniej powinna być.
+1	Ta	_	DET	_	_	head	label	_	_
+2	różnica	_	NOUN	_	_	head	label	_	_
+3	między	_	ADP	_	_	head	label	_	_
+4	ekonomicznymi	_	ADJ	_	_	head	label	_	_
+5	danymi	_	NOUN	_	_	head	label	_	_
+6	a	_	CCONJ	_	_	head	label	_	_
+7	polityczną	_	ADJ	_	_	head	label	_	_
+8	retoryką	_	NOUN	_	_	head	label	_	_
+9	jest	_	AUX	_	_	head	label	_	_
+10	znajoma	_	ADJ	_	_	head	label	_	_
+11	,	_	PUNCT	_	_	head	label	_	_
+12	a	_	CCONJ	_	_	head	label	_	_
+13	przynajmniej	_	PART	_	_	head	label	_	_
+14	powinna	_	VERB	_	_	head	label	_	_
+15	być	_	AUX	_	_	head	label	_	_
+16	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 12
+# text = Badanie oszacowało, że pokonanie rzeki Potomac na gondoli powinno zająć pasażerom około czterech minut.
+1	Badanie	_	NOUN	_	_	head	label	_	_
+2	oszacowało	_	VERB	_	_	head	label	_	_
+3	,	_	PUNCT	_	_	head	label	_	_
+4	że	_	SCONJ	_	_	head	label	_	_
+5	pokonanie	_	NOUN	_	_	head	label	_	_
+6	rzeki	_	NOUN	_	_	head	label	_	_
+7	Potomac	_	NOUN	_	_	head	label	_	_
+8	na	_	ADP	_	_	head	label	_	_
+9	gondoli	_	NOUN	_	_	head	label	_	_
+10	powinno	_	VERB	_	_	head	label	_	_
+11	zająć	_	VERB	_	_	head	label	_	_
+12	pasażerom	_	NOUN	_	_	head	label	_	_
+13	około	_	ADP	_	_	head	label	_	_
+14	czterech	_	NUM	_	_	head	label	_	_
+15	minut	_	NOUN	_	_	head	label	_	_
+16	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 13
+# text = Kolekcjonował on karty i wymieniał się nimi z innymi chłopcami.
+1	Kolekcjonował	_	VERB	_	_	head	label	_	_
+2	on	_	PRON	_	_	head	label	_	_
+3	karty	_	NOUN	_	_	head	label	_	_
+4	i	_	CCONJ	_	_	head	label	_	_
+5	wymieniał	_	VERB	_	_	head	label	_	_
+6	się	_	PRON	_	_	head	label	_	_
+7	nimi	_	PRON	_	_	head	label	_	_
+8	z	_	ADP	_	_	head	label	_	_
+9	innymi	_	ADJ	_	_	head	label	_	_
+10	chłopcami	_	NOUN	_	_	head	label	_	_
+11	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 14
+# text = To przestępstwo karane jest pięcioma latami w więzieniu.
+1	To	_	DET	_	_	head	label	_	_
+2	przestępstwo	_	NOUN	_	_	head	label	_	_
+3	karane	_	ADJ	_	_	head	label	_	_
+4	jest	_	AUX	_	_	head	label	_	_
+5	pięcioma	_	NUM	_	_	head	label	_	_
+6	latami	_	NOUN	_	_	head	label	_	_
+7	w	_	ADP	_	_	head	label	_	_
+8	więzieniu	_	NOUN	_	_	head	label	_	_
+9	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 15
+# text = Wiadomość dostarczona była do każdej wsi w prowincji.
+1	Wiadomość	_	NOUN	_	_	head	label	_	_
+2	dostarczona	_	ADJ	_	_	head	label	_	_
+3	była	_	AUX	_	_	head	label	_	_
+4	do	_	ADP	_	_	head	label	_	_
+5	każdej	_	DET	_	_	head	label	_	_
+6	wsi	_	NOUN	_	_	head	label	_	_
+7	w	_	ADP	_	_	head	label	_	_
+8	prowincji	_	NOUN	_	_	head	label	_	_
+9	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 16
+# text = Te myśli mam gdzieś z tyłu głowy.
+1	Te	_	DET	_	_	head	label	_	_
+2	myśli	_	NOUN	_	_	head	label	_	_
+3	mam	_	VERB	_	_	head	label	_	_
+4	gdzieś	_	NOUN	_	_	head	label	_	_
+5	z	_	ADP	_	_	head	label	_	_
+6	tyłu	_	NOUN	_	_	head	label	_	_
+7	głowy	_	NOUN	_	_	head	label	_	_
+8	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 17
+# text = Adam byłby przeniesiony do życia wiecznego.
+1	Adam	_	NOUN	_	_	head	label	_	_
+2	był	_	AUX	_	_	head	label	_	_
+3	by	_	AUX	_	_	head	label	_	_
+4	przeniesiony	_	ADJ	_	_	head	label	_	_
+5	do	_	ADP	_	_	head	label	_	_
+6	życia	_	NOUN	_	_	head	label	_	_
+7	wiecznego	_	ADJ	_	_	head	label	_	_
+8	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 18
+# text = Osłonki przegniły i musiały być wymienione.
+1	Osłonki	_	NOUN	_	_	head	label	_	_
+2	przegniły	_	VERB	_	_	head	label	_	_
+3	i	_	CCONJ	_	_	head	label	_	_
+4	musiały	_	AUX	_	_	head	label	_	_
+5	być	_	AUX	_	_	head	label	_	_
+6	wymienione	_	ADJ	_	_	head	label	_	_
+7	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 19
+# text = Była rozwścieczona, że to dziewczę odważyło się ośmieszyć ją przed klasą.
+1	Była	_	AUX	_	_	head	label	_	_
+2	rozwścieczona	_	ADJ	_	_	head	label	_	_
+3	,	_	PUNCT	_	_	head	label	_	_
+4	że	_	SCONJ	_	_	head	label	_	_
+5	to	_	DET	_	_	head	label	_	_
+6	dziewczę	_	NOUN	_	_	head	label	_	_
+7	odważyło	_	VERB	_	_	head	label	_	_
+8	się	_	PRON	_	_	head	label	_	_
+9	ośmieszyć	_	VERB	_	_	head	label	_	_
+10	ją	_	PRON	_	_	head	label	_	_
+11	przed	_	ADP	_	_	head	label	_	_
+12	klasą	_	NOUN	_	_	head	label	_	_
+13	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 20
+# text = Przewaga, jaką miał w kolegium elektorów, przyćmiła fakt, że wygrana oparta była o ledwie 43% głosów.
+1	Przewaga	_	NOUN	_	_	head	label	_	_
+2	,	_	PUNCT	_	_	head	label	_	_
+3	jaką	_	DET	_	_	head	label	_	_
+4	miał	_	VERB	_	_	head	label	_	_
+5	w	_	ADP	_	_	head	label	_	_
+6	kolegium	_	NOUN	_	_	head	label	_	_
+7	elektorów	_	NOUN	_	_	head	label	_	_
+8	,	_	PUNCT	_	_	head	label	_	_
+9	przyćmiła	_	VERB	_	_	head	label	_	_
+10	fakt	_	NOUN	_	_	head	label	_	_
+11	,	_	PUNCT	_	_	head	label	_	_
+12	że	_	SCONJ	_	_	head	label	_	_
+13	wygrana	_	NOUN	_	_	head	label	_	_
+14	oparta	_	ADJ	_	_	head	label	_	_
+15	była	_	AUX	_	_	head	label	_	_
+16	o	_	ADP	_	_	head	label	_	_
+17	ledwie	_	PART	_	_	head	label	_	_
+18	43	_	NUM	_	_	head	label	_	_
+19	%	_	SYM	_	_	head	label	_	_
+20	głosów	_	NOUN	_	_	head	label	_	_
+21	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 21
+# text = Amerykańscy żołnierze mogą teraz mieć atropinę i automatyczne wstrzykiwacze w swoich apteczkach na wypadek zatrucia neurotoksycznymi estrami fosforanowymi.
+1	Amerykańscy	_	ADJ	_	_	head	label	_	_
+2	żołnierze	_	NOUN	_	_	head	label	_	_
+3	mogą	_	AUX	_	_	head	label	_	_
+4	teraz	_	ADV	_	_	head	label	_	_
+5	mieć	_	VERB	_	_	head	label	_	_
+6	atropinę	_	NOUN	_	_	head	label	_	_
+7	i	_	CCONJ	_	_	head	label	_	_
+8	automatyczne	_	ADJ	_	_	head	label	_	_
+9	wstrzykiwacze	_	NOUN	_	_	head	label	_	_
+10	w	_	ADP	_	_	head	label	_	_
+11	swoich	_	DET	_	_	head	label	_	_
+12	apteczkach	_	NOUN	_	_	head	label	_	_
+13	na	_	ADP	_	_	head	label	_	_
+14	wypadek	_	NOUN	_	_	head	label	_	_
+15	zatrucia	_	NOUN	_	_	head	label	_	_
+16	neurotoksycznymi	_	ADJ	_	_	head	label	_	_
+17	estrami	_	NOUN	_	_	head	label	_	_ 
+18	fosforanowymi	_	ADJ	_	_	head	label	_	_
+19	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 22
+# text = Na dłuższą metę poprzez przebiegłoć osiągnąć mógłby to, czego nie może od razu osiągnąć siłą i przemocą.
+1	Na	_	ADP	_	_	head	label	_	_
+2	dłuższą	_	ADJ	_	_	head	label	_	_
+3	metę	_	NOUN	_	_	head	label	_	_
+4	poprzez	_	ADP	_	_	head	label	_	_
+5	przebiegłość	_	NOUN	_	_	head	label	_	_
+6	osiągnąć	_	VERB	_	_	head	label	_	_
+7	mógł	_	AUX	_	_	head	label	_	_
+8	by	_	AUX	_	_	head	label	_	_
+9	to	_	PRON	_	_	head	label	_	_
+10	,	_	PUNCT	_	_	head	label	_	_
+11	czego	_	PRON	_	_	head	label	_	_
+12	nie	_	PART	_	_	head	label	_	_
+13	może	_	AUX	_	_	head	label	_	_
+14	od	_	ADP	_	_	head	label	_	_
+15	razu	_	NOUN	_	_	head	label	_	_
+16	osiągnąć	_	VERB	_	_	head	label	_	_
+17	siłą	_	NOUN	_	_	head	label	_	_
+18	i	_	CCONJ	_	_	head	label	_	_
+19	przemocą	_	NOUN	_	_	head	label	_	_
+20	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 23
+# text = Twierdzi się, że tylko hierarchiczne społeczeństwo z klasą mającą wiele wolnego czasu u szczytu może produkować dzieła sztuki.
+1	Twierdzi	_	VERB	_	_	head	label	_	_
+2	się	_	PRON	_	_	head	label	_	_
+3	,	_	PUNCT	_	_	head	label	_	_
+4	że	_	SCONJ	_	_	head	label	_	_
+5	tylko	_	PART	_	_	head	label	_	_
+6	hierarchiczne	_	ADJ	_	_	head	label	_	_
+7	społeczeństwo	_	NOUN	_	_	head	label	_	_
+8	z	_	ADP	_	_	head	label	_	_
+9	klasą	_	NOUN	_	_	head	label	_	_
+10	mającą	_	ADJ	_	_	head	label	_	_
+11	wiele	_	DET	_	_	head	label	_	_
+12	wolnego	_	ADJ	_	_	head	label	_	_
+13	czasu	_	NOUN	_	_	head	label	_	_
+14	u	_	ADP	_	_	head	label	_	_
+15	szczytu	_	NOUN	_	_	head	label	_	_
+16	może	_	AUX	_	_	head	label	_	_
+17	produkować	_	VERB	_	_	head	label	_	_
+18	dzieła	_	NOUN	_	_	head	label	_	_
+19	sztuki	_	NOUN	_	_	head	label	_	_
+20	.	_	PUNCT	_	_	head	label	_	_
+
+# sent_id = 24
+# text = Jego naiwne tłumaczenie, że nie spaliłby kościoła, gdyby nie sądził, że biskp był w środku.
+1	Jego	_	DET	_	_	head	label	_	_
+2	naiwne	_	ADJ	_	_	head	label	_	_
+3	tłumaczenie	_	NOUN	_	_	head	label	_	_
+4	,	_	PUNCT	_	_	head	label	_	_
+5	że	_	SCONJ	_	_	head	label	_	_
+6	nie	_	PART	_	_	head	label	_	_
+7	spalił	_	VERB	_	_	head	label	_	_
+8	by	_	AUX	_	_	head	label	_	_
+9	kościoła	_	NOUN	_	_	head	label	_	_
+10	,	_	PUNCT	_	_	head	label	_	_
+11	gdyby	_	SCONJ	_	_	head	label	_	_
+12	nie	_	PART	_	_	head	label	_	_
+13	sądził	_	VERB	_	_	head	label	_	_
+14	,	_	PUNCT	_	_	head	label	_	_
+15	że	_	SCONJ	_	_	head	label	_	_
+16	biskup	_	NOUN	_	_	head	label	_	_
+17	był	_	VERB	_	_	head	label	_	_
+18	w	_	ADP	_	_	head	label	_	_
+19	środku	_	NOUN	_	_	head	label	_	_
+20	.	_	PUNCT	_	_	head	label	_	_
