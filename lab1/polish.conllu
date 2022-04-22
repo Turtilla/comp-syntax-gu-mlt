@@ -317,7 +317,7 @@
 8	by	_	AUX	_	_	7	aux	_	_
 9	to	_	PRON	_	_	6	obj	_	_
 10	,	_	PUNCT	_	_	13	punct	_	_
-11	czego	_	PRON	_	_	16	nsubj	_	_
+11	czego	_	PRON	_	_	13	nsubj	_	_
 12	nie	_	PART	_	_	13	advmod	_	_
 13	może	_	VERB	_	_	9	acl	_	_
 14	od	_	ADP	_	_	15	case	_	_
@@ -330,46 +330,47 @@
 
 # sent_id = 23
 # text = Twierdzi się, że tylko hierarchiczne społeczeństwo z klasą mającą wiele wolnego czasu u szczytu może produkować dzieła sztuki.
-1	Twierdzi	_	VERB	_	_	head	label	_	_
-2	się	_	PRON	_	_	head	label	_	_
-3	,	_	PUNCT	_	_	head	label	_	_
-4	że	_	SCONJ	_	_	head	label	_	_
-5	tylko	_	PART	_	_	head	label	_	_
-6	hierarchiczne	_	ADJ	_	_	head	label	_	_
-7	społeczeństwo	_	NOUN	_	_	head	label	_	_
-8	z	_	ADP	_	_	head	label	_	_
-9	klasą	_	NOUN	_	_	head	label	_	_
-10	mającą	_	ADJ	_	_	head	label	_	_
-11	wiele	_	DET	_	_	head	label	_	_
-12	wolnego	_	ADJ	_	_	head	label	_	_
-13	czasu	_	NOUN	_	_	head	label	_	_
-14	u	_	ADP	_	_	head	label	_	_
-15	szczytu	_	NOUN	_	_	head	label	_	_
-16	może	_	AUX	_	_	head	label	_	_
-17	produkować	_	VERB	_	_	head	label	_	_
-18	dzieła	_	NOUN	_	_	head	label	_	_
-19	sztuki	_	NOUN	_	_	head	label	_	_
-20	.	_	PUNCT	_	_	head	label	_	_
+1	Twierdzi	_	VERB	_	_	0	root	_	_
+2	się	_	PRON	_	_	1	expl:pv	_	_
+3	,	_	PUNCT	_	_	16	punct	_	_
+4	że	_	SCONJ	_	_	16	mark	_	_
+5	tylko	_	PART	_	_	6	advmod	_	_
+6	hierarchiczne	_	ADJ	_	_	7	amod	_	_
+7	społeczeństwo	_	NOUN	_	_	16	nsubj	_	_
+8	z	_	ADP	_	_	9	case	_	_
+9	klasą	_	NOUN	_	_	7	nmod	_	_
+10	mającą	_	ADJ	_	_	9	acl	_	_
+11	wiele	_	DET	_	_	13	det	_	_
+12	wolnego	_	ADJ	_	_	13	amod	_	_
+13	czasu	_	NOUN	_	_	10	obj	_	_
+14	u	_	ADP	_	_	15	case	_	_
+15	szczytu	_	NOUN	_	_	9	nmod	_	_
+16	może	_	VERB	_	_	1	ccomp	_	_
+17	produkować	_	VERB	_	_	16	xcomp	_	_
+18	dzieła	_	NOUN	_	_	17	obj	_	_
+19	sztuki	_	NOUN	_	_	18	compound	_	_
+20	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 24
 # text = Jego naiwne tłumaczenie, że nie spaliłby kościoła, gdyby nie sądził, że biskp był w środku.
-1	Jego	_	DET	_	_	head	label	_	_
-2	naiwne	_	ADJ	_	_	head	label	_	_
-3	tłumaczenie	_	NOUN	_	_	head	label	_	_
-4	,	_	PUNCT	_	_	head	label	_	_
-5	że	_	SCONJ	_	_	head	label	_	_
-6	nie	_	PART	_	_	head	label	_	_
-7	spalił	_	VERB	_	_	head	label	_	_
-8	by	_	AUX	_	_	head	label	_	_
-9	kościoła	_	NOUN	_	_	head	label	_	_
-10	,	_	PUNCT	_	_	head	label	_	_
-11	gdyby	_	SCONJ	_	_	head	label	_	_
-12	nie	_	PART	_	_	head	label	_	_
-13	sądził	_	VERB	_	_	head	label	_	_
-14	,	_	PUNCT	_	_	head	label	_	_
-15	że	_	SCONJ	_	_	head	label	_	_
-16	biskup	_	NOUN	_	_	head	label	_	_
-17	był	_	VERB	_	_	head	label	_	_
-18	w	_	ADP	_	_	head	label	_	_
-19	środku	_	NOUN	_	_	head	label	_	_
-20	.	_	PUNCT	_	_	head	label	_	_
+# Same as in the English version, I am not sure of the root.
+1	Jego	_	DET	_	_	3	nmod:poss	_	_
+2	naiwne	_	ADJ	_	_	3	amod	_	_
+3	tłumaczenie	_	NOUN	_	_	0	root	_	_
+4	,	_	PUNCT	_	_	7	punct	_	_
+5	że	_	SCONJ	_	_	7	mark	_	_
+6	nie	_	PART	_	_	7	advmod	_	_
+7	spalił	_	VERB	_	_	3	acl	_	_
+8	by	_	AUX	_	_	7	aux	_	_
+9	kościoła	_	NOUN	_	_	7	obj	_	_
+10	,	_	PUNCT	_	_	13	punct	_	_
+11	gdyby	_	SCONJ	_	_	13	mark	_	_
+12	nie	_	PART	_	_	13	advmod	_	_
+13	sądził	_	VERB	_	_	7	advcl	_	_
+14	,	_	PUNCT	_	_	17	punct	_	_
+15	że	_	SCONJ	_	_	17	mark	_	_
+16	biskup	_	NOUN	_	_	17	nsubj	_	_
+17	był	_	VERB	_	_	13	ccomp	_	_
+18	w	_	ADP	_	_	19	case	_	_
+19	środku	_	NOUN	_	_	17	obl	_	_
+20	.	_	PUNCT	_	_	3	punct	_	_
