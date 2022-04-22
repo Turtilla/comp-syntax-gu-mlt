@@ -28,142 +28,148 @@
 
 # sent_id = 4
 # text = Shenzheńska policja drogowa decydowała się już wcześniej na niekonwencjonalne kary.
-1	Shenzheńska	_	ADJ	_	_	head	label	_	_
-2	policja	_	NOUN	_	_	head	label	_	_
-3	drogowa	_	ADJ	_	_	head	label	_	_
-4	decydowała	_	VERB	_	_	head	label	_	_
-5	się	_	PRON	_	_	head	label	_	_
-6	już	_	PART	_	_	head	label	_	_
-7	wcześniej	_	ADVERB	_	_	head	label	_	_
-8	na	_	ADP	_	_	head	label	_	_
-9	niekonwencjonalne	_	ADJ	_	_	head	label	_	_
-10	kary	_	NOUN	_	_	head	label	_	_
-11	.	_	PUNCT	_	_	head	label	_	_
+# The reflexive pronoun "się" was tricky but I went with the pl_pud-ud-test.conllu way of marking it as expl:pv.
+1	Shenzheńska	_	ADJ	_	_	2	amod	_	_
+2	policja	_	NOUN	_	_	4	nsubj	_	_
+3	drogowa	_	ADJ	_	_	2	amod	_	_
+4	decydowała	_	VERB	_	_	0	root	_	_
+5	się	_	PRON	_	_	4	expl:pv	_	_
+6	już	_	PART	_	_	7	advmod	_	_
+7	wcześniej	_	ADVERB	_	_	4	advmod	_	_
+8	na	_	ADP	_	_	10	case	_	_
+9	niekonwencjonalne	_	ADJ	_	_	10	amod	_	_
+10	kary	_	NOUN	_	_	4	obl	_	_
+11	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 5
 # text = Dziedzina nauki poświęcona badaniu wulkanów nazywa się wulkanologia.
-1	Dziedzina	_	NOUN	_	_	head	label	_	_
-2	nauki	_	NOUN	_	_	head	label	_	_
-3	poświęcona	_	ADJ	_	_	head	label	_	_
-4	badaniu	_	NOUN	_	_	head	label	_	_
-5	wulkanów	_	NOUN	_	_	head	label	_	_
-6	nazywa	_	VERB	_	_	head	label	_	_
-7	się	_	PRON	_	_	head	label	_	_
-8	wulkanologia	_	NOUN	_	_	head	label	_	_
-9	.	_	PUNCT	_	_	head	label	_	_
+# This sentence is much harder to translate "faithfully" as there is no possible alternation in spelling. The treebank preserves that by giving both the Polish name and both of the English variants, 
+# but it does not really make sense to do that in a sentence that just talks about what the name of this branch of science is so I would stick with my version (but 
+# feel free to tell me to annotate the other one if it was a bad decision on my end).
+1	Dziedzina	_	NOUN	_	_	6	nsubj	_	_
+2	nauki	_	NOUN	_	_	1	nmod	_	_
+3	poświęcona	_	ADJ	_	_	1	acl	_	_
+4	badaniu	_	NOUN	_	_	3	obj	_	_
+5	wulkanów	_	NOUN	_	_	4	nmod	_	_
+6	nazywa	_	VERB	_	_	0	root	_	_
+7	się	_	PRON	_	_	6	expl:pv	_	_
+8	wulkanologia	_	NOUN	_	_	6	obj	_	_
+9	.	_	PUNCT	_	_	6	punct	_	_
 
 # sent_id = 6
 # text = Odbywało się to tuż przy meksykańskim wybrzeżu od kwietnia do czerwca.
-1	Odbywało	_	VERB	_	_	head	label	_	_
-2	się	_	PRON	_	_	head	label	_	_
-3	to	_	PRON	_	_	head	label	_	_
-4	tuż	_	PART	_	_	head	label	_	_
-5	przy	_	ADP	_	_	head	label	_	_
-6	meksykańskim	_	ADJ	_	_	head	label	_	_
-7	wybrzeżu	_	NOUN	_	_	head	label	_	_
-8	od	_	ADP	_	_	head	label	_	_
-9	kwietnia	_	NOUN	_	_	head	label	_	_
-10	do	_	ADP	_	_	head	label	_	_
-11	czerwca	_	NOUN	_	_	head	label	_	_
-12	.	_	PUNCT	_	_	head	label	_	_
+# Though my sentences look different, I was able to consult the "od kwietnia do czerwca" (from April to June) with the treebank; it annotates both word 9 and word 11
+# as obl with respect to the root, but to me it makes more sense to do it like in the English version, with 11 being an nmod of 9. 
+1	Odbywało	_	VERB	_	_	0	root	_	_
+2	się	_	PRON	_	_	1	expl:pv	_	_
+3	to	_	PRON	_	_	1	nsubj	_	_
+4	tuż	_	PART	_	_	7	advmod	_	_
+5	przy	_	ADP	_	_	7	case	_	_
+6	meksykańskim	_	ADJ	_	_	7	amod	_	_
+7	wybrzeżu	_	NOUN	_	_	1	obl	_	_
+8	od	_	ADP	_	_	9	case	_	_
+9	kwietnia	_	NOUN	_	_	1	obl	_	_
+10	do	_	ADP	_	_	11	case	_	_
+11	czerwca	_	NOUN	_	_	9	nmod	_	_
+12	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 7
 # text = - jej głos dosłownie okrążył świat - powiedziała Leive.
-1	-	_	PUNCT	_	_	head	label	_	_
-2	jej	_	DET	_	_	head	label	_	_
-3	głos	_	NOUN	_	_	head	label	_	_
-4	dosłownie	_	ADV	_	_	head	label	_	_
-5	okrążył	_	VERB	_	_	head	label	_	_
-6	świat	_	NOUN	_	_	head	label	_	_
-7	-	_	PUNCT	_	_	head	label	_	_
-8	powiedziała	_	VERB	_	_	head	label	_	_
-9	Leive	_	NOUN	_	_	head	label	_	_
-10	.	_	PUNCT	_	_	head	label	_	_
+1	-	_	PUNCT	_	_	5	punct	_	_
+2	jej	_	DET	_	_	3	nmod:poss	_	_
+3	głos	_	NOUN	_	_	5	nsubj	_	_
+4	dosłownie	_	ADV	_	_	5	advmod	_	_
+5	okrążył	_	VERB	_	_	0	root	_	_
+6	świat	_	NOUN	_	_	5	obj	_	_
+7	-	_	PUNCT	_	_	5	punct	_	_
+8	powiedziała	_	VERB	_	_	5	parataxis	_	_
+9	Leive	_	NOUN	_	_	8	nsubj	_	_
+10	.	_	PUNCT	_	_	5	punct	_	_
 
 # sent_id = 8
 # text = Świadek zeznał policji, że ofiara zaatakowała podejrzanego w kwietniu.
-1	Świadek	_	NOUN	_	_	head	label	_	_
-2	zeznał	_	VERB	_	_	head	label	_	_
-3	policji	_	NOUN	_	_	head	label	_	_
-4	,	_	PUNCT	_	_	head	label	_	_
-5	że	_	SCONJ	_	_	head	label	_	_
-6	ofiara	_	NOUN	_	_	head	label	_	_
-7	zaatakowała	_	VERB	_	_	head	label	_	_
-8	podejrzanego	_	NOUN	_	_	head	label	_	_
-9	w	_	ADP	_	_	head	label	_	_
-10	kwietniu	_	NOUN	_	_	head	label	_	_
-11	.	_	PUNCT	_	_	head	label	_	_
+1	Świadek	_	NOUN	_	_	2	nsubj	_	_
+2	zeznał	_	VERB	_	_	0	root	_	_
+3	policji	_	NOUN	_	_	2	obj	_	_
+4	,	_	PUNCT	_	_	7	punct	_	_
+5	że	_	SCONJ	_	_	7	mark	_	_
+6	ofiara	_	NOUN	_	_	7	nsubj	_	_
+7	zaatakowała	_	VERB	_	_	2	ccomp	_	_
+8	podejrzanego	_	NOUN	_	_	7	obj	_	_
+9	w	_	ADP	_	_	10	case	_	_
+10	kwietniu	_	NOUN	_	_	7	obl	_	_
+11	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 9
 # text = Jest to najbardziej oczywiste gdy imię gwiazdy jest z początku dość rzadkie.
-1	Jest	_	AUX	_	_	head	label	_	_
-2	to	_	PRON	_	_	head	label	_	_
-3	najbardziej	_	ADV	_	_	head	label	_	_
-4	oczywiste	_	ADJ	_	_	head	label	_	_
-5	gdy	_	ADV	_	_	head	label	_	_
-6	imię	_	NOUN	_	_	head	label	_	_
-7	gwiazdy	_	NOUN	_	_	head	label	_	_
-8	jest	_	AUX	_	_	head	label	_	_
-9	z	_	ADP	_	_	head	label	_	_
-10	początku	_	NOUN	_	_	head	label	_	_
-11	dość	_	PART	_	_	head	label	_	_
-12	rzadkie	_	ADJ	_	_	head	label	_	_
-13	.	_	PUNCT	_	_	head	label	_	_
+1	Jest	_	AUX	_	_	4	cop	_	_
+2	to	_	PRON	_	_	4	nsubj	_	_
+3	najbardziej	_	ADV	_	_	4	advmod	_	_
+4	oczywiste	_	ADJ	_	_	0	root	_	_
+5	gdy	_	ADV	_	_	12	mark	_	_
+6	imię	_	NOUN	_	_	12	nsubj	_	_
+7	gwiazdy	_	NOUN	_	_	6	nmod	_	_
+8	jest	_	AUX	_	_	12	cop	_	_
+9	z	_	ADP	_	_	10	case	_	_
+10	początku	_	NOUN	_	_	12	obl	_	_
+11	dość	_	PART	_	_	12	advmod	_	_
+12	rzadkie	_	ADJ	_	_	4	advcl	_	_
+13	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 10
 # text = Nie powstrzymało to inwestorów od masowego wpłacania pieniędzy na fundusze.
-1	Nie	_	PART	_	_	head	label	_	_
-2	powstrzymało	_	VERB	_	_	head	label	_	_
-3	to:<PRON> inwestorów	_	NOUN	_	_	head	label	_	_
-4	od	_	ADP	_	_	head	label	_	_
-5	masowego	_	ADJ	_	_	head	label	_	_
-6	wpłacania	_	NOUN	_	_	head	label	_	_
-7	pieniędzy	_	NOUN	_	_	head	label	_	_
-8	na	_	ADP	_	_	head	label	_	_
-9	fundusze	_	NOUN	_	_	head	label	_	_
-10	.	_	PUNCT	_	_	head	label	_	_
+1	Nie	_	PART	_	_	2	advmod	_	_
+2	powstrzymało	_	VERB	_	_	0	root	_	_
+3	to	_	PRON	_	_	2	nsubj	_	_
+4	inwestorów	_	NOUN	_	_	2	obj	_	_
+5	od	_	ADP	_	_	7	case	_	_
+6	masowego	_	ADJ	_	_	7	amod	_	_
+7	wpłacania	_	NOUN	_	_	2	obl	_	_
+8	pieniędzy	_	NOUN	_	_	7	nmod	_	_
+9	na	_	ADP	_	_	10	case	_	_
+10	fundusze	_	NOUN	_	_	7	nmod	_	_
+11	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 11
 # text = Ta różnica między ekonomicznymi danymi a polityczną retoryką jest znajoma, a przynajmniej powinna być.
-1	Ta	_	DET	_	_	head	label	_	_
-2	różnica	_	NOUN	_	_	head	label	_	_
-3	między	_	ADP	_	_	head	label	_	_
-4	ekonomicznymi	_	ADJ	_	_	head	label	_	_
-5	danymi	_	NOUN	_	_	head	label	_	_
-6	a	_	CCONJ	_	_	head	label	_	_
-7	polityczną	_	ADJ	_	_	head	label	_	_
-8	retoryką	_	NOUN	_	_	head	label	_	_
-9	jest	_	AUX	_	_	head	label	_	_
-10	znajoma	_	ADJ	_	_	head	label	_	_
-11	,	_	PUNCT	_	_	head	label	_	_
-12	a	_	CCONJ	_	_	head	label	_	_
-13	przynajmniej	_	PART	_	_	head	label	_	_
-14	powinna	_	VERB	_	_	head	label	_	_
-15	być	_	AUX	_	_	head	label	_	_
-16	.	_	PUNCT	_	_	head	label	_	_
+1	Ta	_	DET	_	_	2	det	_	_
+2	różnica	_	NOUN	_	_	10	nsubj	_	_
+3	między	_	ADP	_	_	5	case	_	_
+4	ekonomicznymi	_	ADJ	_	_	5	amod	_	_
+5	danymi	_	NOUN	_	_	2	nmod	_	_
+6	a	_	CCONJ	_	_	8	cc	_	_
+7	polityczną	_	ADJ	_	_	8	amod	_	_
+8	retoryką	_	NOUN	_	_	5	conj	_	_
+9	jest	_	AUX	_	_	10	cop	_	_
+10	znajoma	_	ADJ	_	_	0	root	_	_
+11	,	_	PUNCT	_	_	14	punct	_	_
+12	a	_	CCONJ	_	_	14	cc	_	_
+13	przynajmniej	_	PART	_	_	14	advmod	_	_
+14	powinna	_	VERB	_	_	9	conj	_	_
+15	być	_	AUX	_	_	14	xcomp	_	_
+16	.	_	PUNCT	_	_	10	punct	_	_
 
 # sent_id = 12
-# text = Badanie oszacowało, że pokonanie rzeki Potomac na gondoli powinno zająć pasażerom około czterech minut.
-1	Badanie	_	NOUN	_	_	head	label	_	_
-2	oszacowało	_	VERB	_	_	head	label	_	_
-3	,	_	PUNCT	_	_	head	label	_	_
-4	że	_	SCONJ	_	_	head	label	_	_
-5	pokonanie	_	NOUN	_	_	head	label	_	_
-6	rzeki	_	NOUN	_	_	head	label	_	_
-7	Potomac	_	NOUN	_	_	head	label	_	_
-8	na	_	ADP	_	_	head	label	_	_
-9	gondoli	_	NOUN	_	_	head	label	_	_
-10	powinno	_	VERB	_	_	head	label	_	_
-11	zająć	_	VERB	_	_	head	label	_	_
-12	pasażerom	_	NOUN	_	_	head	label	_	_
-13	około	_	ADP	_	_	head	label	_	_
-14	czterech	_	NUM	_	_	head	label	_	_
-15	minut	_	NOUN	_	_	head	label	_	_
-16	.	_	PUNCT	_	_	head	label	_	_
+# text = Badanie oszacowało, że pokonanie rzeki Potomac na gondoli zajmuje pasażerom około czterech minut.
+1	Badanie	_	NOUN	_	_	2	nsubj	_	_
+2	oszacowało	_	VERB	_	_	0	root	_	_
+3	,	_	PUNCT	_	_	10	punct	_	_
+4	że	_	SCONJ	_	_	10	mark	_	_
+5	pokonanie	_	NOUN	_	_	10	nsubj	_	_
+6	rzeki	_	NOUN	_	_	5	nmod	_	_
+7	Potomac	_	NOUN	_	_	6	appos	_	_
+8	na	_	ADP	_	_	9	case	_	_
+9	gondoli	_	NOUN	_	_	5	nmod	_	_
+10	zajmuje	_	VERB	_	_	2	ccomp	_	_
+11	pasażerom	_	NOUN	_	_	10	obj	_	_
+12	około	_	ADP	_	_	14	case	_	_
+13	czterech	_	NUM	_	_	14	nummod	_	_
+14	minut	_	NOUN	_	_	10	obl	_	_
+15	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 13
 # text = Kolekcjonował on karty i wymieniał się nimi z innymi chłopcami.
-1	Kolekcjonował	_	VERB	_	_	head	label	_	_
+1	kolekcjonował	_	VERB	_	_	head	label	_	_
 2	on	_	PRON	_	_	head	label	_	_
 3	karty	_	NOUN	_	_	head	label	_	_
 4	i	_	CCONJ	_	_	head	label	_	_
