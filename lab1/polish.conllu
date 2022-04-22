@@ -257,72 +257,76 @@
 
 # sent_id = 20
 # text = Przewaga, jaką miał w kolegium elektorów, przyćmiła fakt, że wygrana oparta była o ledwie 43% głosów.
-1	Przewaga	_	NOUN	_	_	head	label	_	_
-2	,	_	PUNCT	_	_	head	label	_	_
-3	jaką	_	DET	_	_	head	label	_	_
-4	miał	_	VERB	_	_	head	label	_	_
-5	w	_	ADP	_	_	head	label	_	_
-6	kolegium	_	NOUN	_	_	head	label	_	_
-7	elektorów	_	NOUN	_	_	head	label	_	_
-8	,	_	PUNCT	_	_	head	label	_	_
-9	przyćmiła	_	VERB	_	_	head	label	_	_
-10	fakt	_	NOUN	_	_	head	label	_	_
-11	,	_	PUNCT	_	_	head	label	_	_
-12	że	_	SCONJ	_	_	head	label	_	_
-13	wygrana	_	NOUN	_	_	head	label	_	_
-14	oparta	_	ADJ	_	_	head	label	_	_
-15	była	_	AUX	_	_	head	label	_	_
-16	o	_	ADP	_	_	head	label	_	_
-17	ledwie	_	PART	_	_	head	label	_	_
-18	43	_	NUM	_	_	head	label	_	_
-19	%	_	SYM	_	_	head	label	_	_
-20	głosów	_	NOUN	_	_	head	label	_	_
-21	.	_	PUNCT	_	_	head	label	_	_
+# Here all the clauses were causing me issues, so I am not certain if it is good.
+1	Przewaga	_	NOUN	_	_	9	nsubj	_	_
+2	,	_	PUNCT	_	_	4	punct	_	_
+3	jaką	_	DET	_	_	4	obj	_	_
+4	miał	_	VERB	_	_	1	acl	_	_
+5	w	_	ADP	_	_	6	case	_	_
+6	kolegium	_	NOUN	_	_	4	obl	_	_
+7	elektorów	_	NOUN	_	_	6	compound	_	_
+8	,	_	PUNCT	_	_	4	punct	_	_
+9	przyćmiła	_	VERB	_	_	0	root	_	_
+10	fakt	_	NOUN	_	_	9	obj	_	_
+11	,	_	PUNCT	_	_	14	mark	_	_
+12	że	_	SCONJ	_	_	14	sconj	_	_
+13	wygrana	_	NOUN	_	_	14	nsubj	_	_
+14	oparta	_	ADJ	_	_	10	acl	_	_
+15	była	_	AUX	_	_	14	cop	_	_
+16	o	_	ADP	_	_	19	case	_	_
+17	ledwie	_	PART	_	_	18	advmod	_	_
+18	43	_	NUM	_	_	19	nummod	_	_
+19	%	_	SYM	_	_	14	obl	_	_
+20	głosów	_	NOUN	_	_	19	nmod	_	_
+21	.	_	PUNCT	_	_	9	punct	_	_
 
 # sent_id = 21
 # text = Amerykańscy żołnierze mogą teraz mieć atropinę i automatyczne wstrzykiwacze w swoich apteczkach na wypadek zatrucia neurotoksycznymi estrami fosforanowymi.
-1	Amerykańscy	_	ADJ	_	_	head	label	_	_
-2	żołnierze	_	NOUN	_	_	head	label	_	_
-3	mogą	_	AUX	_	_	head	label	_	_
-4	teraz	_	ADV	_	_	head	label	_	_
-5	mieć	_	VERB	_	_	head	label	_	_
-6	atropinę	_	NOUN	_	_	head	label	_	_
-7	i	_	CCONJ	_	_	head	label	_	_
-8	automatyczne	_	ADJ	_	_	head	label	_	_
-9	wstrzykiwacze	_	NOUN	_	_	head	label	_	_
-10	w	_	ADP	_	_	head	label	_	_
-11	swoich	_	DET	_	_	head	label	_	_
-12	apteczkach	_	NOUN	_	_	head	label	_	_
-13	na	_	ADP	_	_	head	label	_	_
-14	wypadek	_	NOUN	_	_	head	label	_	_
-15	zatrucia	_	NOUN	_	_	head	label	_	_
-16	neurotoksycznymi	_	ADJ	_	_	head	label	_	_
-17	estrami	_	NOUN	_	_	head	label	_	_ 
-18	fosforanowymi	_	ADJ	_	_	head	label	_	_
-19	.	_	PUNCT	_	_	head	label	_	_
+# The confusing part for me is "mogą," which I know to be a modal verb, but which, unlike English modals, is not marked as aux in the treebank.
+1	Amerykańscy	_	ADJ	_	_	2	amod	_	_
+2	żołnierze	_	NOUN	_	_	3	nsubj	_	_
+3	mogą	_	VERB	_	_	0	root	_	_
+4	teraz	_	ADV	_	_	3	advmod	_	_
+5	mieć	_	VERB	_	_	3	xcomp	_	_
+6	atropinę	_	NOUN	_	_	5	obj	_	_
+7	i	_	CCONJ	_	_	9	cc	_	_
+8	automatyczne	_	ADJ	_	_	9	amod	_	_
+9	wstrzykiwacze	_	NOUN	_	_	6	conj	_	_
+10	w	_	ADP	_	_	12	case	_	_
+11	swoich	_	DET	_	_	12	nmod:poss	_	_
+12	apteczkach	_	NOUN	_	_	5	obl	_	_
+13	na	_	ADP	_	_	14	case	_	_
+14	wypadek	_	NOUN	_	_	5	obl	_	_
+15	zatrucia	_	NOUN	_	_	14	nmod	_	_
+16	neurotoksycznymi	_	ADJ	_	_	17	amod	_	_
+17	estrami	_	NOUN	_	_	15	nmod	_	_ 
+18	fosforanowymi	_	ADJ	_	_	17	amod	_	_
+19	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 22
 # text = Na dłuższą metę poprzez przebiegłoć osiągnąć mógłby to, czego nie może od razu osiągnąć siłą i przemocą.
-1	Na	_	ADP	_	_	head	label	_	_
-2	dłuższą	_	ADJ	_	_	head	label	_	_
-3	metę	_	NOUN	_	_	head	label	_	_
-4	poprzez	_	ADP	_	_	head	label	_	_
-5	przebiegłość	_	NOUN	_	_	head	label	_	_
-6	osiągnąć	_	VERB	_	_	head	label	_	_
-7	mógł	_	AUX	_	_	head	label	_	_
-8	by	_	AUX	_	_	head	label	_	_
-9	to	_	PRON	_	_	head	label	_	_
-10	,	_	PUNCT	_	_	head	label	_	_
-11	czego	_	PRON	_	_	head	label	_	_
-12	nie	_	PART	_	_	head	label	_	_
-13	może	_	AUX	_	_	head	label	_	_
-14	od	_	ADP	_	_	head	label	_	_
-15	razu	_	NOUN	_	_	head	label	_	_
-16	osiągnąć	_	VERB	_	_	head	label	_	_
-17	siłą	_	NOUN	_	_	head	label	_	_
-18	i	_	CCONJ	_	_	head	label	_	_
-19	przemocą	_	NOUN	_	_	head	label	_	_
-20	.	_	PUNCT	_	_	head	label	_	_
+# Here I am not really sure which verb the obl in 3 should be connected to, so I connected it to the non-modal one.
+# It is also tricky to determine what words in the instrumental case should be marked as (here I used obl), as they are not really objects.
+1	Na	_	ADP	_	_	3	case	_	_
+2	dłuższą	_	ADJ	_	_	3	amod	_	_
+3	metę	_	NOUN	_	_	6	obl	_	_
+4	poprzez	_	ADP	_	_	5	case	_	_
+5	przebiegłość	_	NOUN	_	_	6	obl	_	_
+6	osiągnąć	_	VERB	_	_	7	xcomp	_	_
+7	mógł	_	VERB	_	_	0	root	_	_
+8	by	_	AUX	_	_	7	aux	_	_
+9	to	_	PRON	_	_	6	obj	_	_
+10	,	_	PUNCT	_	_	13	punct	_	_
+11	czego	_	PRON	_	_	16	nsubj	_	_
+12	nie	_	PART	_	_	13	advmod	_	_
+13	może	_	VERB	_	_	9	acl	_	_
+14	od	_	ADP	_	_	15	case	_	_
+15	razu	_	NOUN	_	_	16	obl	_	_
+16	osiągnąć	_	VERB	_	_	13	xcomp	_	_
+17	siłą	_	NOUN	_	_	16	obl	_	_
+18	i	_	CCONJ	_	_	19	cc	_	_
+19	przemocą	_	NOUN	_	_	17	conj	_	_
+20	.	_	PUNCT	_	_	7	punct	_	_
 
 # sent_id = 23
 # text = Twierdzi się, że tylko hierarchiczne społeczeństwo z klasą mającą wiele wolnego czasu u szczytu może produkować dzieła sztuki.
