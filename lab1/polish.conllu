@@ -169,89 +169,91 @@
 
 # sent_id = 13
 # text = Kolekcjonował on karty i wymieniał się nimi z innymi chłopcami.
-1	kolekcjonował	_	VERB	_	_	head	label	_	_
-2	on	_	PRON	_	_	head	label	_	_
-3	karty	_	NOUN	_	_	head	label	_	_
-4	i	_	CCONJ	_	_	head	label	_	_
-5	wymieniał	_	VERB	_	_	head	label	_	_
-6	się	_	PRON	_	_	head	label	_	_
-7	nimi	_	PRON	_	_	head	label	_	_
-8	z	_	ADP	_	_	head	label	_	_
-9	innymi	_	ADJ	_	_	head	label	_	_
-10	chłopcami	_	NOUN	_	_	head	label	_	_
-11	.	_	PUNCT	_	_	head	label	_	_
+1	kolekcjonował	_	VERB	_	_	0	root	_	_
+2	on	_	PRON	_	_	1	nsubj	_	_
+3	karty	_	NOUN	_	_	1	obj	_	_
+4	i	_	CCONJ	_	_	5	cc	_	_
+5	wymieniał	_	VERB	_	_	1	conj	_	_
+6	się	_	PRON	_	_	5	expl:pv	_	_
+7	nimi	_	PRON	_	_	5	obj	_	_
+8	z	_	ADP	_	_	10	case	_	_
+9	innymi	_	ADJ	_	_	10	amod	_	_
+10	chłopcami	_	NOUN	_	_	5	obl	_	_
+11	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 14
 # text = To przestępstwo karane jest pięcioma latami w więzieniu.
-1	To	_	DET	_	_	head	label	_	_
-2	przestępstwo	_	NOUN	_	_	head	label	_	_
-3	karane	_	ADJ	_	_	head	label	_	_
-4	jest	_	AUX	_	_	head	label	_	_
-5	pięcioma	_	NUM	_	_	head	label	_	_
-6	latami	_	NOUN	_	_	head	label	_	_
-7	w	_	ADP	_	_	head	label	_	_
-8	więzieniu	_	NOUN	_	_	head	label	_	_
-9	.	_	PUNCT	_	_	head	label	_	_
+1	To	_	DET	_	_	2	det	_	_
+2	przestępstwo	_	NOUN	_	_	3	nsubj	_	_
+3	karane	_	ADJ	_	_	0	root	_	_
+4	jest	_	AUX	_	_	3	cop	_	_
+5	pięcioma	_	NUM	_	_	6	nummod	_	_
+6	latami	_	NOUN	_	_	3	obl	_	_
+7	w	_	ADP	_	_	8	case	_	_
+8	więzieniu	_	NOUN	_	_	6	nmod	_	_
+9	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 15
 # text = Wiadomość dostarczona była do każdej wsi w prowincji.
-1	Wiadomość	_	NOUN	_	_	head	label	_	_
-2	dostarczona	_	ADJ	_	_	head	label	_	_
-3	była	_	AUX	_	_	head	label	_	_
-4	do	_	ADP	_	_	head	label	_	_
-5	każdej	_	DET	_	_	head	label	_	_
-6	wsi	_	NOUN	_	_	head	label	_	_
-7	w	_	ADP	_	_	head	label	_	_
-8	prowincji	_	NOUN	_	_	head	label	_	_
-9	.	_	PUNCT	_	_	head	label	_	_
+1	Wiadomość	_	NOUN	_	_	2	nsubj	_	_
+2	dostarczona	_	ADJ	_	_	0	root	_	_
+3	była	_	AUX	_	_	2	cop	_	_
+4	do	_	ADP	_	_	6	case	_	_
+5	każdej	_	DET	_	_	6	det	_	_
+6	wsi	_	NOUN	_	_	2	obl	_	_
+7	w	_	ADP	_	_	8	case	_	_
+8	prowincji	_	NOUN	_	_	6	nmod	_	_
+9	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 16
 # text = Te myśli mam gdzieś z tyłu głowy.
-1	Te	_	DET	_	_	head	label	_	_
-2	myśli	_	NOUN	_	_	head	label	_	_
-3	mam	_	VERB	_	_	head	label	_	_
-4	gdzieś	_	NOUN	_	_	head	label	_	_
-5	z	_	ADP	_	_	head	label	_	_
-6	tyłu	_	NOUN	_	_	head	label	_	_
-7	głowy	_	NOUN	_	_	head	label	_	_
-8	.	_	PUNCT	_	_	head	label	_	_
+# "gdzieś" (somewhere) was problematic for me and I did not find any clues in the treebanks I looked at.
+1	Te	_	DET	_	_	2	det	_	_
+2	myśli	_	NOUN	_	_	3	obj	_	_
+3	mam	_	VERB	_	_	0	root	_	_
+4	gdzieś	_	NOUN	_	_	3	obl	_	_
+5	z	_	ADP	_	_	6	case	_	_
+6	tyłu	_	NOUN	_	_	4	nmod	_	_
+7	głowy	_	NOUN	_	_	6	nmod	_	_
+8	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 17
 # text = Adam byłby przeniesiony do życia wiecznego.
-1	Adam	_	NOUN	_	_	head	label	_	_
-2	był	_	AUX	_	_	head	label	_	_
-3	by	_	AUX	_	_	head	label	_	_
-4	przeniesiony	_	ADJ	_	_	head	label	_	_
-5	do	_	ADP	_	_	head	label	_	_
-6	życia	_	NOUN	_	_	head	label	_	_
-7	wiecznego	_	ADJ	_	_	head	label	_	_
-8	.	_	PUNCT	_	_	head	label	_	_
+# "byłby" and other compounded copulas+auxiliaries are tricky when marking their dependence, but I followed the treebank.
+1	Adam	_	NOUN	_	_	4	nsubj	_	_
+2	był	_	AUX	_	_	4	cop	_	_
+3	by	_	AUX	_	_	4	aux	_	_
+4	przeniesiony	_	ADJ	_	_	0	root	_	_
+5	do	_	ADP	_	_	6	case	_	_
+6	życia	_	NOUN	_	_	4	obl	_	_
+7	wiecznego	_	ADJ	_	_	6	amod	_	_
+8	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 18
 # text = Osłonki przegniły i musiały być wymienione.
-1	Osłonki	_	NOUN	_	_	head	label	_	_
-2	przegniły	_	VERB	_	_	head	label	_	_
-3	i	_	CCONJ	_	_	head	label	_	_
-4	musiały	_	AUX	_	_	head	label	_	_
-5	być	_	AUX	_	_	head	label	_	_
-6	wymienione	_	ADJ	_	_	head	label	_	_
-7	.	_	PUNCT	_	_	head	label	_	_
+1	Osłonki	_	NOUN	_	_	2	nsubj	_	_
+2	przegniły	_	VERB	_	_	0	root	_	_
+3	i	_	CCONJ	_	_	6	cc	_	_
+4	musiały	_	AUX	_	_	6	aux	_	_
+5	być	_	AUX	_	_	6	cop	_	_
+6	wymienione	_	ADJ	_	_	2	conj	_	_
+7	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 19
 # text = Była rozwścieczona, że to dziewczę odważyło się ośmieszyć ją przed klasą.
-1	Była	_	AUX	_	_	head	label	_	_
-2	rozwścieczona	_	ADJ	_	_	head	label	_	_
-3	,	_	PUNCT	_	_	head	label	_	_
-4	że	_	SCONJ	_	_	head	label	_	_
-5	to	_	DET	_	_	head	label	_	_
-6	dziewczę	_	NOUN	_	_	head	label	_	_
-7	odważyło	_	VERB	_	_	head	label	_	_
-8	się	_	PRON	_	_	head	label	_	_
-9	ośmieszyć	_	VERB	_	_	head	label	_	_
-10	ją	_	PRON	_	_	head	label	_	_
-11	przed	_	ADP	_	_	head	label	_	_
-12	klasą	_	NOUN	_	_	head	label	_	_
-13	.	_	PUNCT	_	_	head	label	_	_
+1	Była	_	AUX	_	_	2	cop	_	_
+2	rozwścieczona	_	ADJ	_	_	0	root	_	_
+3	,	_	PUNCT	_	_	7	punct	_	_
+4	że	_	SCONJ	_	_	7	mark	_	_
+5	to	_	DET	_	_	6	det	_	_
+6	dziewczę	_	NOUN	_	_	7	nsubj	_	_
+7	odważyło	_	VERB	_	_	2	ccomp	_	_
+8	się	_	PRON	_	_	7	expl:pv	_	_
+9	ośmieszyć	_	VERB	_	_	7	xcomp	_	_
+10	ją	_	PRON	_	_	9	obj	_	_
+11	przed	_	ADP	_	_	12	case	_	_
+12	klasą	_	NOUN	_	_	9	obl	_	_
+13	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 20
 # text = Przewaga, jaką miał w kolegium elektorów, przyćmiła fakt, że wygrana oparta była o ledwie 43% głosów.
