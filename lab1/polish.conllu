@@ -1,29 +1,30 @@
 ﻿# sent_id = 1
 # text = Kto to jest?
-1	Kto	_	PRON	_	_	head	label	_	_
-2	to	_	PRON	_	_	head	label	_	_
-3	jest	_	AUX	_	_	head	label	_	_
-4	?	_	PUNCT	_	_	head	label	_	_
+1	Kto	_	PRON	_	_	0	root	_	_
+2	to	_	PRON	_	_	1	nsubj	_	_
+3	jest	_	AUX	_	_	1	cop	_	_
+4	?	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 2
 # text = Mijamy niewielkie miasto z dwoma minaretami.
-1	Mijamy	_	VERB	_	_	head	label	_	_
-2	niewielkie	_	ADJ	_	_	head	label	_	_
-3	miasto	_	NOUN	_	_	head	label	_	_
-4	z	_	ADP	_	_	head	label	_	_
-5	dwoma	_	NUM	_	_	head	label	_	_
-6	minaretami	_	NOUN	_	_	head	label	_	_
-7	.	_	PUNCT	_	_	head	label	_	_
+# As will become clear in upcoming sentences, there is a big deal of subject dropping in Polish.
+1	Mijamy	_	VERB	_	_	0	root	_	_
+2	niewielkie	_	ADJ	_	_	2	amod	_	_
+3	miasto	_	NOUN	_	_	1	obj	_	_
+4	z	_	ADP	_	_	6	case	_	_
+5	dwoma	_	NUM	_	_	6	nummod	_	_
+6	minaretami	_	NOUN	_	_	3	nmod	_	_
+7	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 3
 # text = Byłem tylko chłopcem w zabłoconych butach.
-1	Byłem	_	AUX	_	_	head	label	_	_
-2	tylko	_	PART	_	_	head	label	_	_
-3	chłopcem	_	NOUN	_	_	head	label	_	_
-4	w	_	ADP	_	_	head	label	_	_
-5	zabłoconych	_	ADJ	_	_	head	label	_	_
-6	butach	_	NOUN	_	_	head	label	_	_
-7	.	_	PUNCT	_	_	head	label	_	_
+1	Byłem	_	AUX	_	_	3	cop	_	_
+2	tylko	_	PART	_	_	3	advmod	_	_
+3	chłopcem	_	NOUN	_	_	0	root	_	_
+4	w	_	ADP	_	_	6	case	_	_
+5	zabłoconych	_	ADJ	_	_	6	amod	_	_
+6	butach	_	NOUN	_	_	3	nmod	_	_
+7	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 4
 # text = Shenzheńska policja drogowa decydowała się już wcześniej na niekonwencjonalne kary.

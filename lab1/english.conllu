@@ -1,10 +1,10 @@
 # sent_id = 1
 # text = Who are they?
 # position word _ postag _ _ head label _ _
-1	who	_	PRON	_	_	3	nsubj	_	_ 
-2	are	_	AUX	_	_	3	cop	_	_ 
-3	they	_	PRON	_	_	0	root	_	_ 
-4	?	_	PUNCT	_	_	3	punct	_	_
+1	who	_	PRON	_	_	0	root	_	_ 
+2	are	_	AUX	_	_	1	cop	_	_ 
+3	they	_	PRON	_	_	1	nsubj	_	_ 
+4	?	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 2
 # text = A small town with two minarets glides by.
@@ -20,6 +20,7 @@
 
 # sent_id = 3
 # text = I was just a boy with muddy shoes.
+# I found it tricky to identify how the shoes would relate to the root (not an obj or obl)
 1	I	_	PRON	_	_ 5	nsubj	_	_ 
 2	was	_	AUX	_	_	5	cop	_	_ 
 3	just	_	ADV	_	_	5	advmod	_	_ 
@@ -32,6 +33,7 @@
 
 # sent_id = 4
 # text = Shenzhen's traffic police have opted for unconventional penalties before..
+# As far as I understand the double stops are a typo but I still included them.
 1	Shenzhen	_	PROPN	_	_	4	nmod	_	_ 
 2	's	_	PART	_	_	1	case	_	_ 
 3	traffic	_	NOUN	_	_	4	compound	_	_ 
@@ -47,6 +49,7 @@
 
 # sent_id = 5
 # text = The study of volcanoes is called volcanology, sometimes spelled vulcanology.
+# I had a really hard time identifying what the xcomp parts here would be.
 1	The	_	DET	_	_	2	det	_	_ 
 2	study	_	NOUN	_	_	6	nsubj:pass	_	_ 
 3	of	_	ADP	_	_	4	case	_	_ 
@@ -77,20 +80,21 @@
 13	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 7
-# text = "Her voice literally went around the world," Leive said.	!!!!!!!!!!!!!!!!!!!!!!!!!!!
-1	"	_	PUNCT	_	_	head	label	_	_
-2	Her _	PRON	_	_	head	label	_	_
-3	voice	_	NOUN	_	_	head	label	_	_
-4	literally	_	ADV	_	_	head	label	_	_
-5	went	_	VERB	_	_	head	label	_	_
-6	around	_	ADP	_	_	head	label	_	_
-7	the	_	DET	_	_	head	label	_	_
-8	world	_	NOUN	_	_	head	label	_	_
-9	,	_	PUNCT	_	_	head	label	_	_
-10	"	_	PUNCT	_	_	head	label	_	_
-11	Leive	_	PROPN	_	_	head	label	_	_
-12	said	_	VERB	_	_	head	label	_	_
-13	.	_	PUNCT	_	_	head	label	_	_
+# text = "Her voice literally went around the world," Leive said.
+# This one was tricky due to the utterance being quoted and I did not know which one of them is the main one (with the root).
+1	"	_	PUNCT	_	_	5	punct	_	_
+2	Her _	PRON	_	_	3	nmod:poss	_	_
+3	voice	_	NOUN	_	_	5	nsubj	_	_
+4	literally	_	ADV	_	_	5	advmod	_	_
+5	went	_	VERB	_	_	0	root	_	_
+6	around	_	ADP	_	_	8	case	_	_
+7	the	_	DET	_	_	8	det	_	_
+8	world	_	NOUN	_	_	5	obl	_	_
+9	,	_	PUNCT	_	_	5	punct	_	_
+10	"	_	PUNCT	_	_	5	punc	_	_
+11	Leive	_	PROPN	_	_	12	nsubj	_	_
+12	said	_	VERB	_	_	5	parataxis	_	_
+13	.	_	PUNCT	_	_	5	punct	_	_
 
 # sent_id = 8
 # text = A witness told the police that the victim had attacked the suspect in April.
@@ -145,6 +149,7 @@
 
 # sent_id = 11
 # text = This discordance between economic data and political rhetoric is familiar, or should be.
+# Here again the final extra clause was tricky.
 1	This	_	DET	_	_	2	det	_	_
 2	discordance	_	NOUN	_	_	10	nsubj	_	_
 3	between	_	ADP	_	_	5	case	_	_
@@ -163,7 +168,7 @@
 
 # sent_id = 12
 # text = The feasibility study estimates that it would take passangers about four minutes to cross the Potomac river on the gondola.
-# why not ccomp in 8?
+# Why not ccomp in 8?
 1	The	_	DET	_	_	3	det	_	_
 2	feasibility	_	NOUN	_	_	3	nmod	_	_
 3	study	_	NOUN	_	_	4	nsubj	_	_
@@ -188,6 +193,7 @@
 
 # sent_id = 13
 # text = He collected cards and traded them with the other boys
+# While this one felt easy, I am sure there are mistakes in the following ones, especially when there is more than once clause, since I had no "golden standard" to compare myself to.
 1	he	_	PRON	_	_	2	nsubj	_	_ 
 2	collected	_	VERB	_	_	0	root	_	_
 3	cards	_	NOUN	_	_	2	obj	_	_
@@ -391,7 +397,7 @@
 
 # sent_id = 24
 # text = his ingenuous explanation that he would not have burned the church if he had not thought the bishop was in it
-# tricky to identify the root
+# It was tricky to identify the root.
 1	his	_	DET	_	_	3	nmod:poss	_	_
 2	ingenuous	_	ADJ	_	_	3	amod	_	_
 3	explanation	_	NOUN	_	_	0	root	_	_
