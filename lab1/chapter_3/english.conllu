@@ -92,7 +92,7 @@
 7	the	_	DET	_	_	8	det	_	_
 8	world	_	NOUN	_	_	5	obl	_	_
 9	,	_	PUNCT	_	_	5	punct	_	_
-10	"	_	PUNCT	_	_	5	punc	_	_
+10	"	_	PUNCT	_	_	5	punct	_	_
 11	Leive	_	PROPN	_	_	12	nsubj	_	_
 12	said	_	VERB	_	_	5	parataxis	_	_
 13	.	_	PUNCT	_	_	5	punct	_	_
@@ -120,7 +120,7 @@
 2	's	_	AUX	_	_	4	cop	_	_
 3	most	_	ADV	_	_	4	advmod	_	_
 4	obvious	_	ADJ	_	_	0	root	_	_
-5	when	_	SSUBJ	_	_	13	advmod	_	_
+5	when	_	ADV	_	_	13	advmod	_	_
 6	a	_	DET	_	_	7	det	_	_
 7	celebrity	_	NOUN	_	_	9	nmod:poss	_	_
 8	's	_	PART	_	_	7	case	_	_
@@ -161,7 +161,7 @@
 8	rhetoric	_	NOUN	_	_	5	conj	_	_
 9	is	_	AUX	_	_	10	cop	_	_
 10	familiar	_	ADJ	_	_	0	root	_	_
-11	,	_	PUNCT	_	_	14	punc	_	_
+11	,	_	PUNCT	_	_	14	punct	_	_
 12	or	_	CCONJ	_	_	14	cc	_	_
 13	should	_	AUX	_	_	14	aux	_	_
 14	be	_	AUX	_	_	10	conj	_	_
@@ -178,7 +178,7 @@
 6	it	_	PRON	_	_	8	expl	_	_
 7	would	_	AUX	_	_	8	aux	_	_
 8	take	_	VERB	_	_	4	ccomp	_	_
-9	passengers	_	NOUN	_	_	8	iboj	_	_
+9	passengers	_	NOUN	_	_	8	iobj	_	_
 10	about	_	ADV	_	_	11	advmod	_	_
 11	four	_	NUM	_	_	12	nummod	_	_
 12	minutes	_	NOUN	_	_	8	obj	_	_
@@ -190,7 +190,7 @@
 18	on	_	ADP	_	_	20	case	_	_
 19	the	_	DET	_	_	20	det	_	_
 20	gondola	_	NOUN	_	_	14	obl	_	_
-21	.	_	PUNC	_	_	4	punct	_	_
+21	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 13
 # text = He collected cards and traded them with the other boys
@@ -241,7 +241,7 @@
 5	in	_	ADP	_	_	7	case	_	_
 6	the	_	DET	_	_	7	det	_	_
 7	back	_	NOUN	_	_	2	obl	_	_
-8	of	_	PREP	_	_	10	case	_	_
+8	of	_	ADP	_	_	10	case	_	_
 9	my	_	DET	_	_	10	nmod:poss	_	_
 10	head	_	NOUN	_	_	7	nmod	_	_
 
