@@ -16,56 +16,56 @@
 7	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 3
-# text = By³em tylko ch³opcem w zab³oconych butach.
-1	By³em	_	AUX	_	_	3	cop	_	_
+# text = ByÅ‚em tylko chÅ‚opcem w zabÅ‚oconych butach.
+1	ByÅ‚em	_	AUX	_	_	3	cop	_	_
 2	tylko	_	PART	_	_	3	advmod	_	_
-3	ch³opcem	_	NOUN	_	_	0	root	_	_
+3	chÅ‚opcem	_	NOUN	_	_	0	root	_	_
 4	w	_	ADP	_	_	6	case	_	_
-5	zab³oconych	_	ADJ	_	_	6	amod	_	_
+5	zabÅ‚oconych	_	ADJ	_	_	6	amod	_	_
 6	butach	_	NOUN	_	_	3	nmod	_	_
 7	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 4
-# text = Shenzheñska policja drogowa decydowa³a siê ju¿ wczeœniej na niekonwencjonalne kary.
-# The reflexive pronoun "siê" was tricky but I went with the pl_pud-ud-test.conllu way of marking it as expl:pv.
-1	Shenzheñska	_	ADJ	_	_	2	amod	_	_
+# text = ShenzheÅ„ska policja drogowa decydowaÅ‚a siÄ™ juÅ¼ wczeÅ›niej na niekonwencjonalne kary.
+# The reflexive pronoun "siÄ™" was tricky but I went with the pl_pud-ud-test.conllu way of marking it as expl:pv.
+1	ShenzheÅ„ska	_	ADJ	_	_	2	amod	_	_
 2	policja	_	NOUN	_	_	4	nsubj	_	_
 3	drogowa	_	ADJ	_	_	2	amod	_	_
-4	decydowa³a	_	VERB	_	_	0	root	_	_
-5	siê	_	PRON	_	_	4	expl:pv	_	_
-6	ju¿	_	PART	_	_	7	advmod	_	_
-7	wczeœniej	_	ADV	_	_	4	advmod	_	_
+4	decydowaÅ‚a	_	VERB	_	_	0	root	_	_
+5	siÄ™	_	PRON	_	_	4	expl:pv	_	_
+6	juÅ¼	_	PART	_	_	7	advmod	_	_
+7	wczeÅ›niej	_	ADV	_	_	4	advmod	_	_
 8	na	_	ADP	_	_	10	case	_	_
 9	niekonwencjonalne	_	ADJ	_	_	10	amod	_	_
 10	kary	_	NOUN	_	_	4	obl	_	_
 11	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 5
-# text = Dziedzina nauki poœwiêcona badaniu wulkanów nazywa siê wulkanologia.
+# text = Dziedzina nauki poÅ›wiÄ™cona badaniu wulkanÃ³w nazywa siÄ™ wulkanologia.
 # This sentence is much harder to translate "faithfully" as there is no possible alternation in spelling. The treebank preserves that by giving both the Polish name and both of the English variants, 
 # but it does not really make sense to do that in a sentence that just talks about what the name of this branch of science is so I would stick with my version (but 
 # feel free to tell me to annotate the other one if it was a bad decision on my end).
 1	Dziedzina	_	NOUN	_	_	6	nsubj	_	_
 2	nauki	_	NOUN	_	_	1	nmod	_	_
-3	poœwiêcona	_	ADJ	_	_	1	acl	_	_
+3	poÅ›wiÄ™cona	_	ADJ	_	_	1	acl	_	_
 4	badaniu	_	NOUN	_	_	3	obj	_	_
-5	wulkanów	_	NOUN	_	_	4	nmod	_	_
+5	wulkanÃ³w	_	NOUN	_	_	4	nmod	_	_
 6	nazywa	_	VERB	_	_	0	root	_	_
-7	siê	_	PRON	_	_	6	expl:pv	_	_
+7	siÄ™	_	PRON	_	_	6	expl:pv	_	_
 8	wulkanologia	_	NOUN	_	_	6	obj	_	_
 9	.	_	PUNCT	_	_	6	punct	_	_
 
 # sent_id = 6
-# text = Odbywa³o siê to tu¿ przy meksykañskim wybrze¿u od kwietnia do czerwca.
+# text = OdbywaÅ‚o siÄ™ to tuÅ¼ przy meksykaÅ„skim wybrzeÅ¼u od kwietnia do czerwca.
 # Though my sentences look different, I was able to consult the "od kwietnia do czerwca" (from April to June) with the treebank; it annotates both word 9 and word 11
 # as obl with respect to the root, but to me it makes more sense to do it like in the English version, with 11 being an nmod of 9. 
-1	Odbywa³o	_	VERB	_	_	0	root	_	_
-2	siê	_	PRON	_	_	1	expl:pv	_	_
+1	OdbywaÅ‚o	_	VERB	_	_	0	root	_	_
+2	siÄ™	_	PRON	_	_	1	expl:pv	_	_
 3	to	_	PRON	_	_	1	nsubj	_	_
-4	tu¿	_	PART	_	_	7	advmod	_	_
+4	tuÅ¼	_	PART	_	_	7	advmod	_	_
 5	przy	_	ADP	_	_	7	case	_	_
-6	meksykañskim	_	ADJ	_	_	7	amod	_	_
-7	wybrze¿u	_	NOUN	_	_	1	obl	_	_
+6	meksykaÅ„skim	_	ADJ	_	_	7	amod	_	_
+7	wybrzeÅ¼u	_	NOUN	_	_	1	obl	_	_
 8	od	_	ADP	_	_	9	case	_	_
 9	kwietnia	_	NOUN	_	_	1	obl	_	_
 10	do	_	ADP	_	_	11	case	_	_
@@ -73,221 +73,221 @@
 12	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 7
-# text = - jej g³os dos³ownie okr¹¿y³ œwiat - powiedzia³a Leive.
+# text = - jej gÅ‚os dosÅ‚ownie okrÄ…Å¼yÅ‚ Å›wiat - powiedziaÅ‚a Leive.
 1	-	_	PUNCT	_	_	5	punct	_	_
 2	jej	_	DET	_	_	3	nmod:poss	_	_
-3	g³os	_	NOUN	_	_	5	nsubj	_	_
-4	dos³ownie	_	ADV	_	_	5	advmod	_	_
-5	okr¹¿y³	_	VERB	_	_	0	root	_	_
-6	œwiat	_	NOUN	_	_	5	obj	_	_
+3	gÅ‚os	_	NOUN	_	_	5	nsubj	_	_
+4	dosÅ‚ownie	_	ADV	_	_	5	advmod	_	_
+5	okrÄ…Å¼yÅ‚	_	VERB	_	_	0	root	_	_
+6	Å›wiat	_	NOUN	_	_	5	obj	_	_
 7	-	_	PUNCT	_	_	5	punct	_	_
-8	powiedzia³a	_	VERB	_	_	5	parataxis	_	_
+8	powiedziaÅ‚a	_	VERB	_	_	5	parataxis	_	_
 9	Leive	_	NOUN	_	_	8	nsubj	_	_
 10	.	_	PUNCT	_	_	5	punct	_	_
 
 # sent_id = 8
-# text = Œwiadek zezna³ policji, ¿e ofiara zaatakowa³a podejrzanego w kwietniu.
-1	Œwiadek	_	NOUN	_	_	2	nsubj	_	_
-2	zezna³	_	VERB	_	_	0	root	_	_
+# text = Åšwiadek zeznaÅ‚ policji, Å¼e ofiara zaatakowaÅ‚a podejrzanego w kwietniu.
+1	Åšwiadek	_	NOUN	_	_	2	nsubj	_	_
+2	zeznaÅ‚	_	VERB	_	_	0	root	_	_
 3	policji	_	NOUN	_	_	2	obj	_	_
 4	,	_	PUNCT	_	_	7	punct	_	_
-5	¿e	_	SCONJ	_	_	7	mark	_	_
+5	Å¼e	_	SCONJ	_	_	7	mark	_	_
 6	ofiara	_	NOUN	_	_	7	nsubj	_	_
-7	zaatakowa³a	_	VERB	_	_	2	ccomp	_	_
+7	zaatakowaÅ‚a	_	VERB	_	_	2	ccomp	_	_
 8	podejrzanego	_	NOUN	_	_	7	obj	_	_
 9	w	_	ADP	_	_	10	case	_	_
 10	kwietniu	_	NOUN	_	_	7	obl	_	_
 11	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 9
-# text = Jest to najbardziej oczywiste gdy imiê gwiazdy jest z pocz¹tku doœæ rzadkie.
+# text = Jest to najbardziej oczywiste gdy imiÄ™ gwiazdy jest z poczÄ…tku doÅ›Ä‡ rzadkie.
 1	Jest	_	AUX	_	_	4	cop	_	_
 2	to	_	PRON	_	_	4	nsubj	_	_
 3	najbardziej	_	ADV	_	_	4	advmod	_	_
 4	oczywiste	_	ADJ	_	_	0	root	_	_
 5	gdy	_	ADV	_	_	12	mark	_	_
-6	imiê	_	NOUN	_	_	12	nsubj	_	_
+6	imiÄ™	_	NOUN	_	_	12	nsubj	_	_
 7	gwiazdy	_	NOUN	_	_	6	nmod	_	_
 8	jest	_	AUX	_	_	12	cop	_	_
 9	z	_	ADP	_	_	10	case	_	_
-10	pocz¹tku	_	NOUN	_	_	12	obl	_	_
-11	doœæ	_	PART	_	_	12	advmod	_	_
+10	poczÄ…tku	_	NOUN	_	_	12	obl	_	_
+11	doÅ›Ä‡	_	PART	_	_	12	advmod	_	_
 12	rzadkie	_	ADJ	_	_	4	advcl	_	_
 13	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 10
-# text = Nie powstrzyma³o to inwestorów od masowego wp³acania pieniêdzy na fundusze.
+# text = Nie powstrzymaÅ‚o to inwestorÃ³w od masowego wpÅ‚acania pieniÄ™dzy na fundusze.
 1	Nie	_	PART	_	_	2	advmod	_	_
-2	powstrzyma³o	_	VERB	_	_	0	root	_	_
+2	powstrzymaÅ‚o	_	VERB	_	_	0	root	_	_
 3	to	_	PRON	_	_	2	nsubj	_	_
-4	inwestorów	_	NOUN	_	_	2	obj	_	_
+4	inwestorÃ³w	_	NOUN	_	_	2	obj	_	_
 5	od	_	ADP	_	_	7	case	_	_
 6	masowego	_	ADJ	_	_	7	amod	_	_
-7	wp³acania	_	NOUN	_	_	2	obl	_	_
-8	pieniêdzy	_	NOUN	_	_	7	nmod	_	_
+7	wpÅ‚acania	_	NOUN	_	_	2	obl	_	_
+8	pieniÄ™dzy	_	NOUN	_	_	7	nmod	_	_
 9	na	_	ADP	_	_	10	case	_	_
 10	fundusze	_	NOUN	_	_	7	nmod	_	_
 11	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 11
-# text = Ta ró¿nica miêdzy ekonomicznymi danymi a polityczn¹ retoryk¹ jest znajoma, a przynajmniej powinna byæ.
+# text = Ta rÃ³Å¼nica miÄ™dzy ekonomicznymi danymi a politycznÄ… retorykÄ… jest znajoma, a przynajmniej powinna byÄ‡.
 1	Ta	_	DET	_	_	2	det	_	_
-2	ró¿nica	_	NOUN	_	_	10	nsubj	_	_
-3	miêdzy	_	ADP	_	_	5	case	_	_
+2	rÃ³Å¼nica	_	NOUN	_	_	10	nsubj	_	_
+3	miÄ™dzy	_	ADP	_	_	5	case	_	_
 4	ekonomicznymi	_	ADJ	_	_	5	amod	_	_
 5	danymi	_	NOUN	_	_	2	nmod	_	_
 6	a	_	CCONJ	_	_	8	cc	_	_
-7	polityczn¹	_	ADJ	_	_	8	amod	_	_
-8	retoryk¹	_	NOUN	_	_	5	conj	_	_
+7	politycznÄ…	_	ADJ	_	_	8	amod	_	_
+8	retorykÄ…	_	NOUN	_	_	5	conj	_	_
 9	jest	_	AUX	_	_	10	cop	_	_
 10	znajoma	_	ADJ	_	_	0	root	_	_
 11	,	_	PUNCT	_	_	14	punct	_	_
 12	a	_	CCONJ	_	_	14	cc	_	_
 13	przynajmniej	_	PART	_	_	14	advmod	_	_
 14	powinna	_	VERB	_	_	9	conj	_	_
-15	byæ	_	AUX	_	_	14	xcomp	_	_
+15	byÄ‡	_	AUX	_	_	14	xcomp	_	_
 16	.	_	PUNCT	_	_	10	punct	_	_
 
 # sent_id = 12
-# text = Badanie oszacowa³o, ¿e pokonanie rzeki Potomac na gondoli zajmuje pasa¿erom oko³o czterech minut.
+# text = Badanie oszacowaÅ‚o, Å¼e pokonanie rzeki Potomac na gondoli zajmuje pasaÅ¼erom okoÅ‚o czterech minut.
 1	Badanie	_	NOUN	_	_	2	nsubj	_	_
-2	oszacowa³o	_	VERB	_	_	0	root	_	_
+2	oszacowaÅ‚o	_	VERB	_	_	0	root	_	_
 3	,	_	PUNCT	_	_	10	punct	_	_
-4	¿e	_	SCONJ	_	_	10	mark	_	_
+4	Å¼e	_	SCONJ	_	_	10	mark	_	_
 5	pokonanie	_	NOUN	_	_	10	nsubj	_	_
 6	rzeki	_	NOUN	_	_	5	nmod	_	_
 7	Potomac	_	NOUN	_	_	6	appos	_	_
 8	na	_	ADP	_	_	9	case	_	_
 9	gondoli	_	NOUN	_	_	5	nmod	_	_
 10	zajmuje	_	VERB	_	_	2	ccomp	_	_
-11	pasa¿erom	_	NOUN	_	_	10	obj	_	_
-12	oko³o	_	ADP	_	_	14	case	_	_
+11	pasaÅ¼erom	_	NOUN	_	_	10	obj	_	_
+12	okoÅ‚o	_	ADP	_	_	14	case	_	_
 13	czterech	_	NUM	_	_	14	nummod	_	_
 14	minut	_	NOUN	_	_	10	obl	_	_
 15	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 13
-# text = Kolekcjonowa³ on karty i wymienia³ siê nimi z innymi ch³opcami.
-1	kolekcjonowa³	_	VERB	_	_	0	root	_	_
+# text = KolekcjonowaÅ‚ on karty i wymieniaÅ‚ siÄ™ nimi z innymi chÅ‚opcami.
+1	kolekcjonowaÅ‚	_	VERB	_	_	0	root	_	_
 2	on	_	PRON	_	_	1	nsubj	_	_
 3	karty	_	NOUN	_	_	1	obj	_	_
 4	i	_	CCONJ	_	_	5	cc	_	_
-5	wymienia³	_	VERB	_	_	1	conj	_	_
-6	siê	_	PRON	_	_	5	expl:pv	_	_
+5	wymieniaÅ‚	_	VERB	_	_	1	conj	_	_
+6	siÄ™	_	PRON	_	_	5	expl:pv	_	_
 7	nimi	_	PRON	_	_	5	obj	_	_
 8	z	_	ADP	_	_	10	case	_	_
 9	innymi	_	ADJ	_	_	10	amod	_	_
-10	ch³opcami	_	NOUN	_	_	5	obl	_	_
+10	chÅ‚opcami	_	NOUN	_	_	5	obl	_	_
 11	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 14
-# text = To przestêpstwo karane jest piêcioma latami w wiêzieniu.
+# text = To przestÄ™pstwo karane jest piÄ™cioma latami w wiÄ™zieniu.
 1	To	_	DET	_	_	2	det	_	_
-2	przestêpstwo	_	NOUN	_	_	3	nsubj	_	_
+2	przestÄ™pstwo	_	NOUN	_	_	3	nsubj	_	_
 3	karane	_	ADJ	_	_	0	root	_	_
 4	jest	_	AUX	_	_	3	cop	_	_
-5	piêcioma	_	NUM	_	_	6	nummod	_	_
+5	piÄ™cioma	_	NUM	_	_	6	nummod	_	_
 6	latami	_	NOUN	_	_	3	obl	_	_
 7	w	_	ADP	_	_	8	case	_	_
-8	wiêzieniu	_	NOUN	_	_	6	nmod	_	_
+8	wiÄ™zieniu	_	NOUN	_	_	6	nmod	_	_
 9	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 15
-# text = Wiadomoœæ dostarczona by³a do ka¿dej wsi w prowincji.
-1	Wiadomoœæ	_	NOUN	_	_	2	nsubj	_	_
+# text = WiadomoÅ›Ä‡ dostarczona byÅ‚a do kaÅ¼dej wsi w prowincji.
+1	WiadomoÅ›Ä‡	_	NOUN	_	_	2	nsubj	_	_
 2	dostarczona	_	ADJ	_	_	0	root	_	_
-3	by³a	_	AUX	_	_	2	cop	_	_
+3	byÅ‚a	_	AUX	_	_	2	cop	_	_
 4	do	_	ADP	_	_	6	case	_	_
-5	ka¿dej	_	DET	_	_	6	det	_	_
+5	kaÅ¼dej	_	DET	_	_	6	det	_	_
 6	wsi	_	NOUN	_	_	2	obl	_	_
 7	w	_	ADP	_	_	8	case	_	_
 8	prowincji	_	NOUN	_	_	6	nmod	_	_
 9	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 16
-# text = Te myœli mam gdzieœ z ty³u g³owy.
-# "gdzieœ" (somewhere) was problematic for me and I did not find any clues in the treebanks I looked at.
+# text = Te myÅ›li mam gdzieÅ› z tyÅ‚u gÅ‚owy.
+# "gdzieÅ›" (somewhere) was problematic for me and I did not find any clues in the treebanks I looked at.
 1	Te	_	DET	_	_	2	det	_	_
-2	myœli	_	NOUN	_	_	3	obj	_	_
+2	myÅ›li	_	NOUN	_	_	3	obj	_	_
 3	mam	_	VERB	_	_	0	root	_	_
-4	gdzieœ	_	NOUN	_	_	3	obl	_	_
+4	gdzieÅ›	_	NOUN	_	_	3	obl	_	_
 5	z	_	ADP	_	_	6	case	_	_
-6	ty³u	_	NOUN	_	_	4	nmod	_	_
-7	g³owy	_	NOUN	_	_	6	nmod	_	_
+6	tyÅ‚u	_	NOUN	_	_	4	nmod	_	_
+7	gÅ‚owy	_	NOUN	_	_	6	nmod	_	_
 8	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 17
-# text = Adam by³by przeniesiony do ¿ycia wiecznego.
-# "by³by" and other compounded copulas+auxiliaries are tricky when marking their dependence, but I followed the treebank.
+# text = Adam byÅ‚by przeniesiony do Å¼ycia wiecznego.
+# "byÅ‚by" and other compounded copulas+auxiliaries are tricky when marking their dependence, but I followed the treebank.
 1	Adam	_	NOUN	_	_	4	nsubj	_	_
-2	by³	_	AUX	_	_	4	cop	_	_
+2	byÅ‚	_	AUX	_	_	4	cop	_	_
 3	by	_	AUX	_	_	4	aux	_	_
 4	przeniesiony	_	ADJ	_	_	0	root	_	_
 5	do	_	ADP	_	_	6	case	_	_
-6	¿ycia	_	NOUN	_	_	4	obl	_	_
+6	Å¼ycia	_	NOUN	_	_	4	obl	_	_
 7	wiecznego	_	ADJ	_	_	6	amod	_	_
 8	.	_	PUNCT	_	_	4	punct	_	_
 
 # sent_id = 18
-# text = Os³onki przegni³y i musia³y byæ wymienione.
-1	Os³onki	_	NOUN	_	_	2	nsubj	_	_
-2	przegni³y	_	VERB	_	_	0	root	_	_
+# text = OsÅ‚onki przegniÅ‚y i musiaÅ‚y byÄ‡ wymienione.
+1	OsÅ‚onki	_	NOUN	_	_	2	nsubj	_	_
+2	przegniÅ‚y	_	VERB	_	_	0	root	_	_
 3	i	_	CCONJ	_	_	6	cc	_	_
-4	musia³y	_	AUX	_	_	6	aux	_	_
-5	byæ	_	AUX	_	_	6	cop	_	_
+4	musiaÅ‚y	_	AUX	_	_	6	aux	_	_
+5	byÄ‡	_	AUX	_	_	6	cop	_	_
 6	wymienione	_	ADJ	_	_	2	conj	_	_
 7	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 19
-# text = By³a rozwœcieczona, ¿e to dziewczê odwa¿y³o siê oœmieszyæ j¹ przed klas¹.
-1	By³a	_	AUX	_	_	2	cop	_	_
-2	rozwœcieczona	_	ADJ	_	_	0	root	_	_
+# text = ByÅ‚a rozwÅ›cieczona, Å¼e to dziewczÄ™ odwaÅ¼yÅ‚o siÄ™ oÅ›mieszyÄ‡ jÄ… przed klasÄ….
+1	ByÅ‚a	_	AUX	_	_	2	cop	_	_
+2	rozwÅ›cieczona	_	ADJ	_	_	0	root	_	_
 3	,	_	PUNCT	_	_	7	punct	_	_
-4	¿e	_	SCONJ	_	_	7	mark	_	_
+4	Å¼e	_	SCONJ	_	_	7	mark	_	_
 5	to	_	DET	_	_	6	det	_	_
-6	dziewczê	_	NOUN	_	_	7	nsubj	_	_
-7	odwa¿y³o	_	VERB	_	_	2	ccomp	_	_
-8	siê	_	PRON	_	_	7	expl:pv	_	_
-9	oœmieszyæ	_	VERB	_	_	7	xcomp	_	_
-10	j¹	_	PRON	_	_	9	obj	_	_
+6	dziewczÄ™	_	NOUN	_	_	7	nsubj	_	_
+7	odwaÅ¼yÅ‚o	_	VERB	_	_	2	ccomp	_	_
+8	siÄ™	_	PRON	_	_	7	expl:pv	_	_
+9	oÅ›mieszyÄ‡	_	VERB	_	_	7	xcomp	_	_
+10	jÄ…	_	PRON	_	_	9	obj	_	_
 11	przed	_	ADP	_	_	12	case	_	_
-12	klas¹	_	NOUN	_	_	9	obl	_	_
+12	klasÄ…	_	NOUN	_	_	9	obl	_	_
 13	.	_	PUNCT	_	_	2	punct	_	_
 
 # sent_id = 20
-# text = Przewaga, jak¹ mia³ w kolegium elektorów, przyæmi³a fakt, ¿e wygrana oparta by³a o ledwie 43% g³osów.
+# text = Przewaga, jakÄ… miaÅ‚ w kolegium elektorÃ³w, przyÄ‡miÅ‚a fakt, Å¼e wygrana oparta byÅ‚a o ledwie 43% gÅ‚osÃ³w.
 # Here all the clauses were causing me issues, so I am not certain if it is good.
 1	Przewaga	_	NOUN	_	_	9	nsubj	_	_
 2	,	_	PUNCT	_	_	4	punct	_	_
-3	jak¹	_	DET	_	_	4	obj	_	_
-4	mia³	_	VERB	_	_	1	acl	_	_
+3	jakÄ…	_	DET	_	_	4	obj	_	_
+4	miaÅ‚	_	VERB	_	_	1	acl	_	_
 5	w	_	ADP	_	_	6	case	_	_
 6	kolegium	_	NOUN	_	_	4	obl	_	_
-7	elektorów	_	NOUN	_	_	6	compound	_	_
+7	elektorÃ³w	_	NOUN	_	_	6	compound	_	_
 8	,	_	PUNCT	_	_	4	punct	_	_
-9	przyæmi³a	_	VERB	_	_	0	root	_	_
+9	przyÄ‡miÅ‚a	_	VERB	_	_	0	root	_	_
 10	fakt	_	NOUN	_	_	9	obj	_	_
 11	,	_	PUNCT	_	_	14	punct	_	_
-12	¿e	_	SCONJ	_	_	14	mark	_	_
+12	Å¼e	_	SCONJ	_	_	14	mark	_	_
 13	wygrana	_	NOUN	_	_	14	nsubj	_	_
 14	oparta	_	ADJ	_	_	10	acl	_	_
-15	by³a	_	AUX	_	_	14	cop	_	_
+15	byÅ‚a	_	AUX	_	_	14	cop	_	_
 16	o	_	ADP	_	_	19	case	_	_
 17	ledwie	_	PART	_	_	18	advmod	_	_
 18	43	_	NUM	_	_	19	nummod	_	_
 19	%	_	SYM	_	_	14	obl	_	_
-20	g³osów	_	NOUN	_	_	19	nmod	_	_
+20	gÅ‚osÃ³w	_	NOUN	_	_	19	nmod	_	_
 21	.	_	PUNCT	_	_	9	punct	_	_
 
 # sent_id = 21
-# text = Amerykañscy ¿o³nierze mog¹ teraz mieæ atropinê i automatyczne wstrzykiwacze w swoich apteczkach na wypadek zatrucia neurotoksycznymi estrami fosforanowymi.
-# The confusing part for me is "mog¹," which I know to be a modal verb, but which, unlike English modals, is not marked as aux in the treebank.
-1	Amerykañscy	_	ADJ	_	_	2	amod	_	_
-2	¿o³nierze	_	NOUN	_	_	3	nsubj	_	_
-3	mog¹	_	VERB	_	_	0	root	_	_
+# text = AmerykaÅ„scy Å¼oÅ‚nierze mogÄ… teraz mieÄ‡ atropinÄ™ i automatyczne wstrzykiwacze w swoich apteczkach na wypadek zatrucia neurotoksycznymi estrami fosforanowymi.
+# The confusing part for me is "mogÄ…," which I know to be a modal verb, but which, unlike English modals, is not marked as aux in the treebank.
+1	AmerykaÅ„scy	_	ADJ	_	_	2	amod	_	_
+2	Å¼oÅ‚nierze	_	NOUN	_	_	3	nsubj	_	_
+3	mogÄ…	_	VERB	_	_	0	root	_	_
 4	teraz	_	ADV	_	_	3	advmod	_	_
-5	mieæ	_	VERB	_	_	3	xcomp	_	_
-6	atropinê	_	NOUN	_	_	5	obj	_	_
+5	mieÄ‡	_	VERB	_	_	3	xcomp	_	_
+6	atropinÄ™	_	NOUN	_	_	5	obj	_	_
 7	i	_	CCONJ	_	_	9	cc	_	_
 8	automatyczne	_	ADJ	_	_	9	amod	_	_
 9	wstrzykiwacze	_	NOUN	_	_	6	conj	_	_
@@ -303,73 +303,73 @@
 19	.	_	PUNCT	_	_	3	punct	_	_
 
 # sent_id = 22
-# text = Na d³u¿sz¹ metê poprzez przebieg³oæ osi¹gn¹æ móg³by to, czego nie mo¿e od razu osi¹gn¹æ si³¹ i przemoc¹.
+# text = Na dÅ‚uÅ¼szÄ… metÄ™ poprzez przebiegÅ‚oÄ‡ osiÄ…gnÄ…Ä‡ mÃ³gÅ‚by to, czego nie moÅ¼e od razu osiÄ…gnÄ…Ä‡ siÅ‚Ä… i przemocÄ….
 # Here I am not really sure which verb the obl in 3 should be connected to, so I connected it to the non-modal one.
 # It is also tricky to determine what words in the instrumental case should be marked as (here I used obl), as they are not really objects.
 1	Na	_	ADP	_	_	3	case	_	_
-2	d³u¿sz¹	_	ADJ	_	_	3	amod	_	_
-3	metê	_	NOUN	_	_	6	obl	_	_
+2	dÅ‚uÅ¼szÄ…	_	ADJ	_	_	3	amod	_	_
+3	metÄ™	_	NOUN	_	_	6	obl	_	_
 4	poprzez	_	ADP	_	_	5	case	_	_
-5	przebieg³oœæ	_	NOUN	_	_	6	obl	_	_
-6	osi¹gn¹æ	_	VERB	_	_	7	xcomp	_	_
-7	móg³	_	VERB	_	_	0	root	_	_
+5	przebiegÅ‚oÅ›Ä‡	_	NOUN	_	_	6	obl	_	_
+6	osiÄ…gnÄ…Ä‡	_	VERB	_	_	7	xcomp	_	_
+7	mÃ³gÅ‚	_	VERB	_	_	0	root	_	_
 8	by	_	AUX	_	_	7	aux	_	_
 9	to	_	PRON	_	_	6	obj	_	_
 10	,	_	PUNCT	_	_	13	punct	_	_
 11	czego	_	PRON	_	_	13	nsubj	_	_
 12	nie	_	PART	_	_	13	advmod	_	_
-13	mo¿e	_	VERB	_	_	9	acl	_	_
+13	moÅ¼e	_	VERB	_	_	9	acl	_	_
 14	od	_	ADP	_	_	15	case	_	_
 15	razu	_	NOUN	_	_	16	obl	_	_
-16	osi¹gn¹æ	_	VERB	_	_	13	xcomp	_	_
-17	si³¹	_	NOUN	_	_	16	obl	_	_
+16	osiÄ…gnÄ…Ä‡	_	VERB	_	_	13	xcomp	_	_
+17	siÅ‚Ä…	_	NOUN	_	_	16	obl	_	_
 18	i	_	CCONJ	_	_	19	cc	_	_
-19	przemoc¹	_	NOUN	_	_	17	conj	_	_
+19	przemocÄ…	_	NOUN	_	_	17	conj	_	_
 20	.	_	PUNCT	_	_	7	punct	_	_
 
 # sent_id = 23
-# text = Twierdzi siê, ¿e tylko hierarchiczne spo³eczeñstwo z klas¹ maj¹c¹ wiele wolnego czasu u szczytu mo¿e produkowaæ dzie³a sztuki.
+# text = Twierdzi siÄ™, Å¼e tylko hierarchiczne spoÅ‚eczeÅ„stwo z klasÄ… majÄ…cÄ… wiele wolnego czasu u szczytu moÅ¼e produkowaÄ‡ dzieÅ‚a sztuki.
 1	Twierdzi	_	VERB	_	_	0	root	_	_
-2	siê	_	PRON	_	_	1	expl:pv	_	_
+2	siÄ™	_	PRON	_	_	1	expl:pv	_	_
 3	,	_	PUNCT	_	_	16	punct	_	_
-4	¿e	_	SCONJ	_	_	16	mark	_	_
+4	Å¼e	_	SCONJ	_	_	16	mark	_	_
 5	tylko	_	PART	_	_	6	advmod	_	_
 6	hierarchiczne	_	ADJ	_	_	7	amod	_	_
-7	spo³eczeñstwo	_	NOUN	_	_	16	nsubj	_	_
+7	spoÅ‚eczeÅ„stwo	_	NOUN	_	_	16	nsubj	_	_
 8	z	_	ADP	_	_	9	case	_	_
-9	klas¹	_	NOUN	_	_	7	nmod	_	_
-10	maj¹c¹	_	ADJ	_	_	9	acl	_	_
+9	klasÄ…	_	NOUN	_	_	7	nmod	_	_
+10	majÄ…cÄ…	_	ADJ	_	_	9	acl	_	_
 11	wiele	_	DET	_	_	13	det	_	_
 12	wolnego	_	ADJ	_	_	13	amod	_	_
 13	czasu	_	NOUN	_	_	10	obj	_	_
 14	u	_	ADP	_	_	15	case	_	_
 15	szczytu	_	NOUN	_	_	9	nmod	_	_
-16	mo¿e	_	VERB	_	_	1	ccomp	_	_
-17	produkowaæ	_	VERB	_	_	16	xcomp	_	_
-18	dzie³a	_	NOUN	_	_	17	obj	_	_
+16	moÅ¼e	_	VERB	_	_	1	ccomp	_	_
+17	produkowaÄ‡	_	VERB	_	_	16	xcomp	_	_
+18	dzieÅ‚a	_	NOUN	_	_	17	obj	_	_
 19	sztuki	_	NOUN	_	_	18	compound	_	_
 20	.	_	PUNCT	_	_	1	punct	_	_
 
 # sent_id = 24
-# text = Jego naiwne t³umaczenie, ¿e nie spali³by koœcio³a, gdyby nie s¹dzi³, ¿e biskp by³ w œrodku.
+# text = Jego naiwne tÅ‚umaczenie, Å¼e nie spaliÅ‚by koÅ›cioÅ‚a, gdyby nie sÄ…dziÅ‚, Å¼e biskp byÅ‚ w Å›rodku.
 # Same as in the English version, I am not sure of the root.
 1	Jego	_	DET	_	_	3	nmod:poss	_	_
 2	naiwne	_	ADJ	_	_	3	amod	_	_
-3	t³umaczenie	_	NOUN	_	_	0	root	_	_
+3	tÅ‚umaczenie	_	NOUN	_	_	0	root	_	_
 4	,	_	PUNCT	_	_	7	punct	_	_
-5	¿e	_	SCONJ	_	_	7	mark	_	_
+5	Å¼e	_	SCONJ	_	_	7	mark	_	_
 6	nie	_	PART	_	_	7	advmod	_	_
-7	spali³	_	VERB	_	_	3	acl	_	_
+7	spaliÅ‚	_	VERB	_	_	3	acl	_	_
 8	by	_	AUX	_	_	7	aux	_	_
-9	koœcio³a	_	NOUN	_	_	7	obj	_	_
+9	koÅ›cioÅ‚a	_	NOUN	_	_	7	obj	_	_
 10	,	_	PUNCT	_	_	13	punct	_	_
 11	gdyby	_	SCONJ	_	_	13	mark	_	_
 12	nie	_	PART	_	_	13	advmod	_	_
-13	s¹dzi³	_	VERB	_	_	7	advcl	_	_
+13	sÄ…dziÅ‚	_	VERB	_	_	7	advcl	_	_
 14	,	_	PUNCT	_	_	17	punct	_	_
-15	¿e	_	SCONJ	_	_	17	mark	_	_
+15	Å¼e	_	SCONJ	_	_	17	mark	_	_
 16	biskup	_	NOUN	_	_	17	nsubj	_	_
-17	by³	_	VERB	_	_	13	ccomp	_	_
+17	byÅ‚	_	VERB	_	_	13	ccomp	_	_
 18	w	_	ADP	_	_	19	case	_	_
-19	œrodku	_	NOUN	_	_	17	obl	_	_
+19	Å›rodku	_	NOUN	_	_	17	obl	_	_
 20	.	_	PUNCT	_	_	3	punct	_	_
