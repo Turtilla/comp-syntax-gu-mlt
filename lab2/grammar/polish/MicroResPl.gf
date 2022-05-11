@@ -53,8 +53,6 @@ oper
             Fem => case noun of {
               --feminine nouns ending in "ew" - the plurals for "krew" (blood) are not really used and the ones here are modelled after "brew" (eyebrow), and don't fully fit the dictionary entry for "krew", but sound acceptable to me as a native speaker.
               kr + "ew" => mkNoun noun (kr + "wi") (kr + "wi") noun (kr + "wią") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wiom") (kr + "wi") (kr + "wiami") (kr + "wiach") (kr + "wi") g ;
-              --feminine nouns ending in "ość", including "kość" and "ość" (bone, fishbone) and a variety of adjective-derived nouns describing emotions ("miłość" - love, "radość" - happiness) or features ("jasność" - brightness, "wysokość" - height).
-              milo + "ść" => mkNoun noun (milo + "ści") (milo + "ści") noun (milo + "ścią") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ściom") (milo + "ści") (milo + "ściami") (milo + "ściach") (milo + "ści") g ;  
               --feminine nouns ending with "a" with a velar stem.
               wal + "ka" => mkNoun noun (wal + "ki") (wal + "ce") (wal + "kę") (wal + "ką") (wal + "ce") (wal + "ko") (wal + "ki") (wal + "k") (wal + "kom") (wal + "ki") (wal + "kami") (wal + "kach") (wal + "ki") g ;
               dro + "ga" => mkNoun noun (dro + "gi") (dro + "dze") (dro + "gę") (dro + "gą") (dro + "dze") (dro + "go") (dro + "gi") (dro + "g") (dro + "gom") (dro + "gi") (dro + "gami") (dro + "gach") (dro + "gi") g ;
@@ -62,14 +60,25 @@ oper
               wata + "ha" => mkNoun noun (wata + "hy") (wata + "sze") (wata + "hę") (wata + "hą") (wata + "sze") (wata + "ho") (wata + "hy") (wata + "h") (wata + "hom") (wata + "hy") (wata + "hami") (wata + "hach") (wata + "hy") g ;
               --feminine nouns ending with "a" with a historically soft stem.
               pra + ("ca"|"dza"|"sza"|"ża"|"rza"|"cza"|"dża") => case noun of {prac + "a" => mkNoun noun (prac + "y") (prac + "y") (prac + "ę") (prac + "ą") (prac + "y") (prac + "o") (prac + "e") prac (prac + "om") (prac + "e") (prac + "ami") (prac + "ach") (prac + "e") g } ;
-              --feminine nouns ending with "a" with a soft stem.
-              --check Asia vs. ziemia
-              a + ("sia"|"cia"|"zia"|"dzia"|"nia"|"la"|"bia"|"mia"|"wia"|"pia"|"ja"|"ia") => case noun of {asi + "a" => mkNoun noun asi asi (asi + "ę") (asi + "ą") asi (asi + "o") (asi + "e") asi (asi + "om") (asi + "e") (asi + "ami") (asi + "ach") (asi + "e")} ;
-
-
-              x + "a" => mkNoun noun (x + "y") (x + "ie") (x + "ę") (x + "ą") (x + "ie") (x + "o") (x + "y") x (x + "om") (x + "y") (x + "ami") (x + "ach") (x + "y") g 
-              
+              --feminine nouns ending with "a" with a soft stem; does not account for some animate nouns' vocatives in singular ending with "u" instead of "o".
+              a + ("sia"|"cia"|"zia"|"dzia"|"nia"|"la"|"bia"|"mia"|"wia"|"pia"|"ja"|"ia") => case noun of {asi + "a" => mkNoun noun asi asi (asi + "ę") (asi + "ą") asi (asi + "o") (asi + "e") asi (asi + "om") (asi + "e") (asi + "ami") (asi + "ach") (asi + "e") g } ;
+              --feminine nouns ending with "a" with a hard stem.
+              la + ("ba"|"pa"|"fa"|"wa"|"ma"|"ła"|"ta"|"da"|"sa"|"za"|"na") => case noun of {lab + "a" => mkNoun noun (lab + "ę") (lab + "y") (lab + "ie") (lab + "ie") (lab + "ą") (lab + "o") (lab + "y") (lab + "y") lab (lab + "om") (lab + "ach") (lab + "ami") (lab + "y") g } ;
+              kobie + "ta" => mkNoun noun (kobie + "ty") (kobie + "cie") (kobie + "tę") (kobie + "tą") (kobie + "cie") (kobie + "to") (kobie + "ty") (kobie + "t") (kobie + "tom") (kobie + "ty") (kobie + "tami") (kobie + "tach") (kobie + "ty") g ;
+              szko + "ła" => mkNoun noun (szko + "ły") (szko + "le") (szko + "łę") (szko + "łą") (szko + "le") (szko + "ło") (szko + "ły") (szko + "ł") (szko + "łom") (szko + "ły") (szko + "łami") (szko + "łach") (szko + "ły") g ;
+              ope + "ra" => mkNoun noun (ope + "ry") (ope + "rze") (ope + "rę") (ope + "rą") (ope + "rze") (ope + "ro") (ope + "ry") (ope + "r") (ope + "rom") (ope + "ry") (ope + "rami") (ope + "rach") (ope + "ry") g ;
+              --feminine nouns ending with "a" with a vowel stem.
+              id + "ea" => case noun of { ide + "a" => mkNoun noun (ide + "i") (ide + "i") (ide + "ę") (ide + "ą") (ide + "i") (ide + "o") (ide + "e") (ide + "i") (ide + "om") (ide + "e") (ide + "ami") (ide + "ach") (ide + "e") g } ;
+              stat + "ua" => case noun of { statu + "a" => mkNoun noun (stau + "y") (stau + "i") (stau + "ę") (stau + "ą") (stau + "i") (stau + "o") (stau + "y") (stau + "i") (stau + "om") (stau + "y") (stau + "ami") (stau + "ach") (stau + "y") g } ;
+              --feminine nouns ending with "i".
+              mistrzy + "ni" => mkNoun noun noun noun (mistrzy + "nię") (mistrzy + "nią") noun noun (mistrzy + "nie") (mistrzy + "ń") (mistrzy + "niom") (mistrzy + "nie") (mistrzy + "niami") (mistrzy + "niach") (mistrzy + "nie") g ;
+              --feminine nouns ending with a historically soft consonant.
+              podro + ("c"|"dz"|"sz"|"ż"|"rz"|"cz"|"dż") => mkNoun noun (noun + "y") (noun + "y") noun (noun + "ą") (noun + "y") (noun + "y") (noun + "e") (noun + "y") (noun + "om") (noun + "e") (noun + "ami") (noun + "ach") (noun + "e") g ;
+              --feminine nouns ending with a soft consonant.
+              milo + "ść" => mkNoun noun (milo + "ści") (milo + "ści") noun (milo + "ścią") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ściom") (milo + "ści") (milo + "ściami") (milo + "ściach") (milo + "ści") g ;  
+              ja + "źń" => mkNoun noun (ja + "źni") (ja + "źni") noun (ja + "źnią") (ja + "źni") (ja + "źni") (ja + "źnie") (ja + "źni") (ja + "źniom") (ja + "źnie") (ja + "źniami") (ja + "źniach") (ja + "źnie") g 
               } ;
+              --remember mixed pattern!
             Masc => x + _ => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") (noun + "y") (noun + "ów") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") (noun + "y") g      
             MascAnim => 
         } ;
