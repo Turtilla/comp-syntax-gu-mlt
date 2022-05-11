@@ -39,16 +39,30 @@ oper
             g = g
         } ;
 
-  smartNoun : Str -> Gender -> Noun = \noun,g -> case g of {
+  smartNoun : Str -> Str -> Gender -> Noun = \noun,plural,g -> case g of {
             Neut => case noun of { 
               ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the changes to the root in some plutal genitives ("okno" - "okien") or for the relatively irregular "dziecko"
-              jaj + "o" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+              jaj + "o" => case jaj of {
+                mi + "ast" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (mi + "eście") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                jezio + "r" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (jezio + "rze") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                sl + "ow" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "ie") noun (jaj + "a") (sl + "ów") (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                _ => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+              } ;
               --foreign neuter nouns that end with "um", where all the singular forms are the same, e.g. "muzeum", "memorandum".
               muze + "um" => mkNoun noun noun noun noun noun noun noun (muze + "a") (muze + "ów") (muze + "om") (muze + "a")(muze + "ami") (muze + "ach") (muze + "a") g ;
-              --neuter nouns ending with "ę" that mostly denote the young of some species (e.g. "cielę" - calf, "prosię" - piglet).
+              --neuter nouns ending with "ę" that mostly denote the young of some species (e.g. "cielę" - calf, "prosię" - piglet). Does not account for "imię".
               zwierz + "ę" => mkNoun noun (zwierz + "ęcia") (zwierz + "ęciu") noun (zwierz + "ęciem") (zwierz + "ęciu") noun (zwierz + "ęta") (zwierz + "ąt") (zwierz + "ętom") (zwierz + "ęta") (zwierz + "ętami") (zwierz + "ętach") (zwierz + "ęta") g ;
               --neuter verb-derived nouns describing actions, e.g. "jedzenie" - food/eating, "siedzenie" - seat/sitting, "myślenie" - thinking.
-              jedze + "nie" => mkNoun noun (jedze + "nia") (jedze + "niu") noun (jedze + "niem") (jedze + "niu") noun (jedze + "nia") (jedze + "ń") (jedze + "niom") (jedze + "nia") (jedze + "niami") (jedze + "niach") (jedze + "nia") g 
+              jedze + "nie" => mkNoun noun (jedze + "nia") (jedze + "niu") noun (jedze + "niem") (jedze + "niu") noun (jedze + "nia") (jedze + "ń") (jedze + "niom") (jedze + "nia") (jedze + "niami") (jedze + "niach") (jedze + "nia") g ;
+              --neuter nouns ending in "e", with a case accounting for internal vowel mutation.
+              pol + "e" => case pol of {
+                p + "o" + l => mkNoun noun (pol + "a") (pol + "u") (pol + "e") (pol + "em") (pol + "u") (pol + "e") (pol + "a") (p + "ó" + l) (pol + "om") (pol + "a") (pol + "ami") (pol + "ach") (pol + "a") g ;
+                zdje + "ci" => mkNoun noun (pol + "a") (pol + "u") (pol + "e") (pol + "em") (pol + "u") (pol + "e") (pol + "a") (zdje + "ć") (pol + "om") (pol + "a") (pol + "ami") (pol + "ach") (pol + "a") g ;
+                pyta + "ni" => mkNoun noun (pol + "a") (pol + "u") (pol + "e") (pol + "em") (pol + "u") (pol + "e") (pol + "a") (pyta + "ń") (pol + "om") (pol + "a") (pol + "ami") (pol + "ach") (pol + "a") g ;
+                _ => mkNoun noun (pol + "a") (pol + "u") (pol + "e") (pol + "em") (pol + "u") (pol + "e") (pol + "a") (pol + "y") (pol + "om") (pol + "a") (pol + "ami") (pol + "ach") (pol + "a") g 
+              } ;
+              --neuter nouns ending with "us".
+              op + "us" => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") (noun + "y") (noun + "ów") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") (noun + "y") g 
               } ;
             Fem => case noun of {
               --feminine nouns ending in "ew" - the plurals for "krew" (blood) are not really used and the ones here are modelled after "brew" (eyebrow), and don't fully fit the dictionary entry for "krew", but sound acceptable to me as a native speaker.
@@ -80,7 +94,41 @@ oper
               } ;
               --remember mixed pattern!
             Masc => x + _ => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") (noun + "y") (noun + "ów") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") (noun + "y") g      
-            MascAnim => 
+            --does not include some nuances or unusual endings.
+            MascAnim => case plural of {
+              --masculine animate nouns ending with "owie" in Nom Pl.
+              krol + "owie" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") (noun + "owie") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "owie") g ;
+              --masculine animate nouns ending with "i" in Nom Pl.
+              adwokac + "i" => case noun of {
+                angli + "sta" => mkNoun noun (angli + "sty") (angli + "ście") (angli + "stę") (angli + "stą") (angli + "ście") (angli + "sto") (angli + "ści") (angli + "stów") (angli + "stom") (angli + "stów") (angli + "stami") (angli + "stach") (angli + "ści") g ;
+                poe + "ta" => mkNoun noun (poe + "ty") (poe + "cie") (poe + "tę") (poe + "tą") (poe + "cie") (poe + "to") (poe + "ci") (poe + "tów") (poe + "tom") (poe + "tów") (poe + "tami") (poe + "tach") (poe + "ci") g ;
+                meszczy + "zna" => mkNoun noun (meszczy + "zny") (meszczy + "źnie") (meszczy + "znę") (meszczy + "zną") (meszczy + "źnie") (meszczy + "zno") (meszczy + "źni") (meszczy + "zn") (meszczy + "znom") (meszczy + "zn") (meszczy + "znami") (meszczy + "znach") (meszczy + "źni") g ;
+                adwoka + "t" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (adwoka + "cie") (adwoka + "cie") (adwoka + "ci") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (adwoka + "ci") g ;
+                cze + "ch" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") (cze + "si") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (cze + "si") g ;
+                sasi + "ad" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (sasi + "edzie") (sasi + "edzie") (sasi + "edzi") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (sasi + "edzi") g ;
+                szwe + "d" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "zie") (noun + "zie") (noun + "zi") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "zi") g ;
+                weteran => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "ie") (noun + "ie") (noun + "i") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "i") g  
+              } ;
+              --masculine animate nouns ending with "y" in Nom Pl.
+              koledz + "y" => case noun of {
+                kole + "ga" => mkNoun noun (kole + "gi") (kole + "dze") (kole + "gę") (kole + "gą") (kole + "dze") (kole + "go") plural (kole + "gów") (kole + "gom") (kole + "gów") (kole + "gami") (kole + "gach") plural g ;
+                doradc + "a" => mkNoun noun plural plural (doradc + "ę") (doradc + "ą") plural (doradc + "o") plural (doradc + "ów") (doradc + "om") (doradc + "ów") (doradc + "ami") (doradc + "ach") plural g ; 
+                anglik => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "iem") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") plural g ;
+              } ;
+              --masculine animate nouns ending with "e" in Nom Pl.
+              gosci + "e" => case noun of {
+                gos + "ć" => mkNoun noun (gos + "cia") (gos + "ciowi") (gos + "cia") (gos + "ciem") (gos + "ciu") (gos + "ciu") plural (gos + "ci") (gos + "ciom") (gos + "ci") (gos + "ciami") (gos + "iach") plural g ;
+                cesarz => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") plural (noun + "y") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") plural g ;
+              } ;
+              --masculine animate nouns ending with "anie" in Nom Pl.
+              ameryk + "anie" => case noun of {
+                ameryk + "anin"
+                hiszp + "an"
+              }
+
+              
+
+             }
         } ;
 
   Adjective : Type = {s : Gender => Number => Case => Str} ;
