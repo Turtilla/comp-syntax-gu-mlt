@@ -1,5 +1,5 @@
     concrete FoodSwe of Food = {
-  
+
       lincat
         Utt, Phrase, Item, Kind, Quality = {s : Str} ;
   

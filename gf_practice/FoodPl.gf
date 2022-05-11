@@ -1,4 +1,4 @@
-    concrete FoodPl of Food = {
+    concrete FoodPl of Food = open StringOper in {
   
       lincat
         Utt, Phrase, Item, Kind, Quality = {s : Str} ;
