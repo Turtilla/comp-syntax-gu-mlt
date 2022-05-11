@@ -41,14 +41,32 @@ oper
 
   smartNoun : Str -> Gender -> Noun = \noun,g -> case g of {
             Neut => case noun of { 
+              ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the changes to the root in some plutal genitives ("okno" - "okien") or for the relatively irregular "dziecko"
               jaj + "o" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+              --foreign neuter nouns that end with "um", where all the singular forms are the same, e.g. "muzeum", "memorandum".
               muze + "um" => mkNoun noun noun noun noun noun noun noun (muze + "a") (muze + "ów") (muze + "om") (muze + "a")(muze + "ami") (muze + "ach") (muze + "a") g ;
+              --neuter nouns ending with "ę" that mostly denote the young of some species (e.g. "cielę" - calf, "prosię" - piglet).
               zwierz + "ę" => mkNoun noun (zwierz + "ęcia") (zwierz + "ęciu") noun (zwierz + "ęciem") (zwierz + "ęciu") noun (zwierz + "ęta") (zwierz + "ąt") (zwierz + "ętom") (zwierz + "ęta") (zwierz + "ętami") (zwierz + "ętach") (zwierz + "ęta") g ;
+              --neuter verb-derived nouns describing actions, e.g. "jedzenie" - food/eating, "siedzenie" - seat/sitting, "myślenie" - thinking.
               jedze + "nie" => mkNoun noun (jedze + "nia") (jedze + "niu") noun (jedze + "niem") (jedze + "niu") noun (jedze + "nia") (jedze + "ń") (jedze + "niom") (jedze + "nia") (jedze + "niami") (jedze + "niach") (jedze + "nia") g 
               } ;
             Fem => case noun of {
+              --feminine nouns ending in "ew" - the plurals for "krew" (blood) are not really used and the ones here are modelled after "brew" (eyebrow), and don't fully fit the dictionary entry for "krew", but sound acceptable to me as a native speaker.
               kr + "ew" => mkNoun noun (kr + "wi") (kr + "wi") noun (kr + "wią") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wiom") (kr + "wi") (kr + "wiami") (kr + "wiach") (kr + "wi") g ;
+              --feminine nouns ending in "ość", including "kość" and "ość" (bone, fishbone) and a variety of adjective-derived nouns describing emotions ("miłość" - love, "radość" - happiness) or features ("jasność" - brightness, "wysokość" - height).
               milo + "ść" => mkNoun noun (milo + "ści") (milo + "ści") noun (milo + "ścią") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ściom") (milo + "ści") (milo + "ściami") (milo + "ściach") (milo + "ści") g ;  
+              --feminine nouns ending with "a" with a velar stem.
+              wal + "ka" => mkNoun noun (wal + "ki") (wal + "ce") (wal + "kę") (wal + "ką") (wal + "ce") (wal + "ko") (wal + "ki") (wal + "k") (wal + "kom") (wal + "ki") (wal + "kami") (wal + "kach") (wal + "ki") g ;
+              dro + "ga" => mkNoun noun (dro + "gi") (dro + "dze") (dro + "gę") (dro + "gą") (dro + "dze") (dro + "go") (dro + "gi") (dro + "g") (dro + "gom") (dro + "gi") (dro + "gami") (dro + "gach") (dro + "gi") g ;
+              ce + "cha" => mkNoun noun (ce + "chy") (ce + "sze") (ce + "chę") (ce + "chą") (ce + "sze") (ce + "cho") (ce + "chy") (ce + "ch") (ce + "chom") (ce + "chy") (ce + "chami") (ce + "chach") (ce + "chy") g ;         
+              wata + "ha" => mkNoun noun (wata + "hy") (wata + "sze") (wata + "hę") (wata + "hą") (wata + "sze") (wata + "ho") (wata + "hy") (wata + "h") (wata + "hom") (wata + "hy") (wata + "hami") (wata + "hach") (wata + "hy") g ;
+              --feminine nouns ending with "a" with a historically soft stem.
+              pra + ("ca"|"dza"|"sza"|"ża"|"rza"|"cza"|"dża") => case noun of {prac + "a" => mkNoun noun (prac + "y") (prac + "y") (prac + "ę") (prac + "ą") (prac + "y") (prac + "o") (prac + "e") prac (prac + "om") (prac + "e") (prac + "ami") (prac + "ach") (prac + "e") g } ;
+              --feminine nouns ending with "a" with a soft stem.
+              --check Asia vs. ziemia
+              a + ("sia"|"cia"|"zia"|"dzia"|"nia"|"la"|"bia"|"mia"|"wia"|"pia"|"ja"|"ia") => case noun of {asi + "a" => mkNoun noun asi asi (asi + "ę") (asi + "ą") asi (asi + "o") (asi + "e") asi (asi + "om") (asi + "e") (asi + "ami") (asi + "ach") (asi + "e")} ;
+
+
               x + "a" => mkNoun noun (x + "y") (x + "ie") (x + "ę") (x + "ą") (x + "ie") (x + "o") (x + "y") x (x + "om") (x + "y") (x + "ami") (x + "ach") (x + "y") g 
               
               } ;
