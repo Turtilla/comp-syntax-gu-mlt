@@ -23,6 +23,9 @@ oper
   --nouns to the function together with a number to identify the set. I wanted to avoid it, but, consequently, my smart noun function is not ideal
   --and cannot account for all the forms, especially the ones that are in free variation or undergo some not fully predictable internal sound changes.
   --I also chose not to implement some patterns that I know only concern one or two words, as these seem to be irregular enough to be treated as such.
+  --There is a smart function for each gender, since the sheer number of variations made it hard to otherwise troubleshoot errors (it is easier to
+  --fix the error if you know that it is in the endings for masculine nouns, than for all the nouns). There is then a "master function" smartNoun,
+  --which selects which of the four to use based on the given gender.
   Noun : Type = {s : Number => Case => Str ; g : Gender} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Gender -> Noun 
@@ -50,14 +53,13 @@ oper
             g = g
         } ;
 
-  smartNoun : (noun,plural : Str ) -> Gender -> Noun = \noun,plural,g -> case g of {
-            Neut => case noun of { 
+  smartNounNeut : Str -> Str -> Gender -> Noun = \noun,plural,g -> case noun of {
               ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the changes to the root in some plutal genitives ("okno" - "okien") or for the relatively irregular "dziecko"
               jaj + "o" => case jaj of {
-                mi + "ast" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (mi + "eście") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
-                jezio + "r" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (jezio + "rze") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
-                sl + "ow" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "ie") noun (jaj + "a") (sl + "ów") (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
-                _ => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g 
+                mi + "ast" => mkNoun noun plural (jaj + "u") noun (jaj + "em") (mi + "eście") noun plural jaj (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g ;
+                jezio + "r" => mkNoun noun plural (jaj + "u") noun (jaj + "em") (jezio + "rze") noun plural jaj (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g ;
+                sl + "ow" => mkNoun noun plural (jaj + "u") noun (jaj + "iem") (jaj + "ie") noun plural (sl + "ów") (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural) g ;
+                _ => mkNoun noun plural (jaj + "u") noun (jaj + "iem") (jaj + "u") noun plural jaj (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g 
               } ;
               --foreign neuter nouns that end with "um", where all the singular forms are the same, e.g. "muzeum", "memorandum".
               muze + "um" => mkNoun noun noun noun noun noun noun noun (muze + "a") (muze + "ów") (muze + "om") (muze + "a")(muze + "ami") (muze + "ach") (muze + "a") g ;
@@ -74,8 +76,9 @@ oper
               } ;
               --neuter nouns ending with "us".
               op + "us" => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") (noun + "y") (noun + "ów") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") (noun + "y") g 
-              } ;
-            Fem => case noun of {
+  } ;
+
+  smartNounFem : Str -> Str -> Gender -> Noun = \noun,plural,g -> case noun of { 
               --feminine nouns ending in "ew" - the plurals for "krew" (blood) are not really used and the ones here are modelled after "brew" (eyebrow), and don't fully fit the dictionary entry for "krew", but sound acceptable to me as a native speaker.
               kr + "ew" => mkNoun noun (kr + "wi") (kr + "wi") noun (kr + "wią") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wi") (kr + "wiom") (kr + "wi") (kr + "wiami") (kr + "wiach") (kr + "wi") g ;
               --feminine nouns ending with "a" with a velar stem.
@@ -102,16 +105,17 @@ oper
               --feminine nouns ending with a soft consonant.
               milo + "ść" => mkNoun noun (milo + "ści") (milo + "ści") noun (milo + "ścią") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ściom") (milo + "ści") (milo + "ściami") (milo + "ściach") (milo + "ści") g ;  
               ja + "źń" => mkNoun noun (ja + "źni") (ja + "źni") noun (ja + "źnią") (ja + "źni") (ja + "źni") (ja + "źnie") (ja + "źni") (ja + "źniom") (ja + "źnie") (ja + "źniami") (ja + "źniach") (ja + "źnie") g 
-              } ;
-            Masc => case noun of {
-             --velar stem masculine nouns; does not account for irregular variation of "a" and "u" in genitive singular.
+   } ;
+
+  smartNounMasc : Str -> Str -> Gender -> Noun = \noun,plural,g -> case noun of {
+              --velar stem masculine nouns; does not account for irregular variation of "a" and "u" in genitive singular.
               par + ("k"|"g") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "iem") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               da + ("h"|"ch") => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               --historically soft stem masculine nouns.
               --add other variants
               zaj + "ąc" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") plural (zaj + "ęcy") (noun + "om") (noun + "e") (noun + "ami") (noun + "ach") (noun + "e") g ;
               tasiem + "iec" => mkNoun noun (tasiem + "ca") (tasiem + "cowi") (tasiem + "ca") (tasiem + "cem") (tasiem + "cu") (tasiem + "cu") plural (tasiem + "ców") (tasiem + "com") plural (tasiem + "cami") (tasiem + "cach") plural g ;
-              ko + ("c"|"dz") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") (noun + "ami") (noun + "ach") plural g ;
+              ko + ("c"|"dz") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               klu + ("cz"|"sz"|"ż"|"rz"|"dż") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") (noun + "e") (noun + "y") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               --soft stem masculine nouns.
               ki + ("j"|"l") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
@@ -134,9 +138,9 @@ oper
               ga + "d" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (ga + "dzie") (ga + "dzie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               no + ("n"|"z"|"s"|"f") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g 
               --due to their rarity or difficulty, masculine nouns with fleeting vowels (pies vs. psy), with the "ą" vowel (wąż vs. węży), and full irregulars have been excluded.
-            } ;      
-            --does not include some nuances or unusual endings.
-            MascAnim => case plural of {
+  } ;
+
+  smartNounMascAnim : Str -> Str -> Gender -> Noun = \noun,plural,g -> case plural of {
               --masculine animate nouns ending with "owie" in Nom Pl.
               krol + "owie" => case noun of { 
                 zie + "ć" => mkNoun noun (zie + "cia") (zie + "ciowi") (zie + "cia") (zie + "ciem") (zie + "ciu") (zie + "ciu") plural (zie + "ciów") (zie + "ciom") (zie + "ciów") (zie + "ciami") (zie + "ciach") plural g ;
@@ -173,7 +177,14 @@ oper
                 ameryk + "anin" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "ie") (noun + "ie") (ameryk + "anie") (ameryk + "anów") (ameryk + "anom") (ameryk + "anów") (ameryk + "anami") (ameryk + "anach") (ameryk + "anie") g ;
                 hiszp + "an" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "ie") (noun + "ie") (noun + "ie") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "ie") g 
               }
-             }
+  } ;
+
+  smartNoun : Str -> Str -> Gender -> Noun = \noun,plural,g -> case g of {
+            --this was suggested by Arianna to easier troubleshoot problems with the functions for each gender, and to make it more modular
+            Neut => smartNounNeut noun plural g ;
+            Fem => smartNounFem noun plural g ;
+            Masc => smartNounMasc noun plural g ;
+            MascAnim => smartNounMascAnim noun plural g 
         } ;
 
   --for adjectives, since this grammar does not include different degrees (nor negated adjectives, which in Polish are spelled together with the
