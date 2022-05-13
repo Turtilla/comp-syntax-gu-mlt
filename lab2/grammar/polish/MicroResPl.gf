@@ -12,6 +12,17 @@ param
   -- not sure here
 
 oper
+  --for nouns I need to store 2 numbers, 7 cases each, and the gender. Aside from the typical masculine, feminine, neuter, there is something that
+  --I here called the masculine animate gender, but it mostly sets apart human beings from all the other masculine nouns. The major challenge here
+  --was that aside from these categories, the final consonant of the root of the noun also influences the kinds of endings or sound changes that it
+  --undergoes. In addition, sometimes there is a case-to-case ending variation that is not dictated by any features of the word, but is simply the
+  --more widely accepted form, and there is no predicting it without knowing it beforehand. This is why this is not an exhaustive list. Due to there
+  --often being animate and inanimate forms of the same masculine noun, I needed to introduce the plural as a variable that would help me distinguish
+  --between those; it also helps tell apart historically soft p, b, m, w from their hard counterparts (which is not visible in the nominative singular)
+  --for masculine nouns. From what I saw the official Polish grammar handles this by having tens, if not hundreds, of sets of endings, and it passes
+  --nouns to the function together with a number to identify the set. I wanted to avoid it, but, consequently, my smart noun function is not ideal
+  --and cannot account for all the forms, especially the ones that are in free variation or undergo some not fully predictable internal sound changes.
+  --I also chose not to implement some patterns that I know only concern one or two words, as these seem to be irregular enough to be treated as such.
   Noun : Type = {s : Number => Case => Str ; g : Gender} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Gender -> Noun 
@@ -39,14 +50,14 @@ oper
             g = g
         } ;
 
-  smartNoun : Str -> Str -> Gender -> Noun = \noun,plural,g -> case g of {
+  smartNoun : (noun,plural : Str ) -> Gender -> Noun = \noun,plural,g -> case g of {
             Neut => case noun of { 
               ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the changes to the root in some plutal genitives ("okno" - "okien") or for the relatively irregular "dziecko"
               jaj + "o" => case jaj of {
-                mi + "ast" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (mi + "eście") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
-                jezio + "r" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (jezio + "rze") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                mi + "ast" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (mi + "eście") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                jezio + "r" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "em") (jezio + "rze") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
                 sl + "ow" => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "ie") noun (jaj + "a") (sl + "ów") (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
-                _ => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") x (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g ;
+                _ => mkNoun noun (jaj + "a") (jaj + "u") noun (jaj + "iem") (jaj + "u") noun (jaj + "a") jaj (jaj + "om") (jaj + "a") (jaj + "ami") (jaj + "ach") (jaj + "a") g 
               } ;
               --foreign neuter nouns that end with "um", where all the singular forms are the same, e.g. "muzeum", "memorandum".
               muze + "um" => mkNoun noun noun noun noun noun noun noun (muze + "a") (muze + "ów") (muze + "om") (muze + "a")(muze + "ami") (muze + "ach") (muze + "a") g ;
@@ -83,7 +94,7 @@ oper
               ope + "ra" => mkNoun noun (ope + "ry") (ope + "rze") (ope + "rę") (ope + "rą") (ope + "rze") (ope + "ro") (ope + "ry") (ope + "r") (ope + "rom") (ope + "ry") (ope + "rami") (ope + "rach") (ope + "ry") g ;
               --feminine nouns ending with "a" with a vowel stem.
               id + "ea" => case noun of { ide + "a" => mkNoun noun (ide + "i") (ide + "i") (ide + "ę") (ide + "ą") (ide + "i") (ide + "o") (ide + "e") (ide + "i") (ide + "om") (ide + "e") (ide + "ami") (ide + "ach") (ide + "e") g } ;
-              stat + "ua" => case noun of { statu + "a" => mkNoun noun (stau + "y") (stau + "i") (stau + "ę") (stau + "ą") (stau + "i") (stau + "o") (stau + "y") (stau + "i") (stau + "om") (stau + "y") (stau + "ami") (stau + "ach") (stau + "y") g } ;
+              stat + "ua" => case noun of { statu + "a" => mkNoun noun (statu + "y") (statu + "i") (statu + "ę") (statu + "ą") (statu + "i") (statu + "o") (statu + "y") (statu + "i") (statu + "om") (statu + "y") (statu + "ami") (statu + "ach") (statu + "y") g } ;
               --feminine nouns ending with "i".
               mistrzy + "ni" => mkNoun noun noun noun (mistrzy + "nię") (mistrzy + "nią") noun noun (mistrzy + "nie") (mistrzy + "ń") (mistrzy + "niom") (mistrzy + "nie") (mistrzy + "niami") (mistrzy + "niach") (mistrzy + "nie") g ;
               --feminine nouns ending with a historically soft consonant.
@@ -92,12 +103,49 @@ oper
               milo + "ść" => mkNoun noun (milo + "ści") (milo + "ści") noun (milo + "ścią") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ści") (milo + "ściom") (milo + "ści") (milo + "ściami") (milo + "ściach") (milo + "ści") g ;  
               ja + "źń" => mkNoun noun (ja + "źni") (ja + "źni") noun (ja + "źnią") (ja + "źni") (ja + "źni") (ja + "źnie") (ja + "źni") (ja + "źniom") (ja + "źnie") (ja + "źniami") (ja + "źniach") (ja + "źnie") g 
               } ;
-              --remember mixed pattern!
-            Masc => x + _ => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") (noun + "y") (noun + "ów") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") (noun + "y") g      
+            Masc => case noun of {
+             --velar stem masculine nouns; does not account for irregular variation of "a" and "u" in genitive singular.
+              par + ("k"|"g") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "iem") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              da + ("h"|"ch") => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              --historically soft stem masculine nouns.
+              --add other variants
+              zaj + "ąc" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") plural (zaj + "ęcy") (noun + "om") (noun + "e") (noun + "ami") (noun + "ach") (noun + "e") g ;
+              tasiem + "iec" => mkNoun noun (tasiem + "ca") (tasiem + "cowi") (tasiem + "ca") (tasiem + "cem") (tasiem + "cu") (tasiem + "cu") plural (tasiem + "ców") (tasiem + "com") plural (tasiem + "cami") (tasiem + "cach") plural g ;
+              ko + ("c"|"dz") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") (noun + "ami") (noun + "ach") plural g ;
+              klu + ("cz"|"sz"|"ż"|"rz"|"dż") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") (noun + "e") (noun + "y") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              --soft stem masculine nouns.
+              ki + ("j"|"l") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              ko + "ń" => mkNoun noun (ko + "nia") (ko + "niowi") (ko + "nia") (ko + "niem") (ko + "niu") (ko + "niu") plural (ko + "ni") (ko + "niom") plural (ko + "niami") (ko + "niach") plural g ;
+              pa + "ź" => mkNoun noun (pa + "zia") (pa + "ziowi") (pa + "zia") (pa + "ziem") (pa + "ziu") (pa + "ziu") plural (pa + "zi") (pa + "ziom") plural (pa + "ziami") (pa + "ziach") plural g ;
+              re + "dź" => mkNoun noun (re + "dzia") (re + "dziowi") (re + "dzia") (re + "dziem") (re + "dziu") (re + "dziu") plural (re + "dzi") (re + "dziom") plural (re + "dziami") (re + "dziach") plural g ;
+              mi + "ś" => mkNoun noun (mi + "sia") (mi + "siowi") (mi + "sia") (mi + "siem") (mi + "siu") (mi + "siu") plural (mi + "si") (mi + "siom") plural (mi + "siami") (mi + "siach") plural g ;
+              ki + "ć" => mkNoun noun (ki + "cia") (ki + "ciowi") (ki + "cia") (ki + "ciem") (ki + "ciu") (ki + "ciu") plural (ki + "ci") (ki + "ciom") plural (ki + "ciami") (ki + "ciach") plural g ;
+              --some soft stem masculine nouns and hard stem masculine nouns (they are indistinguishable in Nom Sg), need a "case plural of" expression.
+              kar + ("p"|"b"|"m"|"w") => case plural of {
+                kar + ("pie"|"bie"|"mie"|"wie") => mkNoun noun (noun + "ia") (noun + "iowi") (noun + "ia") (noun + "iem") (noun + "iu") (noun + "iu") plural (noun + "i") (noun + "iom") plural (noun + "iami") (noun + "iach") plural g ;
+                --hard stem masculine nouns.
+                dom + "y" => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g 
+              } ;
+              --does not account for "ó"->"o" shifts.
+              rowe + "r" => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "ze") (noun + "ze") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              fia + "t" => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (fia + "cie") (fia + "cie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              --this example showcases well the issues with local irregularities; the same word in the nominative means mud/river sand or a mule. These endings are for the animal, but the mud version gets a different genitive and accusative singular ("u" and no ending). There is no regularity to this, nor is there a way to predict it other than just knowing.
+              mu + "ł" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (mu + "le") (mu + "le") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; 
+              ga + "d" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (ga + "dzie") (ga + "dzie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
+              no + ("n"|"z"|"s"|"f") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g 
+              --due to their rarity or difficulty, masculine nouns with fleeting vowels (pies vs. psy), with the "ą" vowel (wąż vs. węży), and full irregulars have been excluded.
+            } ;      
             --does not include some nuances or unusual endings.
             MascAnim => case plural of {
               --masculine animate nouns ending with "owie" in Nom Pl.
-              krol + "owie" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") (noun + "owie") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "owie") g ;
+              krol + "owie" => case noun of { 
+                zie + "ć" => mkNoun noun (zie + "cia") (zie + "ciowi") (zie + "cia") (zie + "ciem") (zie + "ciu") (zie + "ciu") plural (zie + "ciów") (zie + "ciom") (zie + "ciów") (zie + "ciami") (zie + "ciach") plural g ;
+                zie + "ś" => mkNoun noun (zie + "sia") (zie + "siowi") (zie + "sia") (zie + "siem") (zie + "siu") (zie + "siu") plural (zie + "siów") (zie + "siom") (zie + "siów") (zie + "siami") (zie + "siach") plural g ;
+                zie + "ń" => mkNoun noun (zie + "nia") (zie + "niowi") (zie + "nia") (zie + "niem") (zie + "niu") (zie + "niu") plural (zie + "niów") (zie + "niom") (zie + "niów") (zie + "niami") (zie + "niach") plural g ;
+                zie + "ź" => mkNoun noun (zie + "zia") (zie + "ziowi") (zie + "zia") (zie + "ziem") (zie + "ziu") (zie + "ziu") plural (zie + "ziów") (zie + "ziom") (zie + "ziów") (zie + "ziami") (zie + "ziach") plural g ;
+                zie + "dź" => mkNoun noun (zie + "dzia") (zie + "dziowi") (zie + "dzia") (zie + "dziem") (zie + "dziu") (zie + "dziu") plural (zie + "dziów") (zie + "dziom") (zie + "dziów") (zie + "dziami") (zie + "dziach") plural g ;
+                krol => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") (noun + "owie") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "owie") g 
+               } ;
               --masculine animate nouns ending with "i" in Nom Pl.
               adwokac + "i" => case noun of {
                 angli + "sta" => mkNoun noun (angli + "sty") (angli + "ście") (angli + "stę") (angli + "stą") (angli + "ście") (angli + "sto") (angli + "ści") (angli + "stów") (angli + "stom") (angli + "stów") (angli + "stami") (angli + "stach") (angli + "ści") g ;
@@ -113,133 +161,141 @@ oper
               koledz + "y" => case noun of {
                 kole + "ga" => mkNoun noun (kole + "gi") (kole + "dze") (kole + "gę") (kole + "gą") (kole + "dze") (kole + "go") plural (kole + "gów") (kole + "gom") (kole + "gów") (kole + "gami") (kole + "gach") plural g ;
                 doradc + "a" => mkNoun noun plural plural (doradc + "ę") (doradc + "ą") plural (doradc + "o") plural (doradc + "ów") (doradc + "om") (doradc + "ów") (doradc + "ami") (doradc + "ach") plural g ; 
-                anglik => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "iem") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") plural g ;
+                anglik => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "iem") (noun + "u") (noun + "u") plural (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") plural g  --accounts for stem changes g/dz, k/c as they only occur in nom=voc
               } ;
               --masculine animate nouns ending with "e" in Nom Pl.
               gosci + "e" => case noun of {
                 gos + "ć" => mkNoun noun (gos + "cia") (gos + "ciowi") (gos + "cia") (gos + "ciem") (gos + "ciu") (gos + "ciu") plural (gos + "ci") (gos + "ciom") (gos + "ci") (gos + "ciami") (gos + "iach") plural g ;
-                cesarz => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") plural (noun + "y") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") plural g ;
+                cesarz => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "u") (noun + "u") plural (noun + "y") (noun + "om") (noun + "y") (noun + "ami") (noun + "ach") plural g 
               } ;
               --masculine animate nouns ending with "anie" in Nom Pl.
               ameryk + "anie" => case noun of {
-                ameryk + "anin"
-                hiszp + "an"
+                ameryk + "anin" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "ie") (noun + "ie") (ameryk + "anie") (ameryk + "anów") (ameryk + "anom") (ameryk + "anów") (ameryk + "anami") (ameryk + "anach") (ameryk + "anie") g ;
+                hiszp + "an" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (noun + "ie") (noun + "ie") (noun + "ie") (noun + "ów") (noun + "om") (noun + "ów") (noun + "ami") (noun + "ach") (noun + "ie") g 
               }
-
-              
-
              }
         } ;
 
+  --for adjectives, since this grammar does not include different degrees (nor negated adjectives, which in Polish are spelled together with the
+  --negation, e.g. "miły" (nice) vs. "niemiły" (not nice, rude)), I needed to store 4 genders, each with a plural - although the plurals for all
+  --but masculine animate/human are the same. There is, in fact, only 11 different forms that a single adjective can have. However, they can differ
+  --based on the final vowel in the masculine nominative singular, as well as the final consonant of the root. I decided to tell these apart in the 
+  --smart adjective function, and in the make adjective one simply require the 11 forms to be entered. The smart adjective function only needs the
+  --masculine singular nominative form as the rest is practically fully predictable from that. This is perhaps the most regular of the categories.
   Adjective : Type = {s : Gender => Number => Case => Str} ;
 
-  mkAdj : (root, plmasc : Str) -> Adjective
-    = \root,plmasc -> {
+  mkAdj : (yform, egoform, emuform, ymform, ychform, ymiform, eform, aform, ejform, anform, plmasc : Str) -> Adjective
+    = \yform,egoform,emuform,ymform,ychform,ymiform,eform,aform,ejform,anform,plmasc -> {
     s = table {
         MascAnim => table {
           Sg => table {
-            Nom => root + "y" ;
-            Gen => root + "ego" ;
-            Dat => root + "emu" ;
-            Acc => root + "ego" ; -- "y" for nonanimate
-            Ins => root + "ym" ;
-            Loc => root + "ym" ;
-            Voc => root + "y" 
+            Nom => yform ; --żółty, niebieski
+            Gen => egoform ; --żółtego, niebieskiego
+            Dat => emuform ; --żółtemu, niebieskiemu
+            Acc => egoform ; 
+            Ins => ymform ; --żółtym, niebieskim
+            Loc => ymform ;
+            Voc => yform 
           } ;
           Pl => table {
-            Nom => plmasc ;
-            Gen => root + "ych" ;
-            Dat => root + "ym" ;
-            Acc => root + "ych" ;
-            Ins => root + "ymi" ;
-            Loc => root + "ych" ;
+            Nom => plmasc ; --żółci, niebiescy
+            Gen => ychform ; --żółtych, niebieskich
+            Dat => ymform ;
+            Acc => ychform ;
+            Ins => ymiform ; --żółtymi, niebieskimi
+            Loc => ychform ;
             Voc => plmasc
           }
         } ;
         Masc => table {
           Sg => table {
-            Nom => root + "y" ;
-            Gen => root + "ego" ;
-            Dat => root + "emu" ;
-            Acc => root + "y" ; 
-            Ins => root + "ym" ;
-            Loc => root + "ym" ;
-            Voc => root + "y" 
+            Nom => yform ;
+            Gen => egoform ;
+            Dat => emuform ;
+            Acc => yform ; 
+            Ins => ymform ;
+            Loc => ymform ;
+            Voc => yform 
           } ;
           Pl => table {
-            Nom => root + "e" ;
-            Gen => root + "ych" ;
-            Dat => root + "ym" ;
-            Acc => root + "e" ;
-            Ins => root + "ymi" ;
-            Loc => root + "ych" ;
-            Voc => root + "e"
+            Nom => eform ; --żółte, niebieskie
+            Gen => ychform ;
+            Dat => ymform ;
+            Acc => eform ;
+            Ins => ymiform ;
+            Loc => ychform ;
+            Voc => eform
           }
         } ;
         Fem => table {
           Sg => table {
-            Nom => root + "a" ;
-            Gen => root + "ej" ;
-            Dat => root + "ej" ;
-            Acc => root + "ą" ;
-            Ins => root + "ą" ;
-            Loc => root + "ej" ;
-            Voc => root + "a"
+            Nom => aform ; --żółta, niebieska
+            Gen => ejform ; --żółtej, niebieskiej
+            Dat => ejform ;
+            Acc => anform ; --żółtą, niebieską
+            Ins => anform ;
+            Loc => ejform ;
+            Voc => aform
           } ;
           Pl => table {
-            Nom => root + "e" ;
-            Gen => root + "ych" ;
-            Dat => root + "ym" ;
-            Acc => root + "e" ;
-            Ins => root + "ymi" ;
-            Loc => root + "ych" ;
-            Voc => root + "e"
+            Nom => eform ;
+            Gen => ychform ;
+            Dat => ymform ;
+            Acc => eform ;
+            Ins => ymiform ;
+            Loc => ychform ;
+            Voc => eform
           }
         } ;
         Neut => table {
           Sg => table {
-            Nom => root + "e" ;
-            Gen => root + "ego" ;
-            Dat => root + "emu" ;
-            Acc => root + "e" ;
-            Ins => root + "ym" ;
-            Loc => root + "ym" ;
-            Voc => root + "e"
+            Nom => eform ;
+            Gen => egoform ;
+            Dat => emuform ;
+            Acc => eform ;
+            Ins => ymform ;
+            Loc => ymform ;
+            Voc => eform
           } ;
           Pl => table {
-            Nom => root + "e" ;
-            Gen => root + "ych" ;
-            Dat => root + "ym" ;
-            Acc => root + "e" ;
-            Ins => root + "ymi" ;
-            Loc => root + "ych" ;
-            Voc => root + "e"
+            Nom => eform ;
+            Gen => ychform ;
+            Dat => ymform ;
+            Acc => eform ;
+            Ins => ymiform ;
+            Loc => ychform ;
+            Voc => eform
           }
         } 
       } 
     } ;
   
-  -- only nominative; any way to streamline this?
+  
   smartAdj : Str -> Adjective = \masc -> case masc of {
-     du  +  "ży" => mkAdj (du + "ż") (du + "zi") ;
-     wes  +  "oły" => mkAdj (wes + "oł") (wes + "eli") ;
-     mi  +  "ły" => mkAdj (mi + "ł") (mi + "li") ;
-     mlo  +  "dy" => mkAdj (mlo + "d") (mlo + "dzi") ;
-     pro  +  "sty" => mkAdj (pro + "st") (pro + "ści") ;
-     pracowi  +  "ty" => mkAdj (pracowi + "t") (pracowi + "ci") ;
-     star  +  "szy" => mkAdj (star + "sz") (star + "si") ;
-     zmecz  +  "ony" => mkAdj (zmecz + "on") (zmecz + "eni") ;
-     dob  +  "ry" => mkAdj (dob + "r") (dob + "rzy") ;
-     elegan  +  "cki" => mkAdj (elegan + "ck") (elegan + "ccy") ;
-     wyso  +  "ki" => mkAdj (wyso + "k") (wyso + "cy") ;
-     ubo  +  "gi"  => mkAdj (ubo + "g") (ubo + "dzy") ;
-     pachna  +  "cy"  => mkAdj (pachna + "c") (pachna + "cy") ;
-     proro  +  "czy"  => mkAdj (proro + "cz") (proro + "czy") ;
-     cu  +  "dzy"  => mkAdj (cu + "dz") (cu + "dzy") ;
-     slab  +  "y" => mkAdj slab (slab + "i") ;
-     tan + "i" => mkAdj (tan + "i") (tan + "i") 
+     du  +  "ży" => mkAdj (du + "ży") (du + "żego") (du + "żemu") (du + "żym") (du + "żych") (du + "żymi") (du + "że") (du + "ża") (du + "żej") (du + "żą") (du + "zi") ;
+     wes  +  "oły" => mkAdj (wes + "oły") (wes + "ołego") (wes + "ołemu") (wes + "ołym") (wes + "ołych") (wes + "ołymi") (wes + "ołe") (wes + "oła") (wes + "ołej") (wes + "ołą") (wes + "eli") ;
+     mi  +  "ły" => mkAdj (mi + "ły") (mi + "łego") (mi + "łemu") (mi + "łym") (mi + "łych") (mi + "łymi") (mi + "łe") (mi + "ła") (mi + "łej") (mi + "łą") (mi + "li") ;
+     mlo  +  "dy" => mkAdj (mlo + "dy") (mlo + "dego") (mlo + "demu") (mlo + "dym") (mlo + "dych") (mlo + "dymi") (mlo + "de") (mlo + "da") (mlo + "dej") (mlo + "dą") (mlo + "dzi") ;
+     pro  +  "sty" => mkAdj (pro + "sty") (pro + "stego") (pro + "stemu") (pro + "stym") (pro + "stych") (pro + "stymi") (pro + "ste") (pro + "sta") (pro + "stej") (pro + "stą") (pro + "ści") ;
+     pracowi  +  "ty" => mkAdj (pracowi + "ty") (pracowi + "tego") (pracowi + "temu") (pracowi + "tym") (pracowi + "tych") (pracowi + "tymi") (pracowi + "te") (pracowi + "ta") (pracowi + "tej") (pracowi + "tą") (pracowi + "ci") ;
+     star  +  "szy" => mkAdj (star + "szy") (star + "szego") (star + "szemu") (star + "szym") (star + "szych") (star + "szymi") (star + "sze") (star + "sza") (star + "szej") (star + "szą") (star + "si") ;
+     zmecz  +  "ony" => mkAdj (zmecz + "ony") (zmecz + "onego") (zmecz + "onemu") (zmecz + "onym") (zmecz + "onych") (zmecz + "onymi") (zmecz + "one") (zmecz + "ona") (zmecz + "onej") (zmecz + "oną") (zmecz + "eni") ;
+     dob  +  "ry" => mkAdj (dob + "ry") (dob + "rego") (dob + "remu") (dob + "rym") (dob + "rych") (dob + "rymi") (dob + "re") (dob + "ra") (dob + "rej") (dob + "rą") (dob + "rzy") ;
+     elegan  +  "cki" => mkAdj (elegan + "cki") (elegan + "ckiego") (elegan + "ckiemu") (elegan + "ckim") (elegan + "ckich") (elegan + "ckimi") (elegan + "ckie") (elegan + "cka") (elegan + "ckiej") (elegan + "cką") (elegan + "ccy") ;
+     wyso  +  "ki" => mkAdj (wyso + "ki") (wyso + "kiego") (wyso + "kiemu") (wyso + "kim") (wyso + "kich") (wyso + "kimi") (wyso + "kie") (wyso + "ka") (wyso + "kiej") (wyso + "ką") (wyso + "cy")  ;
+     ubo  +  "gi"  => mkAdj (ubo + "gi") (ubo + "giego") (ubo + "giemu") (ubo + "gim") (ubo + "gich") (ubo + "gimi") (ubo + "gie") (ubo + "ga") (ubo + "giej") (ubo + "gą") (ubo + "dzy") ;
+     pachna  +  "cy"  => mkAdj (pachna + "cy") (pachna + "cego") (pachna + "cemu") (pachna + "cym") (pachna + "cych") (pachna + "cymi") (pachna + "ce") (pachna + "ca") (pachna + "cej") (pachna + "cą") (pachna + "cy") ;
+     proro  +  "czy"  => mkAdj (proro + "czy") (proro + "czego") (proro + "czemu") (proro + "czym") (proro + "czych") (proro + "czymi") (proro + "cze") (proro + "cza") (proro + "czej") (proro + "czą") (proro + "czy") ;
+     cu  +  "dzy"  => mkAdj (cu + "dzy") (cu + "dzego") (cu + "dzemu") (cu + "dzym") (cu + "dzych") (cu + "dzymi") (cu + "dze") (cu + "dza") (cu + "dzej") (cu + "dzą") (cu + "dzy") ;
+     slab  +  "y" => mkAdj (slab + "y") (slab + "ego") (slab + "emu") (slab + "ym") (slab + "ych") (slab + "ymi") (slab + "e") (slab + "a") (slab + "ej") (slab + "ą")  (slab + "i") ;
+     tan + "i" => mkAdj (tan + "i") (tan + "iego") (tan + "iemu") (tan + "im") (tan + "ich") (tan + "imi") (tan + "ie") (tan + "ia") (tan + "iej") (tan + "ią") (tan + "i") 
      } ;
 
+  --for the verb, as far as only the present tense is concerned, only the infinitive and six present verb forms are needed. These are stored using
+  --the NPAgr, since they need to agree with the subject in the number and person. In the past tense, in all the forms except for 2nd person plural,
+  --the gender is also something that needs to be agreed for, but I disregarded it here as it is not currently needed. For the conjugate verb function,
+  --which is the smart verb function to an extent, aside from the infinitive, one needs the number of the conjugation it takes, as these are not
+  --predictable from just the spelling. This does not also fully account for changes in the root or conjugations where endings can vary.
   Verb : Type = {s : VForm => Str} ;
 
   mkVerb : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 : Str) -> Verb
@@ -280,7 +336,7 @@ oper
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]
   Verb2 : Type = Verb ** {c : Str} ;
 
-  be_Verb : Verb = mkVerb "być" "jestem" "jesteś" "jest" "jesteście" "jesteśmy" "są" ; ---s to be generalized
+  be_Verb : Verb = mkVerb "być" "jestem" "jesteś" "jest" "jesteście" "jesteśmy" "są" ; 
 
 
 ---s a very simplified verb agreement function for Micro
