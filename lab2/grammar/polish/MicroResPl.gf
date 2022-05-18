@@ -9,7 +9,6 @@ param
   Conjugation = I | II | III | IV | V | VIa | VIb | VIIa | VIIb | VIII | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
 
   NPAgreement = NPAgr Number Person ;
-  -- not sure here
 
 oper
   --for nouns I need to store 2 numbers, 7 cases each, and the gender. Aside from the typical masculine, feminine, neuter, there is something that
@@ -350,9 +349,5 @@ oper
   Verb2 : Type = Verb ** {c : Str} ;
 
   be_Verb : Verb = mkVerb "być" "jestem" "jesteś" "jest" "jesteście" "jesteśmy" "są" ; 
-
-
----s a very simplified verb agreement function for Micro
----removed for now
 
 }
