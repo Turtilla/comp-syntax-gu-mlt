@@ -6,7 +6,7 @@ param
   Case = Nom | Gen | Dat | Acc | Ins | Loc | Voc ;
   Gender = MascAnim | Masc | Fem | Neut ;
   Person = First | Second | Third ;
-  Conjugation = I | II | III | IV | V | VIa | VIb | VIIa | VIIb | VIII | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
+  Conjugation = I | II | III | IV | Va | VIa | VIb | VIIa | VIIb | VIII | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
 
   NPAgreement = NPAgr Number Person ;
   GNAgreement = GNAgr Gender Number ;
@@ -314,7 +314,7 @@ oper
   mkVerb : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 : Str) -> Verb
     = \inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 -> {
     s = table {
-      Inf => inf ; -- wil it work?
+      Inf => inf ; 
       Pres (NPAgr Sg First) => pressg1 ;
       Pres (NPAgr Sg Second) => pressg2 ;
       Pres (NPAgr Sg Third) => pressg3 ;
@@ -331,7 +331,7 @@ oper
      II => case inf of { umi  +  "eć" =>  mkVerb inf (umi + "em") (umi + "esz") (umi + "e") (umi + "emy") (umi + "ecie") (umi + "eją") } ;  -- 2nd conjugation
      III => case inf of { tani + "eć"  => mkVerb inf (tani + "eję") (tani + "ejesz") (tani + "eje") (tani + "ejemy") (tani + "ejcie") (tani + "eją") } ;  -- 3rd conjugation
      IV => case inf of { mal  +  "ować" => mkVerb inf (mal + "uję") (mal + "ujesz") (mal + "uje") (mal + "ujemy") (mal + "ujecie") (mal + "ują") } ;  -- 4th conjugation
-     V => case inf of { ciag  +  "nąć" => mkVerb inf (ciag + "nę") (ciag + "niesz") (ciag + "nie") (ciag + "niemy") (ciag + "niecie") (ciag + "ną") } ;  -- 5th conjugation
+     Va => case inf of { ciag  +  "nąć" => mkVerb inf (ciag + "nę") (ciag + "niesz") (ciag + "nie") (ciag + "niemy") (ciag + "niecie") (ciag + "ną") } ;  -- 5th conjugation, needs calling Va because it otherwise conflicts with V(erb)
      VIa => case inf of { rob  +  "ić" => mkVerb inf (rob + "ię") (rob + "isz") (rob + "i") (rob + "imy") (rob + "icie") (rob + "ią") } ;  -- 6th A conjugation
      VIb => case inf of { wierz  +  "yć" => mkVerb inf (wierz + "ę") (wierz + "ysz") (wierz + "y") (wierz + "ymy") (wierz + "ycie") (wierz + "ą") } ;  -- 6th B conjugation
      VIIa => case inf of { widz  +  ("ieć"|"eć") => mkVerb inf (widz + "ę") (widz + "isz") (widz + "i") (widz + "imy") (widz + "icie") (widz + "ą") } ;  -- 7th A conjugation
@@ -347,7 +347,7 @@ oper
      } ;  
 
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  Verb2 : Type = Verb ** {c : Str} ;
+  Verb2 : Type = Verb ** {cp : Str} ;
 
   be_Verb : Verb = mkVerb "być" "jestem" "jesteś" "jest" "jesteście" "jesteśmy" "są" ; 
 

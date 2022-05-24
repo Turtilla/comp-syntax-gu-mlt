@@ -57,7 +57,8 @@ concrete MicroLangEng of MicroLang = open MicroResEng, Prelude in {
       } ;
       
     UsePron p = p ;
-            
+
+    --we need to remove indefinite pronouns        
     a_Det = {s = pre {"a"|"e"|"i"|"o" => "an" ; _ => "a"} ; n = Sg} ; --- a/an can get wrong
     aPl_Det = {s = "" ; n = Pl} ;
     the_Det = {s = "the" ; n = Sg} ;
