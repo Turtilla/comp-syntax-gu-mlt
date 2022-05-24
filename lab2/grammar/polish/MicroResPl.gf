@@ -9,6 +9,7 @@ param
   Conjugation = I | II | III | IV | V | VIa | VIb | VIIa | VIIb | VIII | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
 
   NPAgreement = NPAgr Number Person ;
+  GNAgreement = GNAgr Gender Number ;
 
 oper
   --for nouns I need to store 2 numbers, 7 cases each, and the gender. Aside from the typical masculine, feminine, neuter, there is something that
