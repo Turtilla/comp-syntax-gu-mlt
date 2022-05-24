@@ -16,7 +16,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     NP = {s : Case => Str ; a : GNAgreement} ; -- gender, number agreement
     Pron = {s : Case => Str ; a : GNAgreement} ;
     Det = {s : Gender => Case => Str ; n : Number} ;
-    Prep = {s : Str} ;
+    Prep = {s : Str ; c : Case} ;
     V = Verb ; --{s : VForm => Str}
     V2 = Verb2 ;  --Verb ** {c : Str}
     A = Adjective ; --{s : Gender => Number => Case => Str}
@@ -56,10 +56,10 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       vp ** {compl = vp.compl ++ adv.s} ;
   
   -- Noun
---    DetCN det cn = {
---      s = \\c => det.s ++ cn.s ! det.n ;
---      a = Agr det.n ;
---      } ;
+    DetCN det cn = {
+      s = table {c => det.s ! cn.g ! c ++ cn.s ! det.n ! c} ;
+      a = GNAgr cn.g det.n ;
+      } ;
       
     UsePron p = p ;
 
@@ -151,23 +151,20 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     AdjCN ap cn = {
       s = table {n => table {
                 c => ap.s ! cn.g ! n ! c ++ cn.s ! n ! c
-       }} ; g = cn.g  -- need to change, need {s : Number => Case => Str ; g : Gender}
+       }} ; g = cn.g
       } ;
 
   -- Adjective
     PositA a = a ;
 
   -- Adverb 
---    PrepNP prep np = \prep,np -> case prep of {
---      ("w"|"we"|"na") => s = prep.s ++ np.s ! Loc ;
---      ("z"|"ze") => s = prep.s ++ np.s ! Ins
---      } ; 
+    PrepNP prep np = {s = prep.s ++ np.s ! prep.c} ;
 
   -- Structural
     --variants depending on the first consonant of the noun added
-    in_Prep = {s = pre {"w" => "we" ; _ => "w"}} ; --locative
-    on_Prep = {s = "na"} ; --locative
-    with_Prep = {s = pre {"z" => "ze" ; _ => "z"}} ; --instrumental
+    in_Prep = {s = pre {"w" => "we" ; _ => "w"} ; c = Loc} ; --locative
+    on_Prep = {s = "na" ; c = Loc} ; --locative
+    with_Prep = {s = pre {"z" => "ze" ; _ => "z"} ; c = Loc} ; --instrumental
 
     --for the majority of pronouns there are alternative versions (e.g. for masculine accusative singular
     --there is "jego", "go", "niego", "-ń"); these have a relatively predictable distribution, but in some
@@ -338,12 +335,12 @@ oper
   mkA : Str -> A
     = \masc -> lin A (smartAdj masc) ;
 
---  mkV = overload {
---    mkV : Str -> Conjugation -> Verb  -- predictable verb, e.g. czytać-czytam-czytasz-etc.
---      = \inf, conj -> lin V (conjVerb inf conj) ;
---    mkV : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 : Str) -> V  -- irregular verb, e.g. iść-idę-idziesz-etc.
---      = \inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 -> lin V (mkVerb inf pressg1 pressg2 pressg3 prespl1 prespl2 prespl3) ;
---    } ;
+  mkV = overload {
+    mkV : Str -> Conjugation -> Verb  -- predictable verb, e.g. czytać-czytam-czytasz-etc.
+      = \inf, conj -> lin V (conjVerb inf conj) ;
+    mkV : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 : Str) -> V  -- irregular verb, e.g. iść-idę-idziesz-etc.
+      = \inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3 -> lin V (mkVerb inf pressg1 pressg2 pressg3 prespl1 prespl2 prespl3) ;
+    } ;
 
 --These cannot just take strings since constructing a verb requires the conjugation
 --  mkV2 = overload {
