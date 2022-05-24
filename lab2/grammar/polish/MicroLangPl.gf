@@ -148,9 +148,11 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     
     UseN n = n ;
     
---    AdjCN ap cn = {
---      s = table {n => ap.s ++ cn.s ! n}  -- need to change 
---      } ;
+    AdjCN ap cn = {
+      s = table {n => table {
+                c => ap.s ! cn.g ! n ! c ++ cn.s ! n ! c
+       }} ; g = cn.g  -- need to change, need {s : Number => Case => Str ; g : Gender}
+      } ;
 
   -- Adjective
     PositA a = a ;
