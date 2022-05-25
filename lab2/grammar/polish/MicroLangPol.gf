@@ -9,11 +9,11 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
     Utt = {s : Str} ;
     
     S  = {s : Str} ;
-    VP = {verb : Verb ; compl : Gender => Number => Str} ; ---s special case of Mini
-    Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject
+    VP = {verb : Verb ; compl : Gender => Number => Str} ; --the compl needs to store different forms for when it is a subject complement
+    Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject, see above
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
-    NP = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ; -- gender, number agreement
+    NP = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --NPAgreement and isPron for when it is subject, g and n for when it is an object.
     Pron = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
     Det = {s : Gender => Case => Str ; n : Number} ;
     Prep = {s : Str ; c : Case} ;
@@ -31,37 +31,39 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
   -- Sentence
     PredVPS np vp = { s = case np.isPron of {
       False => np.s ! Nom ++ vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n ;
-      True => vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n
+      True => vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n --pronoun-dropping; pronominal subjects are only used for emphasis
       }};
 
   -- Verb  
     UseV v = {
       verb = v ;
-      compl = table {g => table {n => []}} ;
+      compl = table {g => table {n => []}} ; --no object or complement
       } ;
       
     ComplV2 v2 np = {
       verb = v2 ;
-      compl = table {g => table {n => v2.cp ++ np.s ! Acc}}  -- NP object in the accusative, preposition first
+      compl = table {g => table {n => v2.cp ++ np.s ! Acc}}  -- NP object in the accusative, potential preposition first
       } ;
 
--- how do I make it so that it picks the right compl based on the subject's gender?     
     UseComp comp = {
-      verb = be_Verb ;     -- the verb is the copula "be"
-      compl = comp.s -- ! subject gender ! subject number, use GNAgreement somehow?
+      verb = be_Verb ; -- the verb is the copula "be"
+      compl = comp.s --subject complement, can later select the appropriate form based on gender and number of the subject
       } ;
      
     CompAP ap = {
       s = table {
         g => table {
-          n => ap.s ! g ! n ! Nom
+          n => ap.s ! g ! n ! Nom --allows to select the appropriate form based on gender and number of the subject
         }
       }
     } ;
       
+    --for this one it is worth noting that adverbs are very flexible in terms of position and this sentence-final position works well for
+    --adverbials like "in a book" or "with them", but not as much for adverbs like "now" or "already", it sounds a bit off, however, I believe
+    --that fixing this would be rather complicated and the solution I can think of does not allow for multiple adverbs.
     AdvVP vp adv = {
       verb = vp.verb ;
-      compl = table {g => table {n => vp.compl ! g ! n ++ adv.s}}
+      compl = table {g => table {n => vp.compl ! g ! n ++ adv.s}} --adds an adv to the object or complement
     } ;
   
   -- Noun
@@ -70,13 +72,13 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
       a = NPAgr det.n Third ;
       g = cn.g ;
       n = det.n ;
-      isPron = False
+      isPron = False --lets decide if this can be dropped when it is a subject
       } ;
       
     UsePron p = p ;
 
-    --how to make it dependent on gender? same as in the other file?    
-    --these are also entirely optional and are more of determiners than articles. Should I keep them?   
+    --it's worth pointing out that the definite "articles" here are somewhere between that and determiners ("this"). I decided to keep them 
+    --nonetheless because they do highlight the difference between "some noun" and "the noun".
     a_Det = {s = table {g => table {c => ""}} ; n = Sg} ;
     aPl_Det = {s = table {g => table {c => ""}} ; n = Pl} ; 
     the_Det = {s = table {
@@ -162,7 +164,7 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
     
     AdjCN ap cn = {
       s = table {n => table {
-                c => ap.s ! cn.g ! n ! c ++ cn.s ! n ! c
+                c => ap.s ! cn.g ! n ! c ++ cn.s ! n ! c --all number and case combinations with appropriate gender
        }} ; g = cn.g
       } ;
 
@@ -170,10 +172,10 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
     PositA a = a ;
 
   -- Adverb 
-    PrepNP prep np = {s = prep.s ++ np.s ! prep.c} ;
+    PrepNP prep np = {s = prep.s ++ np.s ! prep.c} ; --the attached NP must be in an appropriate case
 
   -- Structural
-    --variants depending on the first consonant of the noun added
+    --variants depending on the first consonant of the noun, stored case that is required of the NP that connects to the preposition
     in_Prep = {s = pre {"w" => "we" ; _ => "w"} ; c = Loc} ; --locative
     on_Prep = {s = "na" ; c = Loc} ; --locative
     with_Prep = {s = pre {"z" => "ze" ; _ => "z"} ; c = Ins} ; --instrumental
@@ -233,7 +235,7 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
       --this one is used for plurals where no masculine human noun is a part of the group denoted by the pronoun; since this distinction seems
       --to be outside the scope of this assignment, I just commented this option out. This is only really relevant in actual discourse when we
       --know what the pronoun refers to, and in sentences with past verb forms, where they have to align in gender. Adjectives also have to do
-      --that, but that is more straightforward
+      --that, but that is more straightforward.
       --they_nonmasc_Pron = {
       --s = table {
                 --Nom => "one" ;
@@ -264,7 +266,7 @@ lin big_A = mkA "duży" ;
 lin bike_N = mkN "rower" "rowery" "rowerów" Masc ;
 lin bird_N = mkN "ptak" "ptaki" "ptaków" Masc ;
 lin black_A = mkA "czarny" ;
-lin blood_N = mkN "krew" "krwi" "krwi" Fem ;
+lin blood_N = mkN "krew" "krwie" "krwi" Fem ;
 lin blue_A = mkA "niebieski" ;
 lin boat_N = mkN "łódka" "łódki" "łódek" Fem ; 
 lin book_N = mkN "książka" "książki" "książek" Fem ;
