@@ -1,5 +1,5 @@
 --# -path=.:../abstract
-concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
+concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
 
 -----------------------------------------------------
 ---------------- Grammar part -----------------------
@@ -13,8 +13,8 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
-    NP = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number} ; -- gender, number agreement
-    Pron = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number} ;
+    NP = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ; -- gender, number agreement
+    Pron = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
     Det = {s : Gender => Case => Str ; n : Number} ;
     Prep = {s : Str ; c : Case} ;
     V = Verb ; --{s : VForm => Str}
@@ -26,13 +26,13 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
   lin
   -- Phrase
     UttS s = s ;
-    UttNP np = {s = np.s ! Acc} ;  -- why ! Acc here? 
+    UttNP np = {s = np.s ! Nom} ;  --originally it was Acc here, but, to be honest, a NP in any case could be an utterance here, so I picked the default Nom
 
   -- Sentence
-    PredVPS np vp = {
-      s = np.s ! Nom ++ vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n
-      -- add more options, use ; 
-      } ;  --use free variation with | or variants {}
+    PredVPS np vp = { s = case np.isPron of {
+      False => np.s ! Nom ++ vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n ;
+      True => vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n
+      }};
 
   -- Verb  
     UseV v = {
@@ -70,6 +70,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       a = NPAgr det.n Third ;
       g = cn.g ;
       n = det.n ;
+      isPron = False
       } ;
       
     UsePron p = p ;
@@ -197,6 +198,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       a = NPAgr Sg Third ;
       g = MascAnim ; 
       n = Sg ;
+      isPron = True ;
       } ;
     she_Pron = {
       s = table {
@@ -211,6 +213,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       a = NPAgr Sg Third ;
       g = Fem ;
       n = Sg ;
+      isPron = True ;
       } ;
     they_Pron = {
       s = table {
@@ -225,6 +228,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       a = NPAgr Pl Third ;
       g = MascAnim ;
       n = Pl ;
+      isPron = True ;
       } ;
       --this one is used for plurals where no masculine human noun is a part of the group denoted by the pronoun; since this distinction seems
       --to be outside the scope of this assignment, I just commented this option out. This is only really relevant in actual discourse when we
@@ -240,99 +244,102 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
                 --Loc => "nich" ;
                 --Voc => "one"
                 --} ;
-      --a = Agr Pl ;
+      --a = NPAgr Pl Third ;
+      --g = Fem ; -- or Neut or Masc
+      --n = Pl ;
+      --isPron = True ;
       --} ;
 
 -----------------------------------------------------
 ---------------- Lexicon part -----------------------
 -----------------------------------------------------
 
---lin already_Adv = mkAdv "już" ;
-lin animal_N = mkN "zwierzę" "zwierzęta" Neut ;
-lin apple_N = mkN "jabłko" "jabłka" Neut ;
+lin already_Adv = mkAdv "już" ;
+lin animal_N = mkN "zwierzę" "zwierzęta" "zwierząt" Neut ;
+lin apple_N = mkN "jabłko" "jabłka" "jabłek" Neut ;
 lin baby_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ;
 lin bad_A = mkA "zły" ;
-lin beer_N = mkN "piwo" "piwa" Neut ;
+lin beer_N = mkN "piwo" "piwa" "piw" Neut ;
 lin big_A = mkA "duży" ;
-lin bike_N = mkN "rower" "rowery" Masc ;
-lin bird_N = mkN "ptak" "ptaki" Masc ;
+lin bike_N = mkN "rower" "rowery" "rowerów" Masc ;
+lin bird_N = mkN "ptak" "ptaki" "ptaków" Masc ;
 lin black_A = mkA "czarny" ;
-lin blood_N = mkN "krew" "krwi" Fem ;
+lin blood_N = mkN "krew" "krwi" "krwi" Fem ;
 lin blue_A = mkA "niebieski" ;
-lin boat_N = mkN "łódka" "łódki" Fem ; 
-lin book_N = mkN "książka" "książki" Fem ;
-lin boy_N = mkN "chłopak" "chłopacy" MascAnim ;
-lin bread_N = mkN "chleb" "chleby" Masc ;
+lin boat_N = mkN "łódka" "łódki" "łódek" Fem ; 
+lin book_N = mkN "książka" "książki" "książek" Fem ;
+lin boy_N = mkN "chłopak" "chłopacy" "chłopaków" MascAnim ;
+lin bread_N = mkN "chleb" "chleby" "chlebów" Masc ;
 lin break_V2 = mkV2 (mkV "łamać" IX) ;
 lin buy_V2 = mkV2 (mkV "kupować" IV) ;
-lin car_N = mkN "auto" "auta" Neut ;
-lin cat_N = mkN "kot" "koty" Masc ;
+lin car_N = mkN "auto" "auta" "aut" Neut ;
+lin cat_N = mkN "kot" "koty" "kotów" Masc ;
 lin child_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ;
-lin city_N = mkN "miasto" "miasta" Neut ;
+lin city_N = mkN "miasto" "miasta" "miast" Neut ;
 lin clean_A = mkA "czysty" ;
 lin clever_A = mkA "sprytny" ;
-lin cloud_N = mkN "chmura" "chmury" Fem ;
+lin cloud_N = mkN "chmura" "chmury" "chmur" Fem ;
 lin cold_A = mkA "zimny" ;
 lin come_V = mkV "przychodzić" VIa ;
-lin computer_N = mkN "komputer" "komputery" Masc;
-lin cow_N = mkN "krowa" "krowy" "krowie" "krowę" "krową" "krowie" "krowo" "krowy" "krów" "krowom" "krowy" "krowami" "krowach" "krowy" Fem ;
+lin computer_N = mkN "komputer" "komputery" "komputerów" Masc;
+lin cow_N = mkN "krowa" "krowy" "krów" Fem ;
 lin dirty_A = mkA "brudny" ;
 lin dog_N = mkN "pies" "psa" "psu" "psa" "psem" "psie" "psie" "psy" "psów" "psom" "psy" "psami" "psach" "psy" Masc ; 
 lin drink_V2 = mkV2 (mkV "pić" Xa) ;
 lin eat_V2 = mkV2 (mkV "jeść" "jem" "jesz" "je" "jemy" "jecie" "jedzą") ;
 lin find_V2 = mkV2 (mkV "znajdować" IV) ;
 lin fire_N = mkN "ogień" "ognia" "ogniowi" "ogień" "ogniem" "ogniu" "ogniu" "ognie" "ogni" "ogniom" "ognie" "ogniami" "ogniach" "ognie" Masc ; --IRREGULAR
-lin fish_N = mkN "ryba" "ryby" Fem ;
-lin flower_N = mkN "kwiat" "kwiaty" Masc ;
-lin friend_N = mkN "przyjaciel" "przyjaciele" MascAnim ;
-lin girl_N = mkN "dziewczyna" "dziewczyny" Fem ;
+lin fish_N = mkN "ryba" "ryby" "ryb" Fem ;
+lin flower_N = mkN "kwiat" "kwiaty" "kwiatów" Masc ;
+lin friend_N = mkN "przyjaciel" "przyjaciele" "przyjaciół" MascAnim ;
+lin girl_N = mkN "dziewczyna" "dziewczyny" "dziewczyn" Fem ;
 lin good_A = mkA "dobry" ;
 lin go_V = mkV "iść" "idę" "idziesz" "idzie" "idziemy" "idziecie" "idą" ;
-lin grammar_N = mkN "gramatyka" "gramatyki" Fem ;
+lin grammar_N = mkN "gramatyka" "gramatyki" "gramatyk" Fem ;
 lin green_A = mkA "zielony" ;
 lin heavy_A = mkA "ciężki" ;
-lin horse_N = mkN "koń" "konie" Masc ;
+lin horse_N = mkN "koń" "konie" "koni" Masc ;
 lin hot_A = mkA "gorący" ;
-lin house_N = mkN "dom" "domy" Masc ;
+lin house_N = mkN "dom" "domy" "domów" Masc ;
 --- lin john_PN = mkPN "John" ;
 lin jump_V = mkV "skakać" IX ;
 lin kill_V2 = mkV2 (mkV "zabijać" I) ;
 --- lin know_VS = mkVS (mkV "wiedzieć" "wiem" "wiesz" "wie" "wiemy" "wiecie" "wiedzą") ;
-lin language_N = mkN "język" "języki" Masc ;
+lin language_N = mkN "język" "języki" "języków" Masc ;
 lin live_V = mkV "żyć" Xa;
 lin love_V2 = mkV2 (mkV "kochać" I) ;
-lin man_N = mkN "mężczyzna" "mężczyźni" MascAnim ;
-lin milk_N = mkN "mleko" "mleka" Neut ;
-lin music_N = mkN "muzyka" "muzyki" Fem ;
+lin man_N = mkN "mężczyzna" "mężczyźni" "mężczyzn" MascAnim ;
+lin milk_N = mkN "mleko" "mleka" "mlek" Neut ;
+lin music_N = mkN "muzyka" "muzyki" "muzyk" Fem ;
 lin new_A = mkA "nowy" ;
--- lin now_Adv = mkAdv "teraz" ;
+lin now_Adv = mkAdv "teraz" ;
 lin old_A = mkA "stary" ;
 -- lin paris_PN = mkPN "Paryż" ;
 lin play_V = mkV "grać" I;
 lin read_V2 = mkV2 (mkV "czytać" I) ;
 lin ready_A = mkA "gotowy" ;
 lin red_A = mkA "czerwony" ;
-lin river_N = mkN "rzeka" "rzeki" Fem ;
+lin river_N = mkN "rzeka" "rzeki" "rzek" Fem ;
 lin run_V = mkV "biegać" I ;
-lin sea_N = mkN "morze" "morza" "morzu" "morze" "morzem" "morzu" "morze" "morza" "mórz" "morzom" "morza" "morzami" "morzach" "morza" Neut ;
+lin sea_N = mkN "morze" "morza" "mórz" Neut ;
 lin see_V2 = mkV2 (mkV "widzieć" VIIa) ;
-lin ship_N = mkN "statek" "statki" Masc ;
+lin ship_N = mkN "statek" "statki" "statków" Masc ;
 lin sleep_V = mkV "spać" "śpię" "śpisz" "śpi" "śpimy" "śpicie" "śpią";
 lin small_A = mkA "mały" ;
-lin star_N = mkN "gwiazda" "gwiazdy" Fem ;
+lin star_N = mkN "gwiazda" "gwiazdy" "gwiazd" Fem ;
 lin swim_V = mkV "pływać" I ;
 lin teach_V2 = mkV2 (mkV "uczyć" VIb) ;
-lin train_N = mkN "pociąg" "pociągi" Masc;
+lin train_N = mkN "pociąg" "pociągi" "pociągów" Masc;
 lin travel_V = mkV "podróżować" IV ;
-lin tree_N = mkN "drzewo" "drzewa" Neut ;
+lin tree_N = mkN "drzewo" "drzewa" "drzew" Neut ;
 lin understand_V2 = mkV2 (mkV "rozumieć" II) ;
 lin wait_V2 = mkV2 (mkV "czekać" I) "na" ;
 lin walk_V = mkV "spacerować" IV ;
 lin warm_A = mkA "ciepły" ;
 lin water_N = mkN "woda" "wody" "wodzie" "wodę" "wodą" "wodzie" "wodo" "wody" "wód" "wodom" "wody" "wodami" "wodach" "wody" Fem ; --only "wód" is irregular
 lin white_A = mkA "biały" ;
-lin wine_N = mkN "wino" "wina" Neut ;
-lin woman_N = mkN "kobieta" "kobiety" Fem ;
+lin wine_N = mkN "wino" "wina" "win" Neut ;
+lin woman_N = mkN "kobieta" "kobiety" "kobiet" Fem ;
 lin yellow_A = mkA "żółty" ;
 lin young_A = mkA "młody" ;
 
@@ -342,8 +349,8 @@ lin young_A = mkA "młody" ;
 
 oper
   mkN = overload {
-    mkN :  Str -> Str -> Gender -> Noun   -- predictable nouns, e.g. jajo-jaja, kobieta-kobiety, byk-byki, król-królowie
-      = \noun,plural,g -> lin N (smartNoun noun plural g) ;
+    mkN :  Str -> Str -> Str -> Gender -> Noun   -- predictable nouns, e.g. jajo-jaja, kobieta-kobiety, byk-byki, król-królowie
+      = \noun,plural,gen,g -> lin N (smartNoun noun plural gen g) ;
     mkN : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Gender -> Noun  -- irregular nouns, e.g. człowiek-ludzie
       = \sgnom, sggen, sgdat, sgacc, sgins, sgloc, sgvoc, plnom, plgen, pldat, placc, plins, plloc, plvoc, g -> 
       lin N (mkNoun sgnom sggen sgdat sgacc sgins sgloc sgvoc plnom plgen pldat placc plins plloc plvoc g) ;
@@ -367,10 +374,10 @@ oper
       = \v,p -> lin V2 (v ** {cp = p}) ;
     } ;
 --
---  mkAdv : Str -> Adv
---    = \s -> lin Adv {s = s} ;
+  mkAdv : Str -> Adv
+    = \s -> lin Adv {s = s} ;
   
---  mkPrep : Str -> Prep
---    = \s -> lin Prep {s = s} ;
+  mkPrep : Str -> Case -> Prep
+    = \s,c -> lin Prep {s = s ; c = c} ;
 
 }
