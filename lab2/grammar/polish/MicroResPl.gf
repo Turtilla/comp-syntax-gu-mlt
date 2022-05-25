@@ -1,4 +1,4 @@
-resource MicroResPl = open Prelude in {
+resource MicroResPol = open Prelude in {
 
 param
   VForm = Inf | Pres NPAgreement ;
@@ -9,7 +9,6 @@ param
   Conjugation = I | II | III | IV | Va | VIa | VIb | VIIa | VIIb | VIII | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
 
   NPAgreement = NPAgr Number Person ;
-  GNAgreement = GNAgr Gender Number ;
 
 oper
   --for nouns I need to store 2 numbers, 7 cases each, and the gender. Aside from the typical masculine, feminine, neuter, there is something that
@@ -26,6 +25,8 @@ oper
   --There is a smart function for each gender, since the sheer number of variations made it hard to otherwise troubleshoot errors (it is easier to
   --fix the error if you know that it is in the endings for masculine nouns, than for all the nouns). There is then a "master function" smartNoun,
   --which selects which of the four to use based on the given gender.
+
+  --Requiring plural genitive solved a lot of other issues that forced me to split a lot of variants.
   Noun : Type = {s : Number => Case => Str ; g : Gender} ;
 
   mkNoun : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Gender -> Noun 
@@ -82,6 +83,7 @@ oper
               --feminine nouns ending in "ew" - the plurals for "krew" (blood) are not really used and the ones here are modelled after "brew" (eyebrow), and don't fully fit the dictionary entry for "krew", but sound acceptable to me as a native speaker.
               kr + "ew" => mkNoun noun plural plural noun (kr + "wią") plural plural plural plural (kr + "wiom") plural (kr + "wiami") (kr + "wiach") plural g ;
               --feminine nouns ending with "a" with a velar stem.
+              lo + ("dka"|"tka") => case noun of {lod + "ka" => mkNoun noun plural (lod + "ce") (lod + "kę") (lod + "ką") (lod + "ce") (lod + "ko") plural (lod + "ek") (lod + "kom") plural (lod + "kami") (lod + "kach") plural g } ;
               wal + "ka" => mkNoun noun plural (wal + "ce") (wal + "kę") (wal + "ką") (wal + "ce") (wal + "ko") plural (wal + "k") (wal + "kom") plural (wal + "kami") (wal + "kach") plural g ;
               dro + "ga" => mkNoun noun plural (dro + "dze") (dro + "gę") (dro + "gą") (dro + "dze") (dro + "go") plural (dro + "g") (dro + "gom") plural (dro + "gami") (dro + "gach") plural g ;
               ce + "cha" => mkNoun noun plural (ce + "sze") (ce + "chę") (ce + "chą") (ce + "sze") (ce + "cho") plural (ce + "ch") (ce + "chom") plural (ce + "chami") (ce + "chach") plural g ;         
@@ -139,7 +141,7 @@ oper
               mu + "ł" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (mu + "le") (mu + "le") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; 
               ga + "d" => mkNoun noun (noun + "a") (noun + "owi") (noun + "a") (noun + "em") (ga + "dzie") (ga + "dzie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g ;
               no + ("n"|"z"|"s"|"f") => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") plural (noun + "ów") (noun + "om") plural (noun + "ami") (noun + "ach") plural g 
-              --due to their rarity or difficulty, masculine nouns with fleeting vowels (pies vs. psy), with the "ą" vowel (wąż vs. węży), and full irregulars have been excluded.
+              --due to their rarity or difficulty, some masculine nouns with fleeting vowels (ogień vs. ognie), with the "ą" vowel (wąż vs. węży), and full irregulars have been excluded.
   } ;
 
   smartNounMascAnim : Str -> Str -> Gender -> Noun = \noun,plural,g -> case plural of {

@@ -9,12 +9,12 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     Utt = {s : Str} ;
     
     S  = {s : Str} ;
-    VP = {verb : Verb ; compl : Str} ; ---s special case of Mini
+    VP = {verb : Verb ; compl : Gender => Number => Str} ; ---s special case of Mini
     Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
-    NP = {s : Case => Str ; a : GNAgreement} ; -- gender, number agreement
-    Pron = {s : Case => Str ; a : GNAgreement} ;
+    NP = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number} ; -- gender, number agreement
+    Pron = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number} ;
     Det = {s : Gender => Case => Str ; n : Number} ;
     Prep = {s : Str ; c : Case} ;
     V = Verb ; --{s : VForm => Str}
@@ -25,24 +25,24 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
 
   lin
   -- Phrase
---    UttS s = s ;
---    UttNP np = {s = np.s ! Acc} ;  -- why ! Acc here? 
+    UttS s = s ;
+    UttNP np = {s = np.s ! Acc} ;  -- why ! Acc here? 
 
   -- Sentence
---    PredVPS np vp = variants {
---      s = np.s ! Nom ++ vp.verb.s ! agr2vform np.a ++ vp.compl
+    PredVPS np vp = {
+      s = np.s ! Nom ++ vp.verb.s ! Pres np.a ++ vp.compl ! np.g ! np.n
       -- add more options, use ; 
---      } ;  --use free variation with | or variants {}
+      } ;  --use free variation with | or variants {}
 
   -- Verb  
     UseV v = {
       verb = v ;
-      compl = [] ;
+      compl = table {g => table {n => []}} ;
       } ;
       
     ComplV2 v2 np = {
       verb = v2 ;
-      compl = v2.cp ++ np.s ! Acc  -- NP object in the accusative, preposition first
+      compl = table {g => table {n => v2.cp ++ np.s ! Acc}}  -- NP object in the accusative, preposition first
       } ;
 
 -- how do I make it so that it picks the right compl based on the subject's gender?     
@@ -59,21 +59,25 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
       }
     } ;
       
-    AdvVP vp adv =
-      vp ** {compl = vp.compl ++ adv.s} ;
+    AdvVP vp adv = {
+      verb = vp.verb ;
+      compl = table {g => table {n => vp.compl ! g ! n ++ adv.s}}
+    } ;
   
   -- Noun
     DetCN det cn = {
       s = table {c => det.s ! cn.g ! c ++ cn.s ! det.n ! c} ;
-      a = GNAgr cn.g det.n ;
+      a = NPAgr det.n Third ;
+      g = cn.g ;
+      n = det.n ;
       } ;
       
     UsePron p = p ;
 
     --how to make it dependent on gender? same as in the other file?    
     --these are also entirely optional and are more of determiners than articles. Should I keep them?   
-    a_Det = variants {} ; --- a/an can get wrong
-    aPl_Det = variants {} ;
+    a_Det = {s = table {g => table {c => ""}} ; n = Sg} ;
+    aPl_Det = {s = table {g => table {c => ""}} ; n = Pl} ; 
     the_Det = {s = table {
       MascAnim => table {
                 Nom => "ten" ;
@@ -171,7 +175,7 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
     --variants depending on the first consonant of the noun added
     in_Prep = {s = pre {"w" => "we" ; _ => "w"} ; c = Loc} ; --locative
     on_Prep = {s = "na" ; c = Loc} ; --locative
-    with_Prep = {s = pre {"z" => "ze" ; _ => "z"} ; c = Loc} ; --instrumental
+    with_Prep = {s = pre {"z" => "ze" ; _ => "z"} ; c = Ins} ; --instrumental
 
     --for the majority of pronouns there are alternative versions (e.g. for masculine accusative singular
     --there is "jego", "go", "niego", "-ń"); these have a relatively predictable distribution, but in some
@@ -190,7 +194,9 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
                 Loc => "nim" ;
                 Voc => "on"
                 } ;
-      a = GNAgr MascAnim Sg ;
+      a = NPAgr Sg Third ;
+      g = MascAnim ; 
+      n = Sg ;
       } ;
     she_Pron = {
       s = table {
@@ -202,7 +208,9 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
                 Loc => "niej" ;
                 Voc => "ona"
                 } ;
-      a = GNAgr Fem Sg ;
+      a = NPAgr Sg Third ;
+      g = Fem ;
+      n = Sg ;
       } ;
     they_Pron = {
       s = table {
@@ -214,7 +222,9 @@ concrete MicroLangPl of MicroLang = open MicroResPl, Prelude in {
                 Loc => "nich" ;
                 Voc => "oni"
                 } ;
-      a = GNAgr MascAnim Pl ;
+      a = NPAgr Pl Third ;
+      g = MascAnim ;
+      n = Pl ;
       } ;
       --this one is used for plurals where no masculine human noun is a part of the group denoted by the pronoun; since this distinction seems
       --to be outside the scope of this assignment, I just commented this option out. This is only really relevant in actual discourse when we
@@ -249,9 +259,9 @@ lin bird_N = mkN "ptak" "ptaki" Masc ;
 lin black_A = mkA "czarny" ;
 lin blood_N = mkN "krew" "krwi" Fem ;
 lin blue_A = mkA "niebieski" ;
-lin boat_N = mkN "łódka" "łódki" Fem ;
+lin boat_N = mkN "łódka" "łódki" Fem ; 
 lin book_N = mkN "książka" "książki" Fem ;
-lin boy_N = mkN "chłopiec" "chłopcy" MascAnim ;
+lin boy_N = mkN "chłopak" "chłopacy" MascAnim ;
 lin bread_N = mkN "chleb" "chleby" Masc ;
 lin break_V2 = mkV2 (mkV "łamać" IX) ;
 lin buy_V2 = mkV2 (mkV "kupować" IV) ;
@@ -265,13 +275,13 @@ lin cloud_N = mkN "chmura" "chmury" Fem ;
 lin cold_A = mkA "zimny" ;
 lin come_V = mkV "przychodzić" VIa ;
 lin computer_N = mkN "komputer" "komputery" Masc;
-lin cow_N = mkN "krowa" "krowy" Fem ;
+lin cow_N = mkN "krowa" "krowy" "krowie" "krowę" "krową" "krowie" "krowo" "krowy" "krów" "krowom" "krowy" "krowami" "krowach" "krowy" Fem ;
 lin dirty_A = mkA "brudny" ;
-lin dog_N = mkN "pies" "psy" Masc ;
+lin dog_N = mkN "pies" "psa" "psu" "psa" "psem" "psie" "psie" "psy" "psów" "psom" "psy" "psami" "psach" "psy" Masc ; 
 lin drink_V2 = mkV2 (mkV "pić" Xa) ;
 lin eat_V2 = mkV2 (mkV "jeść" "jem" "jesz" "je" "jemy" "jecie" "jedzą") ;
 lin find_V2 = mkV2 (mkV "znajdować" IV) ;
-lin fire_N = mkN "ogień" "ognie" Masc ;
+lin fire_N = mkN "ogień" "ognia" "ogniowi" "ogień" "ogniem" "ogniu" "ogniu" "ognie" "ogni" "ogniom" "ognie" "ogniami" "ogniach" "ognie" Masc ; --IRREGULAR
 lin fish_N = mkN "ryba" "ryby" Fem ;
 lin flower_N = mkN "kwiat" "kwiaty" Masc ;
 lin friend_N = mkN "przyjaciel" "przyjaciele" MascAnim ;
@@ -316,10 +326,10 @@ lin train_N = mkN "pociąg" "pociągi" Masc;
 lin travel_V = mkV "podróżować" IV ;
 lin tree_N = mkN "drzewo" "drzewa" Neut ;
 lin understand_V2 = mkV2 (mkV "rozumieć" II) ;
-lin wait_V2 = mkV2 (mkV "czekać" I) ;
+lin wait_V2 = mkV2 (mkV "czekać" I) "na" ;
 lin walk_V = mkV "spacerować" IV ;
 lin warm_A = mkA "ciepły" ;
-lin water_N = mkN "woda" "wody" Fem ;
+lin water_N = mkN "woda" "wody" "wodzie" "wodę" "wodą" "wodzie" "wodo" "wody" "wód" "wodom" "wody" "wodami" "wodach" "wody" Fem ; --only "wód" is irregular
 lin white_A = mkA "biały" ;
 lin wine_N = mkN "wino" "wina" Neut ;
 lin woman_N = mkN "kobieta" "kobiety" Fem ;
