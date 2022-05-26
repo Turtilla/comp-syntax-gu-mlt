@@ -1,3 +1,4 @@
+#sent_id=1
 1       ten     the_Det DET     Det     Det-7   4       det     _       _
 2       biały   white_A ADJ     A       A-14    4       amod    _       _
 3       gotowy  ready_A ADJ     A       A-14    4       amod    _       _
@@ -5,12 +6,14 @@
 5       jest    UseComp AUX     VP      VP-11   6       cop     _       _
 6       młody   young_A ADJ     A       A-14    0       root    _       _
 
+#sent_id=2
 1       ognie   fire_N  NOUN    N       N-7     2       nsubj   _       _
 2       kochają love_V2 VERB    V2      V2-6    0       root    _       _
 3       mężczyzn        man_N   NOUN    N       N-10    2       obj     _       _
 4       na      on_Prep ADP     Prep    Prep-0  5       case    _       _
 5       niej    she_Pron        PRON    Pron    Pron-5  2       advmod  _       _
 
+#sent_id=3
 1       zielone green_A ADJ     A       A-49    3       amod    _       _
 2       dobre   good_A  ADJ     A       A-49    3       amod    _       _
 3       drzewa  tree_N  NOUN    N       N-7     4       nsubj   _       _
@@ -18,69 +21,88 @@
 5       te      thePl_Det       DET     Det     Det-17  6       det     _       _
 6       kobiety woman_N NOUN    N       N-10    4       obj     _       _
 
+#sent_id=4
 1       jest    UseComp AUX     VP      VP-11   2       cop     _       _
 2       gorący  hot_A   ADJ     A       A-0     0       root    _       _
 
+#sent_id=5
 1       są      UseComp AUX     VP      VP-14   2       cop     _       _
 2       żółci   yellow_A        ADJ     A       A-7     0       root    _       _
 
+#sent_id=6
 1       chłopacy        boy_N   NOUN    N       N-7     2       nsubj   _       _
 2       piją    drink_V2        VERB    V2      V2-6    0       root    _       _
 3       ich     they_Pron       PRON    Pron    Pron-3  2       obj     _       _
 
+#sent_id=7
 1       sprytny clever_A        ADJ     A       A-0     2       amod    _       _
 2       mężczyzna       man_N   NOUN    N       N-0     0       root    _       _
 
+#sent_id=8
 1       zabijają        kill_V2 VERB    V2      V2-6    0       root    _       _
 2       łódkę   boat_N  NOUN    N       N-3     1       obj     _       _
 
+#sent_id=9
 1       ten     the_Det DET     Det     Det-7   3       det     _       _
 2       gotowy  ready_A ADJ     A       A-14    3       amod    _       _
 3       koń     horse_N NOUN    N       N-0     0       root    _       _
 
+#sent_id=10
 1       krowy   cow_N   NOUN    N       N-7     3       nsubj   _       _
 2       są      UseComp AUX     VP      VP-14   3       cop     _       _
 3       czarne  black_A ADJ     A       A-35    0       root    _       _
 4       teraz   now_Adv ADV     Adv     Adv-0   3       advmod  _       _
 
+#sent_id=11
 1       ten     the_Det DET     Det     Det-7   3       det     _       _
 2       czerwony        red_A   ADJ     A       A-14    3       amod    _       _
 3       pociąg  train_N NOUN    N       N-0     5       nsubj   _       _
 4       jest    UseComp AUX     VP      VP-11   5       cop     _       _
 5       zimny   cold_A  ADJ     A       A-14    0       root    _       _
 
+#sent_id=12
 1       są      UseComp AUX     VP      VP-14   2       cop     _       _
 2       czyści  clean_A ADJ     A       A-7     0       root    _       _
 
+#sent_id=13
 1       te      thePl_Det       DET     Det     Det-7   2       det     _       _
 2       statki  ship_N  NOUN    N       N-7     0       root    _       _
 
-1       kupują  buy_V2  VERB    V2      V2-6    0       root    _       _
-2       ich     they_Pron       PRON    Pron    Pron-3  1       obj     _       _
-3       teraz   now_Adv ADV     Adv     Adv-0   1       advmod  _       _
-4       teraz   now_Adv ADV     Adv     Adv-0   1       advmod  _       _
+#sent_id=14
+1       młode   young_A ADJ     A       A-35    2       amod    _       _
+2       łódki   boat_N  NOUN    N       N-7     4       nsubj   _       _
+3       są      UseComp AUX     VP      VP-14   4       cop     _       _
+4       zimne   cold_A  ADJ     A       A-35    0       root    _       _
 
+#sent_id=15
 1       statki  ship_N  NOUN    N       N-7     3       nsubj   _       _
 2       są      UseComp AUX     VP      VP-14   3       cop     _       _
 3       dobre   good_A  ADJ     A       A-21    0       root    _       _
 
+#sent_id=16
 1       idzie   go_V    VERB    V       V-3     0       root    _       _
 
+#sent_id=17
 1       grają   play_V  VERB    V       V-6     0       root    _       _
 2       w       in_Prep ADP     Prep    Prep-0  3       case    _       _
 3       niej    she_Pron        PRON    Pron    Pron-5  1       advmod  _       _
 4       z       with_Prep       ADP     Prep    Prep-0  5       case    _       _
 5       krwiami blood_N NOUN    N       N-11    1       advmod  _       _
 
+#sent_id=18
 1       ten     the_Det DET     Det     Det-7   3       det     _       _
 2       ciepły  warm_A  ADJ     A       A-14    3       amod    _       _
 3       kwiat   flower_N        NOUN    N       N-0     4       nsubj   _       _
 4       biega   run_V   VERB    V       V-3     0       root    _       _
 
-1       oni     they_Pron       PRON    Pron    Pron-0  0       root    _       _
+#sent_id=19
+1       żyje    live_V  VERB    V       V-3     0       root    _       _
+2       już     already_Adv     ADV     Adv     Adv-0   1       advmod  _       _
+3       z       with_Prep       ADP     Prep    Prep-0  4       case    _       _
+4       nimi    they_Pron       PRON    Pron    Pron-4  1       advmod  _       _
+5       teraz   now_Adv ADV     Adv     Adv-0   1       advmod  _       _
 
-1       wina    wine_N  NOUN    N       N-7     0       root    _       _
-
+#sent_id=20
 1       złe     bad_A   ADJ     A       A-49    2       amod    _       _
 2       drzewa  tree_N  NOUN    N       N-7     4       nsubj   _       _
 3       są      UseComp AUX     VP      VP-14   4       cop     _       _

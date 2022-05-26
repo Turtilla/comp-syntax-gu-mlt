@@ -78,7 +78,8 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
     UsePron p = p ;
 
     --it's worth pointing out that the definite "articles" here are somewhere between that and determiners ("this"). I decided to keep them 
-    --nonetheless because they do highlight the difference between "some noun" and "the noun".
+    --nonetheless because they do highlight the difference between "some noun" and "the noun". The choice to keep them was motivated by some
+    --Polish linguists arguing that it is an article in development and it really does act like it sometimes, for distinguishing definiteness.
     a_Det = {s = table {g => table {c => ""}} ; n = Sg} ;
     aPl_Det = {s = table {g => table {c => ""}} ; n = Pl} ; 
     the_Det = {s = table {
@@ -175,12 +176,31 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
     PrepNP prep np = {s = prep.s ++ np.s ! prep.c} ; --the attached NP must be in an appropriate case
 
   -- Structural
-    --variants depending on the first consonant of the noun, stored case that is required of the NP that connects to the preposition
-    in_Prep = {s = pre {"w" => "we" ; _ => "w"} ; c = Loc} ; --locative
-    on_Prep = {s = "na" ; c = Loc} ; --locative
-    with_Prep = {s = pre {"z" => "ze" ; _ => "z"} ; c = Ins} ; --instrumental
 
-    --for the majority of pronouns there are alternative versions (e.g. for masculine accusative singular
+    --Variants depending on the first consonant of the noun, stored case that is required of the NP that connects to the preposition
+    --the "ze" and "we" variants occur after certain consonant clusters (f or w + consonant, s, z, ś, ź, ż, rz, sz + consonant, respectively),
+    --but pre does not allow for gluing tokens together, so I was not able to do ("f"|"w") + (consonants). Instead I went over what clusters
+    --are possible, with the help of https://sjp.pwn.pl/so/lista/A.html, and ended up with these voluminous lists. There is perhaps an easier
+    --way of doing it, but I could not think of any at that point, knowing that pre takes precedence over gluing.
+    --In addition, he cases assigned to these prepositions do not account for all their meanings; "z" can also mean from, as in "I am from Poland";
+    --in that case it takes the Genitive case. However, I assume that would not be grouped together here, but would just be under from_Prep, 
+    --together with the same set of "exceptions", but a different case.
+
+    in_Prep = {s = pre {("fia"|"fią"|"fie"|"fię"|"fio"|"fiu"|"fl"|"fr"|"ft"|
+                        "wb"|"wc"|"wd"|"wg"|"wia"|"wią"|"wie"|"wię"|"wio"|"wiu"|
+                        "wj"|"wk"|"wl"|"wł"|"wm"|"wn"|"wp"|"wr"|"ws"|"wt"|"wz"|"wż") => "we" ; 
+                        _ => "w"} ; c = Loc} ; --locative
+    on_Prep = {s = "na" ; c = Loc} ; --locative
+    with_Prep = {s = pre {("sc"|"sf"|"sg"|"sj"|"sk"|"sl"|"sł"|"sm"|"sn"|"sp"|"sr"|"st"|"sw"|
+                          "zb"|"zd"|"zg"|"zj"|"zl"|"zł"|"zm"|"zn"|"zr"|"zs"|"zw"|"zż"|
+                          "śc"|"śl"|"śm"|"śn"|"śp"|"śr"|"św"|
+                          "źd"|"źl"|"źr"|
+                          "żb"|"żd"|"żg"|"żl"|"żł"|"żm"|"żn"|"żr"|"żw"|
+                          "rzg"|"rzn"|"rzp"|
+                          "szc"|"szk"|"szl"|"szł"|"szm"|"szn"|"szp"|"szr"|"szt"|"szw") => "ze" ; 
+                          _ => "z"} ; c = Ins} ; --instrumental
+
+    --For the majority of pronouns there are alternative versions (e.g. for masculine accusative singular
     --there is "jego", "go", "niego", "-ń"); these have a relatively predictable distribution, but in some
     --contexts they are interchangeable. I think implementing all of them is beyond the scope of this assignment.
     --The "n" forms appear after prepositions. Short forms (without "je", wherever applicable) can only appear
@@ -259,7 +279,7 @@ concrete MicroLangPol of MicroLang = open MicroResPol, Prelude in {
 lin already_Adv = mkAdv "już" ;
 lin animal_N = mkN "zwierzę" "zwierzęta" "zwierząt" Neut ;
 lin apple_N = mkN "jabłko" "jabłka" "jabłek" Neut ;
-lin baby_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ;
+lin baby_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ; --irrecular
 lin bad_A = mkA "zły" ;
 lin beer_N = mkN "piwo" "piwa" "piw" Neut ;
 lin big_A = mkA "duży" ;
@@ -276,7 +296,7 @@ lin break_V2 = mkV2 (mkV "łamać" IX) ;
 lin buy_V2 = mkV2 (mkV "kupować" IV) ;
 lin car_N = mkN "auto" "auta" "aut" Neut ;
 lin cat_N = mkN "kot" "koty" "kotów" Masc ;
-lin child_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ;
+lin child_N = mkN "dziecko" "dziecka" "dziecku" "dziecko" "dzieckiem" "dziecku" "dziecko" "dzieci" "dzieci" "dzieciom" "dzieci" "dziećmi" "dzieciach" "dzieci" Neut ; --irregular
 lin city_N = mkN "miasto" "miasta" "miast" Neut ;
 lin clean_A = mkA "czysty" ;
 lin clever_A = mkA "sprytny" ;
@@ -286,17 +306,17 @@ lin come_V = mkV "przychodzić" VIa ;
 lin computer_N = mkN "komputer" "komputery" "komputerów" Masc;
 lin cow_N = mkN "krowa" "krowy" "krów" Fem ;
 lin dirty_A = mkA "brudny" ;
-lin dog_N = mkN "pies" "psa" "psu" "psa" "psem" "psie" "psie" "psy" "psów" "psom" "psy" "psami" "psach" "psy" Masc ; 
+lin dog_N = mkN "pies" "psa" "psu" "psa" "psem" "psie" "psie" "psy" "psów" "psom" "psy" "psami" "psach" "psy" Masc ; --fleeting vowel
 lin drink_V2 = mkV2 (mkV "pić" Xa) ;
 lin eat_V2 = mkV2 (mkV "jeść" "jem" "jesz" "je" "jemy" "jecie" "jedzą") ;
 lin find_V2 = mkV2 (mkV "znajdować" IV) ;
-lin fire_N = mkN "ogień" "ognia" "ogniowi" "ogień" "ogniem" "ogniu" "ogniu" "ognie" "ogni" "ogniom" "ognie" "ogniami" "ogniach" "ognie" Masc ; --IRREGULAR
+lin fire_N = mkN "ogień" "ognia" "ogniowi" "ogień" "ogniem" "ogniu" "ogniu" "ognie" "ogni" "ogniom" "ognie" "ogniami" "ogniach" "ognie" Masc ; --fleeting vowel
 lin fish_N = mkN "ryba" "ryby" "ryb" Fem ;
 lin flower_N = mkN "kwiat" "kwiaty" "kwiatów" Masc ;
 lin friend_N = mkN "przyjaciel" "przyjaciele" "przyjaciół" MascAnim ;
 lin girl_N = mkN "dziewczyna" "dziewczyny" "dziewczyn" Fem ;
 lin good_A = mkA "dobry" ;
-lin go_V = mkV "iść" "idę" "idziesz" "idzie" "idziemy" "idziecie" "idą" ;
+lin go_V = mkV "iść" "idę" "idziesz" "idzie" "idziemy" "idziecie" "idą" ; --irregular
 lin grammar_N = mkN "gramatyka" "gramatyki" "gramatyk" Fem ;
 lin green_A = mkA "zielony" ;
 lin heavy_A = mkA "ciężki" ;
@@ -325,8 +345,8 @@ lin river_N = mkN "rzeka" "rzeki" "rzek" Fem ;
 lin run_V = mkV "biegać" I ;
 lin sea_N = mkN "morze" "morza" "mórz" Neut ;
 lin see_V2 = mkV2 (mkV "widzieć" VIIa) ;
-lin ship_N = mkN "statek" "statki" "statków" Masc ;
-lin sleep_V = mkV "spać" "śpię" "śpisz" "śpi" "śpimy" "śpicie" "śpią";
+lin ship_N = mkN "statek" "statku" "statkowi" "statek" "statkiem" "statku" "statku" "statki" "statków" "statkom" "statki" "statkami" "statkach" "statki" Masc ; --fleeting vowel
+lin sleep_V = mkV "spać" "śpię" "śpisz" "śpi" "śpimy" "śpicie" "śpią"; --irregular
 lin small_A = mkA "mały" ;
 lin star_N = mkN "gwiazda" "gwiazdy" "gwiazd" Fem ;
 lin swim_V = mkV "pływać" I ;
@@ -338,7 +358,7 @@ lin understand_V2 = mkV2 (mkV "rozumieć" II) ;
 lin wait_V2 = mkV2 (mkV "czekać" I) "na" ;
 lin walk_V = mkV "spacerować" IV ;
 lin warm_A = mkA "ciepły" ;
-lin water_N = mkN "woda" "wody" "wodzie" "wodę" "wodą" "wodzie" "wodo" "wody" "wód" "wodom" "wody" "wodami" "wodach" "wody" Fem ; --only "wód" is irregular
+lin water_N = mkN "woda" "wody" "wód" Fem ;
 lin white_A = mkA "biały" ;
 lin wine_N = mkN "wino" "wina" "win" Neut ;
 lin woman_N = mkN "kobieta" "kobiety" "kobiet" Fem ;
@@ -369,6 +389,8 @@ oper
     } ;
 
 --These cannot just take strings since constructing a verb requires the conjugation
+--something here is causing a warning when compiling: Warning: ignoring lock fields in resolving mkV2 (mkV "łamać" IX) for {s : VForm => Str} 
+--using V; however, this does not impact the grammar working and we could not find a solution/explanation as to what causes it in the lab.
   mkV2 = overload {
     mkV2 : V -> V2            -- any verb with direct object, e.g. "drink"
       = \v   -> lin V2 (v ** {cp = []}) ;
