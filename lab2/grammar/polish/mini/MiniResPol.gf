@@ -308,6 +308,7 @@ oper
   --predictable from just the spelling. This does not also fully account for changes in the root or conjugations where endings can vary.
   Verb : Type = {s : VForm => Str} ;
 
+  --TODO ADD IMPERATIVE
   mkVerb : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl : Str) -> Verb
     = \inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl -> {
     s = table {
