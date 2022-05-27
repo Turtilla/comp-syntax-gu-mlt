@@ -1,12 +1,12 @@
 resource MiniResPol = open Prelude in {
 
 param
-  VForm = Inf | Pres NPAgreement | Past NPGAgreement ;
+  VForm = Inf | Imp2Sg | Pres NPAgreement | Past NPGAgreement ;
   Number = Sg | Pl ;
   Case = Nom | Gen | Dat | Acc | Ins | Loc | Voc ;
   Gender = MascAnim | Masc | Fem | Neut ;
   Person = First | Second | Third ;
-  Conjugation = I | II | III | IV | Vab | Vc | VIa | VIb | VIIa | VIIb | VIIIa | VIIIb | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
+  Conjugation = I | II | III | IV | Va | Vb | Vc | VIa | VIb | VIIa | VIIb | VIIIa | VIIIb | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
 
   NPAgreement = NPAgr Number Person ; --needed for present verbs
   NPGAgreement = NPGAgr Number Person Gender ; --needed for past verbs
@@ -309,10 +309,11 @@ oper
   Verb : Type = {s : VForm => Str} ;
 
   --TODO ADD IMPERATIVE
-  mkVerb : (inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl : Str) -> Verb
-    = \inf,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl -> {
+  mkVerb : (inf,imp2sg,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl : Str) -> Verb
+    = \inf,imp2sg,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl -> {
     s = table {
       Inf => inf ; --lubić
+      Imp2Sg => imp2sg ; --lub!
       --present
       Pres (NPAgr Sg First) => pressg1 ; --lubię
       Pres (NPAgr Sg Second) => pressg2 ; --lubisz
@@ -350,26 +351,47 @@ oper
     } ;
 
   conjVerb : Str -> Conjugation -> Verb = \inf, conj -> case conj of {
-     I => case inf of { czyt  +  "ać" => mkVerb inf (czyt + "am") (czyt + "asz") (czyt + "a") (czyt + "amy") (czyt + "acie") (czyt + "ają") (czyt + "ał") (czyt + "ał") (czyt + "al")} ; -- 1st conjugation
-     II => case inf of { umi  +  "eć" =>  mkVerb inf (umi + "em") (umi + "esz") (umi + "e") (umi + "emy") (umi + "ecie") (umi + "eją") (umi + "ał") (umi + "ał") (umi + "el") } ;  -- 2nd conjugation
-     III => case inf of { tani + "eć"  => mkVerb inf (tani + "eję") (tani + "ejesz") (tani + "eje") (tani + "ejemy") (tani + "ejcie") (tani + "eją") (tani + "ał") (tani + "ał") (tani + "el") } ;  -- 3rd conjugation
-     IV => case inf of { mal  +  "ować" => mkVerb inf (mal + "uję") (mal + "ujesz") (mal + "uje") (mal + "ujemy") (mal + "ujecie") (mal + "ują") (mal + "ował") (mal + "ował") (mal + "owal") } ;  -- 4th conjugation
-     Vab => case inf of { ciag  +  "nąć" => mkVerb inf (ciag + "nę") (ciag + "niesz") (ciag + "nie") (ciag + "niemy") (ciag + "niecie") (ciag + "ną") (ciag + "nęł") (ciag + "nął") (ciag + "nęl") } ;  -- 5th A + B conjugation
-     Vc => case inf of { chud  +  "nąć" => mkVerb inf (chud + "nę") (chud + "niesz") (chud + "nie") (chud + "niemy") (chud + "niecie") (chud + "ną") (chud + "ł") (chud + "ł") (chud + "l") } ;  -- 5th C conjugation
-     VIa => case inf of { rob  +  "ić" => mkVerb inf (rob + "ię") (rob + "isz") (rob + "i") (rob + "imy") (rob + "icie") (rob + "ią") (rob + "ił") (rob + "ił") (rob + "il") } ;  -- 6th A conjugation
-     VIb => case inf of { wierz  +  "yć" => mkVerb inf (wierz + "ę") (wierz + "ysz") (wierz + "y") (wierz + "ymy") (wierz + "ycie") (wierz + "ą") (wierz + "ył") (wierz + "ył") (wierz + "yl") } ;  -- 6th B conjugation
-     VIIa => case inf of { widz  +  ("ieć"|"eć") => mkVerb inf (widz + "ę") (widz + "isz") (widz + "i") (widz + "imy") (widz + "icie") (widz + "ą") (widz + "ał") (widz + "ał") (widz + "el") } ;  -- 7th A conjugation
-     VIIb => case inf of { lez  +  ("ieć"|"eć") => mkVerb inf (lez + "ę") (lez + "ysz") (lez + "y") (lez + "ymy") (lez + "ycie") (lez + "ą") (lez + "ał") (lez + "ał") (lez + "el") } ;  -- 7th B conjugation
-     VIIIa => case inf of { czyt  +  "ywać" => mkVerb inf (czyt + "uję") (czyt + "ujesz") (czyt + "uje") (czyt + "ujemy") (czyt + "ujecie") (czyt + "ują") (czyt + "ywał") (czyt + "ywał") (czyt + "ywal") } ;  -- 8th A conjugation
-     VIIIb => case inf of { zysk  +  "iwać" => mkVerb inf (zysk + "uję") (zysk + "ujesz") (zysk + "uje") (zysk + "ujemy") (zysk + "ujecie") (zysk + "ują") (zysk + "iwał") (zysk + "iwał") (zysk + "iwal") } ;  -- 8th B conjugation
-     IX => case inf of { lam  +  "ać" => mkVerb inf (lam + "ię") (lam + "iesz") (lam + "ie") (lam + "iemy") (lam + "iecie") (lam + "ią") (lam + "ał") (lam + "ał") (lam + "al") } ;
+     I => case inf of { czyt  +  "ać" => mkVerb inf (czyt + "aj") (czyt + "am") (czyt + "asz") (czyt + "a") (czyt + "amy") (czyt + "acie") (czyt + "ają") (czyt + "ał") (czyt + "ał") (czyt + "al")} ; -- 1st conjugation
+     II => case inf of { umi  +  "eć" =>  mkVerb inf (umi + "ej") (umi + "em") (umi + "esz") (umi + "e") (umi + "emy") (umi + "ecie") (umi + "eją") (umi + "ał") (umi + "ał") (umi + "el") } ;  -- 2nd conjugation
+     III => case inf of { tani + "eć"  => mkVerb inf (tani + "ej") (tani + "eję") (tani + "ejesz") (tani + "eje") (tani + "ejemy") (tani + "ejcie") (tani + "eją") (tani + "ał") (tani + "ał") (tani + "el") } ;  -- 3rd conjugation
+     IV => case inf of { mal  +  "ować" => mkVerb inf (mal + "uj") (mal + "uję") (mal + "ujesz") (mal + "uje") (mal + "ujemy") (mal + "ujecie") (mal + "ują") (mal + "ował") (mal + "ował") (mal + "owal") } ;  -- 4th conjugation
+     Va => case inf of { ciag  +  "nąć" => mkVerb inf (ciag + "nij") (ciag + "nę") (ciag + "niesz") (ciag + "nie") (ciag + "niemy") (ciag + "niecie") (ciag + "ną") (ciag + "nęł") (ciag + "nął") (ciag + "nęl") } ;  -- 5th A conjugation
+     Vb => case inf of { ply  +  "nąć" => mkVerb inf (ply + "ń") (ply + "nę") (ply + "niesz") (ply + "nie") (ply + "niemy") (ply + "niecie") (ply + "ną") (ply + "nęł") (ply + "nął") (ply + "nęl") } ;  -- 5th B conjugation
+     Vc => case inf of { chud  +  "nąć" => mkVerb inf (chud + "nij") (chud + "nę") (chud + "niesz") (chud + "nie") (chud + "niemy") (chud + "niecie") (chud + "ną") (chud + "ł") (chud + "ł") (chud + "l") } ;  -- 5th C conjugation
+     VIa => case inf of { rob  +  "ić" => mkVerb inf rob (rob + "ię") (rob + "isz") (rob + "i") (rob + "imy") (rob + "icie") (rob + "ią") (rob + "ił") (rob + "ił") (rob + "il") } ;  -- 6th A conjugation
+     VIb => case inf of { wierz  +  "yć" => mkVerb inf wierz (wierz + "ę") (wierz + "ysz") (wierz + "y") (wierz + "ymy") (wierz + "ycie") (wierz + "ą") (wierz + "ył") (wierz + "ył") (wierz + "yl") } ;  -- 6th B conjugation
+     VIIa => case inf of { widz  +  ("ieć"|"eć") => mkVerb inf widz (widz + "ę") (widz + "isz") (widz + "i") (widz + "imy") (widz + "icie") (widz + "ą") (widz + "ał") (widz + "ał") (widz + "el") } ;  -- 7th A conjugation
+     VIIb => case inf of { lez  +  ("ieć"|"eć") => mkVerb inf lez (lez + "ę") (lez + "ysz") (lez + "y") (lez + "ymy") (lez + "ycie") (lez + "ą") (lez + "ał") (lez + "ał") (lez + "el") } ;  -- 7th B conjugation
+     VIIIa => case inf of { czyt  +  "ywać" => mkVerb inf (czyt + "uj") (czyt + "uję") (czyt + "ujesz") (czyt + "uje") (czyt + "ujemy") (czyt + "ujecie") (czyt + "ują") (czyt + "ywał") (czyt + "ywał") (czyt + "ywal") } ;  -- 8th A conjugation
+     VIIIb => case inf of { zysk  +  "iwać" => mkVerb inf (zysk + "uj") (zysk + "uję") (zysk + "ujesz") (zysk + "uje") (zysk + "ujemy") (zysk + "ujecie") (zysk + "ują") (zysk + "iwał") (zysk + "iwał") (zysk + "iwal") } ;  -- 8th B conjugation
+     IX => case inf of { lam  +  "ać" => mkVerb inf lam (lam + "ię") (lam + "iesz") (lam + "ie") (lam + "iemy") (lam + "iecie") (lam + "ią") (lam + "ał") (lam + "ał") (lam + "al") } ; -- 9th conjugation
      -- some verbs in the 9th conjugation mutate the root https://pl.wiktionary.org/wiki/Aneks:J%C4%99zyk_polski_-_koniugacja_IX and are not accounted for
-     Xa => case inf of { pi  +  "ć" => mkVerb inf (pi + "ję") (pi + "jesz") (pi + "je") (pi + "jemy") (pi + "jecie") (pi + "ją") (pi + "ł") (pi + "ł") (pi + "l") } ; -- 10th A conjugation
-     Xb => case inf of { l  +  "ać" => mkVerb inf (l + "eję") (l + "ejesz") (l + "eje") (l + "ejemy") (l + "ejecie") (l + "eją") (l + "ał") (l + "ał") (l + "al") }  -- 10th B conjugation
+     Xa => case inf of { pi  +  "ć" => mkVerb inf (pi + "j") (pi + "ję") (pi + "jesz") (pi + "je") (pi + "jemy") (pi + "jecie") (pi + "ją") (pi + "ł") (pi + "ł") (pi + "l") } ; -- 10th A conjugation
+     Xb => case inf of { l  +  "ać" => mkVerb inf (l + "ej") (l + "eję") (l + "ejesz") (l + "eje") (l + "ejemy") (l + "ejecie") (l + "eją") (l + "ał") (l + "ał") (l + "al") }  -- 10th B conjugation
      -- 10th C conjugation mutates the root too and has variation in endings https://pl.wiktionary.org/wiki/Aneks:J%C4%99zyk_polski_-_koniugacja_Xc
      -- 11th conjugation mutates the root as well https://pl.wiktionary.org/wiki/Aneks:J%C4%99zyk_polski_-_koniugacja_XI
-     } ;  
+     -- certain changes in the imperative, such as internal vowel shifts, are not accounted for (as they are not conjugation-specific)
+     } ;
 
+  irregImpVerb : Str -> Str -> Conjugation -> Verb = \inf, imp, conj -> case conj of {
+     I => case inf of { czyt  +  "ać" => mkVerb inf imp (czyt + "am") (czyt + "asz") (czyt + "a") (czyt + "amy") (czyt + "acie") (czyt + "ają") (czyt + "ał") (czyt + "ał") (czyt + "al")} ; -- 1st conjugation
+     II => case inf of { umi  +  "eć" =>  mkVerb inf imp (umi + "em") (umi + "esz") (umi + "e") (umi + "emy") (umi + "ecie") (umi + "eją") (umi + "ał") (umi + "ał") (umi + "el") } ;  -- 2nd conjugation
+     III => case inf of { tani + "eć"  => mkVerb inf imp (tani + "eję") (tani + "ejesz") (tani + "eje") (tani + "ejemy") (tani + "ejcie") (tani + "eją") (tani + "ał") (tani + "ał") (tani + "el") } ;  -- 3rd conjugation
+     IV => case inf of { mal  +  "ować" => mkVerb inf imp (mal + "uję") (mal + "ujesz") (mal + "uje") (mal + "ujemy") (mal + "ujecie") (mal + "ują") (mal + "ował") (mal + "ował") (mal + "owal") } ;  -- 4th conjugation
+     Va => case inf of { ciag  +  "nąć" => mkVerb inf imp (ciag + "nę") (ciag + "niesz") (ciag + "nie") (ciag + "niemy") (ciag + "niecie") (ciag + "ną") (ciag + "nęł") (ciag + "nął") (ciag + "nęl") } ;  -- 5th A conjugation
+     Vb => case inf of { ply  +  "nąć" => mkVerb inf imp (ply + "nę") (ply + "niesz") (ply + "nie") (ply + "niemy") (ply + "niecie") (ply + "ną") (ply + "nęł") (ply + "nął") (ply + "nęl") } ;  -- 5th B conjugation
+     Vc => case inf of { chud  +  "nąć" => mkVerb inf imp (chud + "nę") (chud + "niesz") (chud + "nie") (chud + "niemy") (chud + "niecie") (chud + "ną") (chud + "ł") (chud + "ł") (chud + "l") } ;  -- 5th C conjugation
+     VIa => case inf of { rob  +  "ić" => mkVerb inf rob imp (rob + "isz") (rob + "i") (rob + "imy") (rob + "icie") (rob + "ią") (rob + "ił") (rob + "ił") (rob + "il") } ;  -- 6th A conjugation
+     VIb => case inf of { wierz  +  "yć" => mkVerb inf wierz imp (wierz + "ysz") (wierz + "y") (wierz + "ymy") (wierz + "ycie") (wierz + "ą") (wierz + "ył") (wierz + "ył") (wierz + "yl") } ;  -- 6th B conjugation
+     VIIa => case inf of { widz  +  ("ieć"|"eć") => mkVerb inf imp (widz + "ę") (widz + "isz") (widz + "i") (widz + "imy") (widz + "icie") (widz + "ą") (widz + "ał") (widz + "ał") (widz + "el") } ;  -- 7th A conjugation
+     VIIb => case inf of { lez  +  ("ieć"|"eć") => mkVerb inf imp (lez + "ę") (lez + "ysz") (lez + "y") (lez + "ymy") (lez + "ycie") (lez + "ą") (lez + "ał") (lez + "ał") (lez + "el") } ;  -- 7th B conjugation
+     VIIIa => case inf of { czyt  +  "ywać" => mkVerb inf imp (czyt + "uję") (czyt + "ujesz") (czyt + "uje") (czyt + "ujemy") (czyt + "ujecie") (czyt + "ują") (czyt + "ywał") (czyt + "ywał") (czyt + "ywal") } ;  -- 8th A conjugation
+     VIIIb => case inf of { zysk  +  "iwać" => mkVerb inf imp (zysk + "uję") (zysk + "ujesz") (zysk + "uje") (zysk + "ujemy") (zysk + "ujecie") (zysk + "ują") (zysk + "iwał") (zysk + "iwał") (zysk + "iwal") } ;  -- 8th B conjugation
+     IX => case inf of { lam  +  "ać" => mkVerb inf imp (lam + "ię") (lam + "iesz") (lam + "ie") (lam + "iemy") (lam + "iecie") (lam + "ią") (lam + "ał") (lam + "ał") (lam + "al") } ; -- 9th conjugation
+     Xa => case inf of { pi  +  "ć" => mkVerb inf imp (pi + "ję") (pi + "jesz") (pi + "je") (pi + "jemy") (pi + "jecie") (pi + "ją") (pi + "ł") (pi + "ł") (pi + "l") } ; -- 10th A conjugation
+     Xb => case inf of { l  +  "ać" => mkVerb inf imp (l + "eję") (l + "ejesz") (l + "eje") (l + "ejemy") (l + "ejecie") (l + "eją") (l + "ał") (l + "ał") (l + "al") }  -- 10th B conjugation
+     } ;
+  
   negation : Bool -> Str = \b -> case b of {True => [] ; False => "nie"} ; 
 
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]

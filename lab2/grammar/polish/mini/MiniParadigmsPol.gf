@@ -24,8 +24,11 @@ oper
   mkV = overload {
     mkV : Str -> Conjugation -> Verb  -- predictable verb, e.g. czytać-czytam-czytasz-etc.
       = \inf, conj -> lin V (conjVerb inf conj) ;
-    mkV : Str -> Str -> Str -> Str -> Str -> Str -> Str -> V  -- irregular verb, e.g. iść-idę-idziesz-etc.
-      = \inf, pressg1, pressg2, pressg3, prespl1, prespl2, prespl3 -> lin V (mkVerb inf pressg1 pressg2 pressg3 prespl1 prespl2 prespl3) ;
+    mkV : Str -> Str -> Conjugation -> Verb  -- verb with an unpredictable imperative, e.g. robić-robię-rób-etc.
+      = \inf, imp, conj -> lin V (irregImpVerb inf imp conj) ;
+    mkV : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> V  -- irregular verb, e.g. iść-idę-idziesz-etc.
+      = \inf, imp2sg, pressg1, pressg2, pressg3, prespl1, prespl2, prespl3, lpart, lpartmascsg, lpartmascpl -> 
+      lin V (mkVerb inf imp2sg pressg1 pressg2 pressg3 prespl1 prespl2 prespl3 lpart lpartmascsg lpartmascpl) ;
     } ;
 
 --These cannot just take strings since constructing a verb requires the conjugation
