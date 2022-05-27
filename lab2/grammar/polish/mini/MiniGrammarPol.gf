@@ -23,7 +23,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --TODO Imp
     Imp = {s : Bool => Str} ;
     --TODO what is GVerb??
-    VP = {verb : GVerb ; compl : Str} ;
+    VP = {verb : Verb ; compl : Gender => Number => Case => Str} ;
     Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject, see above
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
@@ -124,11 +124,17 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --TODO QuestVP
     QuestVP ip vp = PredVP ip vp ** {isWh = True} ; 
 
-    --TODO ImpVP
     ImpVP vp = {
       s = table {
-        True  => vp.verb.s ! VF Inf ++ vp.compl ;    -- in Eng, imperative = infinitive
-        False => "do not" ++ vp.verb.s ! VF Inf ++ vp.compl
+        --since my compls are NOT just strings, I could have stored it here under another variable; however,
+        --because we only do this for 2nd person singular we can select that form.
+        --it's worth mentioning that negated sentences take the object in Gen, not Acc.
+        --here I only account for the masculine form (which only matters when the compl has to
+        --agree with the (presumed) subject, so when it is a subject complement, a rather marginal
+        --case), since I also did that stretch for second person pronouns, since in neither situation
+        --do I see a good way out other than using variants (but it is still not ideal).
+        True  => vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! Acc ;    
+        False => "nie" ++ vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! Gen
         }
       } ;
 
@@ -136,46 +142,54 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --do I need generalized verbs? no
     UseV v = {
       verb = v ;
-      compl = table {g => table {n => []}} ; --no object or complement
+      compl = table {g => table {n => table {c => []}}} ; --no object or complement
       } ;
       
     ComplV2 v2 np = {
       verb = v2 ;
-      compl = table {g => table {n => v2.cp ++ np.s ! Acc}}  -- NP object in the accusative, potential preposition first
+      compl = table {g => table {n => table {c => v2.cp ++ np.s ! c}}}  -- NP object needed in Acc and Gen
       } ;
-
-    --TODO ComplVS  
+ 
     ComplVS vs s = {
-      verb = verb2gverb vs ;
-      compl = "that" ++ s.s ;
+      verb = vs ;
+      compl = table {g => table {n => table {c => "że" ++ s.s}}}
       } ;
 
-    --TODO ComplVV  
     ComplVV vv vp = {
-      verb = verb2gverb vv ;
-      compl = "to" ++ vp.verb.s ! VF Inf ++ vp.compl ;
+      verb = vv ;
+      compl = table {g => table {n => table {c => vp.verb.s ! Inf ++ vp.compl ! g ! n}}} ;
       } ;
-      
+
     UseComp comp = {
       verb = be_Verb ; -- the verb is the copula "be"
-      compl = comp.s --subject complement, can later select the appropriate form based on gender and number of the subject
+      compl = table {g => table {n => table {c => comp.s ! g ! n}}} ; 
+      --subject complement, can later select the appropriate form based on gender and number of the subject
+      --this is needed to satisfy certain requirements for VP structure
       } ;
       
     CompAP ap = {
       s = table {
         g => table {
-          n => ap.s ! g ! n ! Nom --allows to select the appropriate form based on gender and number of the subject
+          n =>  ap.s ! g ! n ! Nom --allows to select the appropriate form based on gender and number of the subject
         }
       }
     } ;
       
-    --TODO CompNP
     CompNP np = {
-      s = np.s ! Nom    -- NP complement is in the nominative
+      s = table {
+        g => table {
+          n => np.s ! Ins -- this is the case used when subject=object
+        }
+      }
+    } ;
+ 
+    CompAdv adv = {
+      s = table {
+        g => table {
+          n => adv.s
+        }
       } ;
-
-    --TODO CompAdv 
-    CompAdv adv = adv ;
+    } ;
  
     --for this one it is worth noting that adverbs are very flexible in terms of position and this sentence-final position works well for
     --adverbials like "in a book" or "with them", but not as much for adverbs like "now" or "already", it sounds a bit off, however, I believe
@@ -194,7 +208,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       isPron = False --lets decide if this can be dropped when it is a subject
       } ;
 
-    --TODO UsePN 
+    --same as MassNP
     UsePN pn = {
       s = \\_ => pn.s ;
       a = Agr Sg Per3
@@ -202,7 +216,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       
     UsePron p = p ;  -- Pron is worst-case NP  
 
-    --TODO MassNP  
+    --hopefully works without changes? 
     MassNP cn = {
       s = \\_ => cn.s ! Sg ;
       a = Agr Sg Per3
@@ -306,7 +320,6 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
   -- Adverb
     PrepNP prep np = {s = prep.s ++ np.s ! prep.c} ; --the attached NP must be in an appropriate case
 
---TODO ALL BELOW
   -- Conjunction
     CoordS conj a b = {s = a.s ++ conj.s ++ b.s} ;
 
@@ -318,8 +331,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     TSim  = {s = []    ; isPres = True} ;
     TAnt  = {s = []    ; isPres = False} ;
 
-    and_Conj = {s = "and"} ;
-    or_Conj = {s = "or"} ;
+    and_Conj = {s = "i"} ; --or "oraz"
+    or_Conj = {s = "lub"} ; --or "albo"
 
   -- Structural
     every_Det = {s = table {
@@ -551,10 +564,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     where_IAdv = {s = "gdzie"} ;
     why_IAdv = {s = "czemu"} ; --also "po co" or "dlaczego", maybe use variants?
 
-    --TODO have_V2
-    have_V2 = mkVerb "have" "has" "had" "had" "having" ** {c = []} ;
+    have_V2 = mkVerb "mieć" "miej" "mam" "masz" "ma" "mamy" "macie" "mają" "miał" "miał" "miel" ** {c = []} ;
 
-    --TODO want_VV
-    want_VV = regVerb "want" ;
+    want_VV = mkVerb "chcieć" "chciej" "chcę" "chcesz" "chce" "chcemy" "chcecie" "chcą" "chciał" "chciał" "chciel" ;
     
 }
