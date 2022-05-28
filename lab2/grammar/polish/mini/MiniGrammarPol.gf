@@ -15,22 +15,24 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --TODO Cl
     Cl = {   -- word order is fixed in S and QS
       subj : Str ;                             -- subject
-      verb : Bool => Bool => {fin,inf : Str} ; -- dep. on Pol,Temp, e.g. "does","sleep"
-      compl : Str                              -- after verb: complement, adverbs
+      verb : Bool => {form : Str} ;            -- dep. on Temp, e.g. "robi","śpi"
+      compl : Gender => Number => Case => Str ;                            -- after verb: complement, adverbs
+      rp : Case ;                              -- object case in positive sentences
+      rn : Case                                -- object case in negative sentences
       } ;
     --TODO QC:
     QCl = Cl ** {isWh : Bool} ;
     --TODO Imp
     Imp = {s : Bool => Str} ;
     --TODO what is GVerb??
-    VP = {verb : Verb ; compl : Gender => Number => Case => Str} ;
+    VP = {verb : Verb ; compl : Gender => Number => Case => Str ; rp = c ; rn = c} ;
     Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject, see above
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
-    NP =  {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --NPAgreement and isPron for when it is subject, g and n for when it is an object.
+    NP =  {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --NPAgreement and isPron for when it is subject, g and n for when it is an object.
     --TODO IP
     IP = {s : Case => Str ; a : Agreement} ;
-    Pron = {s : Case => Str ; a: NPAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
+    Pron = {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
     Det = {s : Gender => Case => Str ; n : Number} ;
     --TODO Conj
     Conj = {s : Str} ;
@@ -95,33 +97,61 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
 	    qcl.compl                -- beer
       } ;
 
-    --TODO PredVP
     PredVP np vp = {
       subj = np.s ! Nom ;
       compl = vp.compl ;
-      verb = \\plain,isPres => case <vp.verb.isAux, plain, isPres, np.a> of {
+      verb = \\isPres => case <isPres, np.a, np.a2> of { --we do not use auxiliaries to create compound tenses for present or past.
 
-        -- non-auxiliary verbs, negative/question present: "does (not) drink" 
-        <False,False,True,Agr Sg Per3> => {fin = "does" ; inf = vp.verb.s ! VF Inf} ;
-        <False,False,True,_          > => {fin = "do"   ; inf = vp.verb.s ! VF Inf} ;
-	
-        -- non-auxiliary, plain present ; auxiliary, all present: "drinks", "is (not)"
-        <_,_, True, Agr Sg Per1> => {fin = vp.verb.s ! PresSg1    ; inf = []} ;
-        <_,_, True, Agr Sg Per3> => {fin = vp.verb.s ! VF PresSg3 ; inf = []} ;
-        <_,_, True, _>           => {fin = vp.verb.s ! PresPl     ; inf = []} ;
+        -- positive/negative/question present: "(nie) pije(?)" (word order does not change, questions are a matter of prosody). 
+        <True,NPAgr Sg First,_> => {form = vp.verb.s ! Pres (NPAgr Sg First)} ;
+        <True,NPAgr Sg Second,_> => {form = vp.verb.s ! Pres (NPAgr Sg Second)} ;
+        <True,NPAgr Sg Third,_> => {form = vp.verb.s ! Pres (NPAgr Sg Third)} ;
+        <True,NPAgr Pl First,_> => {form = vp.verb.s ! Pres (NPAgr Pl First)} ;
+        <True,NPAgr Pl Second,_> => {form = vp.verb.s ! Pres (NPAgr Pl Second)} ;
+        <True,NPAgr Pl Third,_> => {form = vp.verb.s ! Pres (NPAgr Pl Third)} ;
 
-        -- all verbs, past: "has (not) drunk", "has (not) been"
-        <_,_, False,Agr Sg Per3> => {fin = "has"  ; inf = vp.verb.s ! VF PastPart} ;
-        <_,_, False,_          > => {fin = "have" ; inf = vp.verb.s ! VF PastPart} 
+        -- all verbs, past: "(nie) pił"
+        <False,_,NPGAgr Sg First Fem> => {form inf = vp.verb.s ! Past (NPGAgr Sg First Fem)} ;
+        <False,_,NPGAgr Sg First Neut> => {form inf = vp.verb.s ! Past (NPGAgr Sg First Neut)} ;
+        <False,_,NPGAgr Sg First Masc> => {form inf = vp.verb.s ! Past (NPGAgr Sg First Masc)} ;
+        <False,_,NPGAgr Sg First MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Sg First MascAnim)} ;
+
+        <False,_,NPGAgr Sg Second Fem> => {form inf = vp.verb.s ! Past (NPGAgr Sg Second Fem)} ;
+        <False,_,NPGAgr Sg Second Neut> => {form inf = vp.verb.s ! Past (NPGAgr Sg Second Neut)} ;
+        <False,_,NPGAgr Sg Second Masc> => {form inf = vp.verb.s ! Past (NPGAgr Sg Second Masc)} ;
+        <False,_,NPGAgr Sg Second MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Sg Second MascAnim)} ;
+
+        <False,_,NPGAgr Sg Third Fem> => {form inf = vp.verb.s ! Past (NPGAgr Sg Third Fem)} ;
+        <False,_,NPGAgr Sg Third Neut> => {form inf = vp.verb.s ! Past (NPGAgr Sg Third Neut)} ;
+        <False,_,NPGAgr Sg Third Masc> => {form inf = vp.verb.s ! Past (NPGAgr Sg Third Masc)} ;
+        <False,_,NPGAgr Sg Third MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Sg Third MascAnim)} ;
+
+        <False,_,NPGAgr Pl First Fem> => {form inf = vp.verb.s ! Past (NPGAgr Pl First Fem)} ;
+        <False,_,NPGAgr Pl First Neut> => {form inf = vp.verb.s ! Past (NPGAgr Pl First Neut)} ;
+        <False,_,NPGAgr Pl First Masc> => {form inf = vp.verb.s ! Past (NPGAgr Pl First Masc)} ;
+        <False,_,NPGAgr Pl First MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Pl First MascAnim)} ;
+
+        <False,_,NPGAgr Pl Second Fem> => {form inf = vp.verb.s ! Past (NPGAgr Pl Second Fem)} ;
+        <False,_,NPGAgr Pl Second Neut> => {form inf = vp.verb.s ! Past (NPGAgr Pl Second Neut)} ;
+        <False,_,NPGAgr Pl Second Masc> => {form inf = vp.verb.s ! Past (NPGAgr Pl Second Masc)} ;
+        <False,_,NPGAgr Pl Second MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Pl Second MascAnim)} ;
+
+        <False,_,NPGAgr Pl Third Fem> => {form inf = vp.verb.s ! Past (NPGAgr Pl Third Fem)} ;
+        <False,_,NPGAgr Pl Third Neut> => {form inf = vp.verb.s ! Past (NPGAgr Pl Third Neut)} ;
+        <False,_,NPGAgr Pl Third Masc> => {form inf = vp.verb.s ! Past (NPGAgr Pl Third Masc)} ;
+        <False,_,NPGAgr Pl Third MascAnim> => {form inf = vp.verb.s ! Past (NPGAgr Pl Third MascAnim)} ;
 
         -- the negation word "not" is put in place in UseCl, UseQCl
-      }
+      } ;
+      rp = vp.rp ;
+      rn = vp.rn 
     } ;
 
-    --TODO QuestCl
+    --Should work? 
     QuestCl cl = cl ** {isWh = False} ; -- since the parts are the same, we don't need to change anything
-    
-    --TODO QuestVP
+    --sometimes we might be adding the particle "czy" (whether, if), but this will either be added in UseQCl or ignored.
+
+    --Should work?
     QuestVP ip vp = PredVP ip vp ** {isWh = True} ; 
 
     ImpVP vp = {
@@ -133,8 +163,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
         --agree with the (presumed) subject, so when it is a subject complement, a rather marginal
         --case), since I also did that stretch for second person pronouns, since in neither situation
         --do I see a good way out other than using variants (but it is still not ideal).
-        True  => vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! Acc ;    
-        False => "nie" ++ vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! Gen
+        True  => vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! vp.rp ;    
+        False => "nie" ++ vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! vp.rn
         }
       } ;
 
@@ -143,21 +173,29 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     UseV v = {
       verb = v ;
       compl = table {g => table {n => table {c => []}}} ; --no object or complement
+      rp = Nom ;
+      rn = Nom ; --this does not really matter here (all entries are identical or empty), but is required by the VP format.
       } ;
       
     ComplV2 v2 np = {
       verb = v2 ;
-      compl = table {g => table {n => table {c => v2.cp ++ np.s ! c}}}  -- NP object needed in Acc and Gen
+      compl = table {g => table {n => table {c => v2.cp ++ np.s ! c}}} ; -- NP object needed in Acc and Gen
+      rp = v2.rp ;
+      rn = v2.rn ; --this is the only case where these cases are needed.
       } ;
  
     ComplVS vs s = {
       verb = vs ;
-      compl = table {g => table {n => table {c => "że" ++ s.s}}}
+      compl = table {g => table {n => table {c => "że" ++ s.s}}} ;
+      rp = Nom ;
+      rn = Nom ;
       } ;
 
     ComplVV vv vp = {
       verb = vv ;
       compl = table {g => table {n => table {c => vp.verb.s ! Inf ++ vp.compl ! g ! n}}} ;
+      rp = Nom ;
+      rn = Nom ;
       } ;
 
     UseComp comp = {
@@ -165,6 +203,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       compl = table {g => table {n => table {c => comp.s ! g ! n}}} ; 
       --subject complement, can later select the appropriate form based on gender and number of the subject
       --this is needed to satisfy certain requirements for VP structure
+      rp = Ins ;
+      rn = Ins ; 
       } ;
       
     CompAP ap = {
@@ -203,6 +243,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     DetCN det cn = {
       s = table {c => det.s ! cn.g ! c ++ cn.s ! det.n ! c} ;
       a = NPAgr det.n Third ;
+      a2 = NPGAgr det.n Third cn.g ;
       g = cn.g ;
       n = det.n ;
       isPron = False --lets decide if this can be dropped when it is a subject
@@ -211,7 +252,10 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --same as MassNP
     UsePN pn = {
       s = \\_ => pn.s ;
-      a = Agr Sg Per3
+      a = NPAgr Sg Third ;
+      a2 = NPGAgr Sg Third pn.g ;
+      g = pn.g ;
+      n = Sg
       } ;
       
     UsePron p = p ;  -- Pron is worst-case NP  
@@ -219,7 +263,10 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --hopefully works without changes? 
     MassNP cn = {
       s = \\_ => cn.s ! Sg ;
-      a = Agr Sg Per3
+      a = NPAgr Sg Third ;
+      a2 = NPGAgr Sg Third cn.g ;
+      g = cn.g ;
+      n = Sg 
       } ;
       
     --it's worth pointing out that the definite "articles" here are somewhere between that and determiners ("this"). I decided to keep them 
@@ -421,6 +468,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       --to past verb forms or subject complements. Because as the author of this 
       --grammar I go by feminine forms, this is the one I decided to give to this 
       --pronoun.
+      a2 = NPGAgr Sg First Fem ;
       g = Fem ;
       n = Sg ;
       isPron = True ;
@@ -438,6 +486,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 } ;
       a = NPAgr Sg Second ;
       --Same as above, this can be of any gender. For variety I chose the Masculine here.
+      a2 = NPGAgr Sg Second MascAnim ;
       g = MascAnim ; 
       n = Sg ;
       isPron = True ;
@@ -454,7 +503,9 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 Voc => "on"
                 } ;
       a = NPAgr Sg Third ;
+      a2 = NPGAgr Sg Third MascAnim ;
       g = MascAnim ; 
+      --this pronoun would also work for regular Masc
       n = Sg ;
       isPron = True ;
       } ;
@@ -469,6 +520,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 Voc => "ona"
                 } ;
       a = NPAgr Sg Third ;
+      a2 = NPGAgr Sg Third Fem ;
       g = Fem ;
       n = Sg ;
       isPron = True ;
@@ -485,6 +537,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 } ;
       a = NPAgr Pl First ;
       --Again, this works for both genders. Here I pick the feminine.
+      a2 = NPGAgr Pl First Fem ;
       g = Fem ;
       n = Pl ;
       isPron = True ;
@@ -501,6 +554,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 Voc => "wy"
                 } ;
       a = NPAgr Pl Second ;
+      a2 = NPGAgr Pl Second MascAnim ;
       --Once more, the same issue with gender; and again I go with MascAnim.
       g = MascAnim ;
       n = Pl ;
@@ -518,6 +572,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
                 Voc => "oni"
                 } ;
       a = NPAgr Pl Third ;
+      a2 = NPGAgr Pl Third MascAnim ;
       g = MascAnim ;
       n = Pl ;
       isPron = True ;
@@ -556,6 +611,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       --For once the choice of gender here is straightforward, as this pronoun only takes masculine forms, even if
       --intended to be used to talk about a woman; if we want to use feminine forms, we have to ask "which person"
       --instead, since "person" is a feminine noun.
+      a2 = NPGAgr Sg Third MascAnim ;
       g = MascAnim ;
       n = Sg ;
       isPron = True ;

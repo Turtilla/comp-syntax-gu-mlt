@@ -35,10 +35,10 @@ oper
 --something here is causing a warning when compiling: Warning: ignoring lock fields in resolving mkV2 (mkV "łamać" IX) for {s : VForm => Str} 
 --using V; however, this does not impact the grammar working and we could not find a solution/explanation as to what causes it in the lab.
   mkV2 = overload {
-    mkV2 : V -> V2            -- any verb with direct object, e.g. "drink"
-      = \v   -> lin V2 (v ** {cp = []}) ;
-    mkV2 : V -> Str -> V2     -- any verb with preposition
-      = \v,p -> lin V2 (v ** {cp = p}) ;
+    mkV2 : V -> Case -> Case -> V2            -- any verb with direct object, e.g. "drink"
+      = \v,c   -> lin V2 (v ** {cp = [] ; rp = c ; rn = c}) ;
+    mkV2 : V -> Str -> Case -> Case -> V2     -- any verb with preposition
+      = \v,p,c -> lin V2 (v ** {cp = p ; r = c ; rn = c}) ;
     } ;
 
 --TODO mkVS

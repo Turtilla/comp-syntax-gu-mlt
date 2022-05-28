@@ -308,8 +308,7 @@ oper
   --predictable from just the spelling. This does not also fully account for changes in the root or conjugations where endings can vary.
   Verb : Type = {s : VForm => Str} ;
 
-  --TODO ADD IMPERATIVE
-  mkVerb : (inf,imp2sg,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl : Str) -> Verb
+  mkVerb : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Verb
     = \inf,imp2sg,pressg1,pressg2,pressg3,prespl1,prespl2,prespl3,lpart,lpartmascsg,lpartmascpl -> {
     s = table {
       Inf => inf ; --lubić
@@ -347,7 +346,7 @@ oper
       Past (NPGAgr Pl Third Neut) => lpart + "y" ; --lubiły
       Past (NPGAgr Pl Third Masc) => lpart + "y" ; --lubiły
       Past (NPGAgr Pl Third MascAnim) => lpartmascpl + "i"  --lubili
-      }
+      } 
     } ;
 
   conjVerb : Str -> Conjugation -> Verb = \inf, conj -> case conj of {
@@ -395,7 +394,7 @@ oper
   negation : Bool -> Str = \b -> case b of {True => [] ; False => "nie"} ; 
 
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  Verb2 : Type = Verb ** {c : Str} ;
+  Verb2 : Type = Verb ** {cp : Str ; rp : Case ; rn : Case} ; --though all the verbs in the lexicon take Acc, this is not always the case, and it can change between positive and negative sentences.
 
   -- generalized verb, here just "be"
  --param
