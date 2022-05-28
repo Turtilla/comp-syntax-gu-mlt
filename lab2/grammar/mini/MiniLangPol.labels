@@ -1,0 +1,4 @@
+UseCl, UseQCl, ImpVP {"nie"} PART advmod head
+UseComp {"być", "bądź", "jestem","jesteś","jest","jesteśmy","jesteście","są", "byłem", "byłam", "byłom", "byłeś", "byłaś", "byłoś", "byliśmy", "byłyśmy", "byliście", "byłyście", "byli", "były"} AUX cop head
+UseQCl {"czy"} PART advmod head
+ComplVS {"że"} SCONJ mark ccomp
