@@ -14,9 +14,13 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     QS = {s : Str} ;
     --TODO Cl
     Cl = {   -- word order is fixed in S and QS
-      subj : Str ;                             -- subject
+      subj : Str ; 
+      g : Gender ;
+      n : Number ;
+      isPron : Bool ;                          -- subject
       verb : Bool => {form : Str} ;            -- dep. on Temp, e.g. "robi","śpi"
       compl : Gender => Number => Case => Str ;                            -- after verb: complement, adverbs
+      complIsPron : Bool ;
       rp : Case ;                              -- object case in positive sentences
       rn : Case                                -- object case in negative sentences
       } ;
@@ -25,8 +29,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --TODO Imp
     Imp = {s : Bool => Str} ;
     --TODO what is GVerb??
-    VP = {verb : Verb ; compl : Gender => Number => Case => Str ; rp = c ; rn = c} ;
-    Comp = {s : Gender => Number => Str} ; --needed to fit complements' gender and number to that of the subject, see above
+    VP = {verb : Verb ; compl : Gender => Number => Case => Str ; complIsPron = Bool ; rp = c ; rn = c} ;
+    Comp = {s : Gender => Number => Str ; complIsPron : Bool} ; --needed to fit complements' gender and number to that of the subject, see above
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
     NP =  {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --NPAgreement and isPron for when it is subject, g and n for when it is an object.
@@ -79,27 +83,33 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
 	    cl.compl                 -- beer
       } ;
 
-    --TODO UseQCl 
     UseQCl temp pol qcl =
-      let
-         isWh = qcl.isWh ;
-         clt = qcl.verb ! andB isWh pol.isTrue ! temp.isPres ;  -- no "do" in present positive Wh questions
-         verbsubj = case isWh of {
-	    True  => qcl.subj ++ clt.fin ;      -- no inversion in Wh questions
-	    False => clt.fin ++ qcl.subj
-	    }
+    {
+      s = case <isWh, isPron, pol.isTrue, qcl.complIsPron> of {
+        <True,_True,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ; --"kto to zrobił"
+        <True,_,False,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ++ "nie" ++ qcl.verb ! temp.isPres ; --"kto tego nie zrobił"
 
-      in {
-        s = pol.s ++ temp.s ++
-	    verbsubj ++
-	    negation pol.isTrue ++   -- not
-	    clt.inf ++               -- drink
-	    qcl.compl                -- beer
-      } ;
+        <False,False,True,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ; --"kot to zrobił"
+        <False,False,False,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ++ "nie" ++ qcl.verb ! temp.isPres ; --"kot tego nie zrobił"
+
+        <False,True,True,_> => qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"zrobił to", "zrobił ciasto"
+        <False,True,False,_> => "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ; --"nie zrobił tego", "nie zrobił ciasta"
+        
+        <True,_True,False> => qcl.subj ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"kto zrobił ciasto"
+        <True,_,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ; --"kto nie zrobił ciasta"
+
+        <False,False,True,False> => qcl.subj ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"kot zrobił ciasto"
+        <False,False,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ; --"kot nie zrobił ciasta" 
+      }
+    } ;
 
     PredVP np vp = {
       subj = np.s ! Nom ;
+      g = np.g ;
+      n = np.n ;
+      isPron = np.isPron ;
       compl = vp.compl ;
+      complIsPron = vp.complIsPron ;
       verb = \\isPres => case <isPres, np.a, np.a2> of { --we do not use auxiliaries to create compound tenses for present or past.
 
         -- positive/negative/question present: "(nie) pije(?)" (word order does not change, questions are a matter of prosody). 
@@ -173,6 +183,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     UseV v = {
       verb = v ;
       compl = table {g => table {n => table {c => []}}} ; --no object or complement
+      complIsPron = False ;
       rp = Nom ;
       rn = Nom ; --this does not really matter here (all entries are identical or empty), but is required by the VP format.
       } ;
@@ -180,6 +191,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     ComplV2 v2 np = {
       verb = v2 ;
       compl = table {g => table {n => table {c => v2.cp ++ np.s ! c}}} ; -- NP object needed in Acc and Gen
+      complIsPron = np.isPron ;
       rp = v2.rp ;
       rn = v2.rn ; --this is the only case where these cases are needed.
       } ;
@@ -187,6 +199,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     ComplVS vs s = {
       verb = vs ;
       compl = table {g => table {n => table {c => "że" ++ s.s}}} ;
+      complIsPron = False ;
       rp = Nom ;
       rn = Nom ;
       } ;
@@ -194,6 +207,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     ComplVV vv vp = {
       verb = vv ;
       compl = table {g => table {n => table {c => vp.verb.s ! Inf ++ vp.compl ! g ! n}}} ;
+      complIsPron = False ;
       rp = Nom ;
       rn = Nom ;
       } ;
@@ -203,6 +217,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       compl = table {g => table {n => table {c => comp.s ! g ! n}}} ; 
       --subject complement, can later select the appropriate form based on gender and number of the subject
       --this is needed to satisfy certain requirements for VP structure
+      complIsPron = comp.complIsPron ;
       rp = Ins ;
       rn = Ins ; 
       } ;
@@ -212,7 +227,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
         g => table {
           n =>  ap.s ! g ! n ! Nom --allows to select the appropriate form based on gender and number of the subject
         }
-      }
+      } ;
+      complIsPron = False
     } ;
       
     CompNP np = {
@@ -220,7 +236,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
         g => table {
           n => np.s ! Ins -- this is the case used when subject=object
         }
-      }
+      } ;
+      complIsPron = np.isPron
     } ;
  
     CompAdv adv = {
@@ -229,6 +246,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
           n => adv.s
         }
       } ;
+      complIsPron = False
     } ;
  
     --for this one it is worth noting that adverbs are very flexible in terms of position and this sentence-final position works well for
@@ -236,7 +254,10 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     --that fixing this would be rather complicated and the solution I can think of does not allow for multiple adverbs.
     AdvVP vp adv = {
       verb = vp.verb ;
-      compl = table {g => table {n => vp.compl ! g ! n ++ adv.s}} --adds an adv to the object or complement
+      compl = table {g => table {n => vp.compl ! g ! n ++ adv.s}} ; --adds an adv to the object or complement
+      complIsPron = vp.complIsPron ; 
+      rp = vp.rp ; 
+      rn = vp.rn
     } ;
 
   --Noun  
