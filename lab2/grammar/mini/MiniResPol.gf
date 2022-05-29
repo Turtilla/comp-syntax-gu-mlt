@@ -31,7 +31,8 @@ oper
   --Requiring plural genitive solved a lot of other issues that forced me to split a lot of variants: for instance, in many cases words with an
   --internal "o" have that vowel shift to "ó" in genitive plural. This let me limit a number of otherwise very intricate "case of" expressions
   --that would have nearly doubled the number of paradigms had I wanted this vowel change to work without requiring the plural genitive. The plural
-  --nominative is needed to tell apart some paradigms.
+  --nominative is needed to tell apart some paradigms, and potentially not all sound changes are accounted for, as my sources were not extremely
+  --comprehensive with describing when they do.
 
   Noun : Type = {s : Number => Case => Str ; g : Gender} ;
 
@@ -61,12 +62,12 @@ oper
         } ;
 
   smartNounNeut : Str -> Str -> Str -> Gender -> Noun = \noun,plural,gen,g -> case noun of {
-              ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the changes to the root in some plutal genitives ("okno" - "okien") or for the relatively irregular "dziecko"
+              ---most neuter nouns that end with "o", like "jajo" or "mleko"; does not account for the relatively irregular "dziecko"
               jaj + "o" => case gen of {
-                mi + "ast" => mkNoun noun plural (gen + "u") noun (gen + "em") (mi + "eście") noun plural gen (gen + "om") plural (gen + "ami") (gen + "ach") plural g ; --miasto, miasta, miast
-                jezio + "r" => mkNoun noun plural (gen + "u") noun (gen + "em") (jezio + "rze") noun plural gen (gen + "om") plural (gen + "ami") (gen + "ach") plural g ; --jezioro, jeziora, jezior
+                mi + "ast" => mkNoun noun plural (jaj + "u") noun (jaj + "em") (mi + "eście") noun plural gen (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g ; --miasto, miasta, miast
+                jezio + "r" => mkNoun noun plural (jaj + "u") noun (jaj + "em") (jezio + "rze") noun plural gen (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g ; --jezioro, jeziora, jezior
                 sl + "ow" => mkNoun noun plural (jaj + "u") noun (jaj + "em") (jaj + "ie") noun plural gen (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g ; --słowo, słowa, słów
-                _ => mkNoun noun plural (gen + "u") noun (gen + "em") (gen + "u") noun plural gen (gen + "om") plural (gen + "ami") (gen + "ach") plural g --jajo, jaja, jaj or jajko, jajka, jajek
+                _ => mkNoun noun plural (jaj + "u") noun (jaj + "em") (jaj + "u") noun plural gen (jaj + "om") plural (jaj + "ami") (jaj + "ach") plural g --jajo, jaja, jaj or jajko, jajka, jajek
               } ;
               --foreign neuter nouns that end with "um", where all the singular forms are the same, e.g. "muzeum", "memorandum".
               muze + "um" => mkNoun noun noun noun noun noun noun noun plural gen (muze + "om") plural (muze + "ami") (muze + "ach") plural g ; --muzeum, muzea, muzeów
@@ -93,7 +94,9 @@ oper
               a + ("sia"|"cia"|"zia"|"dzia"|"nia") => case noun of {asi + "a" => mkNoun noun asi asi (asi + "ę") (asi + "ą") asi (asi + "u") plural gen (asi + "om") plural (asi + "ami") (asi + "ach") plural g } ; --babcia, babcie, babć
               fre + "ja" => mkNoun noun gen gen (fre + "ję") (fre + "ją") gen (fre + "jo") plural gen (fre + "jom") plural (fre + "jami") (fre + "jach") plural g ; --Freja, Freje, Frei
               --feminine nouns ending with "a" with a hard stem.
-              la + ("ba"|"pa"|"fa"|"wa"|"ma"|"ła"|"ta"|"da"|"sa"|"za"|"na") => mkNoun noun plural (gen + "ie") (gen + "ę") (gen + "ą") (gen + "ie") (gen + "o") plural gen (gen + "om") plural (gen + "ami") (gen + "ach") plural g ; --laba, laby, lab
+              la + ("ba"|"pa"|"fa"|"wa"|"ma"|"ła"|"sa"|"za"|"na") => case noun of {lab + "a" => mkNoun noun plural (lab + "ie") (lab + "ę") (lab + "ą") (lab + "ie") (lab + "o") plural gen (lab + "om") plural (lab + "ami") (lab + "ach") plural g} ; --laba, laby, lab
+              la + "ta" => mkNoun noun plural (la + "cie") (la + "tę") (la + "tą") (la + "cie") (la + "to") plural gen (la + "tom") plural (la + "tami") (la + "tach") plural g ; --łata, łaty, łat
+              wo + "da" => mkNoun noun plural (wo+ "dzie") (wo + "dę") (wo + "dą") (wo + "dzie") (wo + "do") plural gen (wo + "dom") plural (wo + "dami") (wo + "dach") plural g ; --woda, wody, wód
               kobie + "ta" => mkNoun noun plural (kobie + "cie") (kobie + "tę") (kobie + "tą") (kobie + "cie") (kobie + "to") plural gen (kobie + "tom") plural (kobie + "tami") (kobie + "tach") plural g ; --kobieta, kobiety, kobiet
               szko + "ła" => mkNoun noun plural (szko + "le") (szko + "łę") (szko + "łą") (szko + "le") (szko + "ło") plural gen (szko + "łom") plural (szko + "łami") (szko + "łach") plural g ; --szkoła, szkoły, szkół
               ope + "ra" => mkNoun noun plural (ope + "rze") (ope + "rę") (ope + "rą") (ope + "rze") (ope + "ro") plural gen (ope + "rom") plural (ope + "rami") (ope + "rach") plural g ; --opera, opery, oper
@@ -285,6 +288,7 @@ oper
   
   
   smartAdj : Str -> Adjective = \masc -> case masc of {
+    --the variety of options here stems mostly from MascAnim plural nominative having an affinity for unusual sound changes to the stem.
      du  +  "ży" => mkAdj (du + "ży") (du + "żego") (du + "żemu") (du + "żym") (du + "żych") (du + "żymi") (du + "że") (du + "ża") (du + "żej") (du + "żą") (du + "zi") ;
      wes  +  "oły" => mkAdj (wes + "oły") (wes + "ołego") (wes + "ołemu") (wes + "ołym") (wes + "ołych") (wes + "ołymi") (wes + "ołe") (wes + "oła") (wes + "ołej") (wes + "ołą") (wes + "eli") ;
      mi  +  "ły" => mkAdj (mi + "ły") (mi + "łego") (mi + "łemu") (mi + "łym") (mi + "łych") (mi + "łymi") (mi + "łe") (mi + "ła") (mi + "łej") (mi + "łą") (mi + "li") ;
@@ -305,10 +309,17 @@ oper
      } ;
 
   --for the verb, as far as only the present tense is concerned, only the infinitive and six present verb forms are needed. These are stored using
-  --the NPAgr, since they need to agree with the subject in the number and person. In the past tense, in all the forms except for 2nd person plural,
-  --the gender is also something that needs to be agreed for, but I disregarded it here as it is not currently needed. For the conjugate verb function,
-  --which is the smart verb function to an extent, aside from the infinitive, one needs the number of the conjugation it takes, as these are not
-  --predictable from just the spelling. This does not also fully account for changes in the root or conjugations where endings can vary.
+  --the NPAgr, since they need to agree with the subject in the number and person. In the past tense, in all the forms gender is also something 
+  --that needs to be agreed for, and why I utilized NPGAgr. However, as the past tense is, arguably, not a tense but a participle with affixed
+  --auxiliaries (lubiłem = jam lubił = ja żem lubił, lubiłeś = tyś lubił = ty żeś lubił, as you can see there are multiple levels of contraction
+  --here and while officially these are called past tense verb forms and taught as such, they have a slightly unusual origin story; all three of
+  --these variants are understandable, though increasingly archaic for the latter two, but still in use sometimes), it has much more regular
+  --endings, and only three variants (in most cases two are the same) of the so-called l-participle are needed (one for feminine and neuter, one
+  --for masculine singular, one for masculine animate plural). For the conjugate verb function, which is the smart verb function to an extent, 
+  --aside from the infinitive, one needs the number of the conjugation it takes, as these are not predictable from just the spelling. This does 
+  --not also fully account for changes in the root or conjugations where endings can vary. In addition, there is an irregImpVerb function which
+  --works almost the same as conjVerb, but requires being fed the imperative for 2nd person singular, since that one can undergo unpredictable
+  --internal sound changes even if the verb is otherwise regular.
   Verb : Type = {s : VForm => Str} ;
 
   mkVerb : Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Str -> Verb
@@ -397,38 +408,14 @@ oper
   negation : Bool -> Str = \b -> case b of {True => [] ; False => "nie"} ; 
 
   -- two-place verb with "case" as preposition; for transitive verbs, c=[]
-  Verb2 : Type = Verb ** {cp : Str ; rp : Case ; rn : Case} ; --though all the verbs in the lexicon take Acc, this is not always the case, and it can change between positive and negative sentences.
+  Verb2 : Type = Verb ** {cp : Str ; rp : Case ; rn : Case} ; 
+  --though almost all the verbs in the lexicon take Acc, this is not always the case, and it can change between positive and negative sentences,
+  --and verbs that have obligatory prepositions.
+
+  --Verb2 gives the warning: ignoring lock fields in resolving mkV2, but otherwise works; we were not able to figure out in the lab what causes it.
 
   be_Verb : Verb = mkVerb "być" "bądź" "jestem" "jesteś" "jest" "jesteście" "jesteśmy" "są" "był" "był" "byl" ; 
-  -- generalized verb, here just "be"
- --param
---   GVForm = VF VForm | PresSg1 | PresPl | PastPl ;
-
--- oper
---  GVerb : Type = {
---     s : GVForm => Str ;
---     isAux : Bool
---     } ;
-
---  be_GVerb : GVerb = {
---     s = table {
---       PresSg1 => "am" ;
---       PresPl  => "are" ;
---       PastPl  => "were" ;
---       VF vf   => (mkVerb "be" "is" "was" "been" "being").s ! vf
---       } ;
---     isAux = True
---     } ;
-
-  -- in VP formation, all verbs are lifted to GVerb, but morphology doesn't need to know this
---   verb2gverb : Verb -> GVerb = \v -> {s =
---     table {
---       PresSg1 => v.s ! Inf ;
---       PresPl  => v.s ! Inf ;
---       PastPl  => v.s ! Past ;
---       VF vf   => v.s ! vf
---       } ;
---     isAux = False
---     } ;
-
+  
+  --all of the gVerb was removed as it was not something key to the structure of any grammar, but a way of handling how it works in English,
+  --and it was not needed in mine.
 }

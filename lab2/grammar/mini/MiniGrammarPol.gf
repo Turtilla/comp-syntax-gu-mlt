@@ -4,12 +4,12 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
 
   lincat
     Utt = {s : Str} ;
-    Pol  = {s : Str ; isTrue : Bool} ; -- the s field is empty, but needed for parsing
+    Pol  = {s : Str ; isTrue : Bool} ; 
     Temp = {s : Str ; isPres : Bool} ;
     
     S  = {s : Str} ;
     QS = {s : Str} ;
-    Cl = {   -- word order is fixed in S and QS
+    Cl = {
       subj : Str ;                                -- the subject 
       g : Gender ;                                -- the gender of the subject to determine complement
       n : Number ;                                -- the number of the subject to determine complement
@@ -21,21 +21,21 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       rn : Case                                   -- object case in negative sentences
       } ;
     QCl = Cl ** {isWh : Bool} ;
-    Imp = {s : Bool => Str} ;
+    Imp = {s : Bool => Str} ; --only because as far as I understood, we are only doing 2nd person singular imperative, 1st and 2nd person plural would complicate things.
     VP = {verb : Verb ; compl : Gender => Number => Case => Str ; complIsPron : Bool ; rp : Case ; rn : Case} ;
     Comp = {s : Gender => Number => Str ; complIsPron : Bool} ; --needed to fit complements' gender and number to that of the subject, see above
     AP = Adjective ; --{s : Gender => Number => Case => Str}
     CN = Noun ; --{s : Number => Case => Str ; g : Gender}
-    NP =  {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --NPAgreement and isPron for when it is subject, g and n for when it is an object.
-    IP = {s : Case => Str ; a : NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
-    Pron = {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ;
+    NP =  {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ;  --NPAgreement and isPron for when it is subject in a present tense sentence,
+    IP = {s : Case => Str ; a : NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ;  --g and n for when it is an object, NPG when it is a subject in a past
+    Pron = {s : Case => Str ; a: NPAgreement ; a2: NPGAgreement ; g : Gender ; n : Number ; isPron : Bool } ; --tense sentence.
     Det = {s : Gender => Case => Str ; n : Number} ;
     Conj = {s : Str} ;
-    Prep = {s : Str ; c : Case} ;
+    Prep = {s : Str ; c : Case} ; --prepositions require their NPs to take specific cases
     V = Verb ;
     V2 = Verb2 ;
     VS = Verb ;
-    VV = Verb ; ---- only VV to VP
+    VV = Verb ;
     A = Adjective ;
     N = Noun ;
     PN = Noun ;
@@ -46,10 +46,9 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
   -- Phrase
     UttS s = s ;
     UttQS s = s ;
-    --originally it was Acc here, but, to be honest, a NP in any case could be an 
-    --utterance here, so I picked the default Nom. In addition, to questions that
-    --would normally be answered with "me" in English (e.g. "who did it?") we would
-    --normally answer in nominative in Polish.
+    --originally it was Acc here, but, to be honest, a NP in any case could be an utterance here, so I picked the default Nom. 
+    --In addition, to questions that would normally be answered with "me" in English (e.g. "who did it?") we would normally answer in 
+    --nominative in Polish ("kto to zrobił?" "ja (to zrobiłem)" / "(to byłem) ja").
     UttNP np = {s = np.s ! Nom} ; 
     UttAdv adv = adv ;
     UttIAdv iadv = iadv ;
@@ -58,42 +57,47 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
   -- Sentence and clause
     UseCl temp pol cl = {
       s = case <cl.isPron, cl.complIsPron, pol.isTrue> of {
-        <True,_,True> => cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rp ; --"zrobiła to", "zrobiła auto"
-        <True,_,False> => "nie" ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rn  ; --"nie zrobiła tego", "nie zrobiła auta"
-        <False,True,True> => cl.subj ++ cl.compl ! cl.g ! cl.n ! cl.rp ++ cl.verb ! temp.isPres ; --"kotka to zrobiła"
+        --word order (or presence) depends on which elements of the sentence are pronouns. Polarity introduces negation, and tense is
+        --inconsequential, as we do not have a generally used compound past tense.
+        <True,_,True> => cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rp ;                          --"zrobiła to", "zrobiła auto"
+        <True,_,False> => "nie" ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rn  ;               --"nie zrobiła tego", "nie zrobiła auta"
+        <False,True,True> => cl.subj ++ cl.compl ! cl.g ! cl.n ! cl.rp ++ cl.verb ! temp.isPres ;           --"kotka to zrobiła"
         <False,True,False> => cl.subj ++ cl.compl ! cl.g ! cl.n ! cl.rn ++ "nie" ++ cl.verb ! temp.isPres ; --"kotka tego nie zrobiła"
-        <False,False,True> => cl.subj ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rp ; --"kotka zrobiła auto"
-        <False,False,False> => cl.subj ++ "nie" ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rn --"kotka nie zrobiła auta"
+        <False,False,True> => cl.subj ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rp ;          --"kotka zrobiła auto"
+        <False,False,False> => cl.subj ++ "nie" ++ cl.verb ! temp.isPres ++ cl.compl ! cl.g ! cl.n ! cl.rn  --"kotka nie zrobiła auta"
       }
     } ;
 
     UseQCl temp pol qcl =
     {
       s = case <qcl.isWh, qcl.isPron, pol.isTrue, qcl.complIsPron> of {
-        <True,_True,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ; --"kto to zrobił"
-        <True,_,False,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ++ "nie" ++ qcl.verb ! temp.isPres ; --"kto tego nie zrobił"
+        --similarly to above, but here it also matters if it is a wh- question. Some word orders are the same, but impossible to group up
+        --using these conditions. I believe there is one set of conditions that, according to the compiler, is never reached here, but
+        --technically it is possible to have a sentence like that so I am keeping it in. 
+        <True,_True,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ;                 --"kto to zrobił"
+        <True,_,False,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ++ "nie" ++ qcl.verb ! temp.isPres ;      --"kto tego nie zrobił"
 
-        <False,False,True,True> => "czy" ++ qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ; --"kot to zrobił"
+        <False,False,True,True> => "czy" ++ qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ++ qcl.verb ! temp.isPres ;  --"kot to zrobił"
         <False,False,False,True> => qcl.subj ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ++ "nie" ++ qcl.verb ! temp.isPres ; --"kot tego nie zrobił"
 
-        <False,True,True,_> => qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"zrobił to", "zrobił ciasto"
-        <False,True,False,_> => "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ; --"nie zrobił tego", "nie zrobił ciasta"
+        <False,True,True,_> => qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ;                           --"zrobił to", "zrobił ciasto"
+        <False,True,False,_> => "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ;                 --"nie zrobił tego", "nie zrobił ciasta"
         
-        <True,_True,False> => qcl.subj ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"kto zrobił ciasto"
-        <True,_,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ; --"kto nie zrobił ciasta"
+        <True,_True,False> => qcl.subj ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ;                --"kto zrobił ciasto"
+        <True,_,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn ;     --"kto nie zrobił ciasta"
 
         <False,False,True,False> => "czy" ++ qcl.subj ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rp ; --"kot zrobił ciasto"
-        <False,False,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn --"kot nie zrobił ciasta" 
+        <False,False,False,False> => qcl.subj ++ "nie" ++ qcl.verb ! temp.isPres ++ qcl.compl ! qcl.g ! qcl.n ! qcl.rn  --"kot nie zrobił ciasta" 
       }
     } ;
 
     PredVP np vp = {
       subj = np.s ! Nom ;
-      g = np.g ;
-      n = np.n ;
-      isPron = np.isPron ;
-      compl = vp.compl ;
-      complIsPron = vp.complIsPron ;
+      g = np.g ;                     --to determine the gender of the complement
+      n = np.n ;                     --to determine the number of the complement
+      isPron = np.isPron ;           --whether the subject is a pronoun
+      compl = vp.compl ;             --this and the g,n above could also be resolved here since we know the subject already
+      complIsPron = vp.complIsPron ; --whether the object is a pronoun
       verb = \\isPres => case <isPres, np.a, np.a2> of { --we do not use auxiliaries to create compound tenses for present or past.
 
         -- positive/negative/question present: "(nie) pije(?)" (word order does not change, questions are a matter of prosody). 
@@ -134,36 +138,29 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
         <False,_,NPGAgr Pl Third Neut> => vp.verb.s ! Past (NPGAgr Pl Third Neut) ;
         <False,_,NPGAgr Pl Third Masc> => vp.verb.s ! Past (NPGAgr Pl Third Masc) ;
         <False,_,NPGAgr Pl Third MascAnim> => vp.verb.s ! Past (NPGAgr Pl Third MascAnim)
-
-        -- the negation word "not" is put in place in UseCl, UseQCl
       } ;
       rp = vp.rp ;
       rn = vp.rn 
     } ;
 
-    --Should work? 
-    QuestCl cl = cl ** {isWh = False} ; -- since the parts are the same, we don't need to change anything
-    --sometimes we might be adding the particle "czy" (whether, if), but this will either be added in UseQCl or ignored.
+    QuestCl cl = cl ** {isWh = False} ;
+    --sometimes we might be adding the particle "czy" (whether, if), but this is added in UseQCl.
 
-    --Should work?
     QuestVP ip vp = (PredVP ip vp) ** {isWh = True} ; 
 
     ImpVP vp = {
       s = table {
-        --since my compls are NOT just strings, I could have stored it here under another variable; however,
-        --because we only do this for 2nd person singular we can select that form.
-        --it's worth mentioning that negated sentences take the object in Gen, not Acc.
-        --here I only account for the masculine form (which only matters when the compl has to
-        --agree with the (presumed) subject, so when it is a subject complement, a rather marginal
-        --case), since I also did that stretch for second person pronouns, since in neither situation
-        --do I see a good way out other than using variants (but it is still not ideal).
+        --since my compls are NOT just strings, I could have stored it here under another variable; however, because we only do this for 2nd 
+        --person singular we can select that form already. It's worth mentioning that negated sentences take the object in Gen, not Acc.
+        --here I only account for the masculine form (which only matters when the compl has to agree with the (presumed) subject, so when it is 
+        --a subject complement, a rather marginal case), since I also did that stretch for second person pronouns, since in neither situation
+        --do I see a good way out that would be within the scope of this project.
         True  => vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! vp.rp ;    
         False => "nie" ++ vp.verb.s ! Imp2Sg ++ vp.compl ! Masc ! Sg ! vp.rn
         }
       } ;
 
   -- Verb
-    --do I need generalized verbs? no
     UseV v = {
       verb = v ;
       compl = table {g => table {n => table {c => []}}} ; --no object or complement
@@ -177,12 +174,12 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       compl = table {g => table {n => table {c => v2.cp ++ np.s ! c}}} ; -- NP object needed in Acc and Gen
       complIsPron = np.isPron ;
       rp = v2.rp ;
-      rn = v2.rn ; --this is the only case where these cases are needed.
+      rn = v2.rn ; --this is a case where these cases are needed.
       } ;
  
     ComplVS vs s = {
       verb = vs ;
-      compl = table {g => table {n => table {c => "że" ++ s.s}}} ;
+      compl = table {g => table {n => table {c => "że" ++ s.s}}} ; --"że" particle is added
       complIsPron = False ;
       rp = Nom ;
       rn = Nom ;
@@ -190,17 +187,17 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
 
     ComplVV vv vp = {
       verb = vv ;
-      compl = table {g => table {n => table {c => vp.verb.s ! Inf ++ vp.compl ! g ! n ! vp.rp}}} ;
+      compl = table {g => table {n => table {c => vp.verb.s ! Inf ++ vp.compl ! g ! n ! vp.rp}}} ; --the compl gets fitted to the required case
       complIsPron = False ;
       rp = vp.rp ;
-      rn = vp.rn ;
+      rn = vp.rn ; 
       } ;
 
     UseComp comp = {
-      verb = be_Verb ; -- the verb is the copula "be"
+      verb = be_Verb ; --copula verb
       compl = table {g => table {n => table {c => comp.s ! g ! n}}} ; 
-      --subject complement, can later select the appropriate form based on gender and number of the subject
-      --this is needed to satisfy certain requirements for VP structure
+      --subject complement, can later select the appropriate form based on gender and number of the subject; this is needed to satisfy certain 
+      --requirements for VP structure
       complIsPron = comp.complIsPron ;
       rp = Ins ;
       rn = Ins ; 
@@ -235,7 +232,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
  
     --for this one it is worth noting that adverbs are very flexible in terms of position and this sentence-final position works well for
     --adverbials like "in a book" or "with them", but not as much for adverbs like "now" or "already", it sounds a bit off, however, I believe
-    --that fixing this would be rather complicated and the solution I can think of does not allow for multiple adverbs.
+    --that fixing this would be rather complicated and the solution I can think of does not allow for multiple / stacked adverbs.
     AdvVP vp adv = {
       verb = vp.verb ;
       compl = table {g => table {n => table { c => vp.compl ! g ! n ! c ++ adv.s}}} ; --adds an adv to the object or complement
@@ -254,7 +251,6 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       isPron = False --lets decide if this can be dropped when it is a subject
       } ;
 
-    --same as MassNP
     UsePN pn = {
       s = pn.s ! Sg ;
       isPron = False ;
@@ -264,9 +260,8 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       n = Sg
       } ;
       
-    UsePron p = p ;  -- Pron is worst-case NP  
+    UsePron p = p ;  
 
-    --hopefully works without changes? 
     MassNP cn = {
       s = cn.s ! Sg ;
       isPron = False ;
@@ -321,7 +316,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
     } ; n = Sg } ;
 
     thePl_Det = {s = table {
-      --here only the MascAnim one is different
+      --here only the MascAnim one is different from the rest
       MascAnim => table {
                 Nom => "ci" ;
                 Gen => "tych" ;
@@ -385,7 +380,10 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
     TSim  = {s = []    ; isPres = True} ;
     TAnt  = {s = []    ; isPres = False} ;
 
-    and_Conj = {s = variants {"i" ; "oraz"}} ; 
+    --these are more or less in free variation, with the first two having a slight difference in formality, and the latter two differing when they
+    --are used for logic (OR and XOR), in everyday Polish they are the same. We tend to try to avoid repetition and thus like having many near
+    --synonyms. This tendency is only visible in more formal writing though, I do not know if it is displayed in speech as well.
+    and_Conj = {s = variants {"i" ; "oraz"}} ;
     or_Conj = {s = variants {"lub" ; "albo" }} ;
 
   -- Structural
@@ -443,6 +441,8 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
                         "wj"|"wk"|"wl"|"wł"|"wm"|"wn"|"wp"|"wr"|"ws"|"wt"|"wz"|"wż") => "we" ; 
                         _ => "w"} ; c = Loc} ; --locative
     on_Prep = {s = "na" ; c = Loc} ; --locative
+    --for the with_Prep one case still does not work, which is "with me"="ze mną". This letter combination does not otherwise trigger this form
+    --of the preposition, this is an exception.
     with_Prep = {s = pre {("sc"|"sf"|"sg"|"sj"|"sk"|"sl"|"sł"|"sm"|"sn"|"sp"|"sr"|"st"|"sw"|
                           "zb"|"zd"|"zg"|"zj"|"zl"|"zł"|"zm"|"zn"|"zr"|"zs"|"zw"|"zż"|
                           "śc"|"śl"|"śm"|"śn"|"śp"|"śr"|"św"|
@@ -452,12 +452,11 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
                           "szc"|"szk"|"szl"|"szł"|"szm"|"szn"|"szp"|"szr"|"szt"|"szw") => "ze" ; 
                           _ => "z"} ; c = Ins} ; --instrumental
 
-    --For the majority of pronouns there are alternative versions (e.g. for masculine accusative singular
-    --there is "jego", "go", "niego", "-ń"); these have a relatively predictable distribution, but in some
-    --contexts they are interchangeable. I think implementing all of them is beyond the scope of this assignment.
-    --The "n" forms appear after prepositions. Short forms (without "je", wherever applicable) can only appear
-    --in unstressed positions (which means what in the SVO sentences they are likely to appear in that form).
-    --"-ń" is a clitic of some prepositions, and only works for the masculine.
+    --For the majority of pronouns there are alternative versions (e.g. for masculine accusative singular there is "jego", "go", "niego", "-ń"); 
+    --these have a relatively predictable distribution, but in some contexts they are interchangeable. I think implementing all of them is 
+    --beyond the scope of this assignment. The "n" forms appear after prepositions. Short forms (without "je", wherever applicable) can only 
+    --appear in unstressed positions (which means what in the SVO sentences they are likely to appear in that form). "-ń" is a clitic of some 
+    --prepositions, and only works for the masculine.
     
     i_Pron = {
       s = table {
@@ -625,7 +624,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       } ;
 
     where_IAdv = {s = "gdzie"} ;
-    why_IAdv = {s = variants {"czemu" ; "po co" ; "dlaczego"}} ; --also "po co" or "dlaczego", maybe use variants?
+    why_IAdv = {s = variants {"czemu" ; "po co" ; "dlaczego"}} ; --same as above, this only differs slightly in terms of formality
 
     have_V2 = (mkVerb "mieć" "miej" "mam" "masz" "ma" "mamy" "macie" "mają" "miał" "miał" "miel") ** {cp = [] ; rp = Acc ; rn = Dat} ;
 
