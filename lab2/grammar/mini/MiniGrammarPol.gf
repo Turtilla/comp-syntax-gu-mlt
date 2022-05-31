@@ -471,10 +471,13 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Sg First ;
       --Here occurs a similar issue as for "they", though the form of the pronoun stays the same, but it can occur in all the different 
       --genders when it comes to past verb forms or subject complements. Because as the author of this grammar I go by feminine forms, this 
-      --is the one I decided to give to this pronoun. By that I mean deciding to put it as first in variants, in case only the first option is 
-      --taken into account when generating sentences.
+      --is the one I decided to give to this pronoun. Initially I wanted to enter the genders as variants, but that does not have the intended
+      --effect, and it is not free variation of gender there, it is just that the same pronouns can have different genders, and, based on that,
+      --appear with different forms of verbs or complements. In Slovak it is resolved differently, with basing the forms on the agreement that
+      --is fed to a "smart paradigm". I could not find, within that grammar, pronouns defined in this constraining way like here, and I cannot
+      --think of a way out that would let "youSg_pron", for example, "randomly" take on any of the four genders.
       a2 = NPGAgr Sg First Fem ;
-      g = variants { Fem ; Masc ; MascAnim ; Neut } ;
+      g = Fem ;
       n = Sg ;
       isPron = True ;
       } ;
@@ -492,7 +495,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Sg Second ;
       --Same as above, this can be of any gender. For variety I chose the Masculine here.
       a2 = NPGAgr Sg Second MascAnim ;
-      g = variants { MascAnim ; Masc ; Fem ; Neut } ; 
+      g = MascAnim ; 
       n = Sg ;
       isPron = True ;
       } ;
@@ -543,7 +546,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Pl First ;
       --Again, this works for both genders. Here I pick the feminine.
       a2 = NPGAgr Pl First Fem ;
-      g = variants { Fem ; Masc ; MascAnim ; Neut } ;
+      g = Fem ;
       n = Pl ;
       isPron = True ;
       } ;
@@ -561,7 +564,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Pl Second ;
       a2 = NPGAgr Pl Second MascAnim ;
       --Once more, the same issue with gender; and again I go with MascAnim.
-      g = variants { MascAnim ; Masc ; Fem ; Neut } ; 
+      g = MascAnim ; 
       n = Pl ;
       isPron = True ;
       } ;
