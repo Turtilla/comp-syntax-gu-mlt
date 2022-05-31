@@ -460,7 +460,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
     
     i_Pron = {
       s = table {
-                Nom => "on" ;
+                Nom => "ja" ;
                 Gen => "mnie" ;
                 Dat => "mi" ; 
                 Acc => "mnie" ; 
@@ -469,13 +469,12 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
                 Voc => "ja"
                 } ;
       a = NPAgr Sg First ;
-      --Here occurs a similar issue as for "they", though the form of the pronoun
-      --stays the same, but it can occur in all the different genders when it comes
-      --to past verb forms or subject complements. Because as the author of this 
-      --grammar I go by feminine forms, this is the one I decided to give to this 
-      --pronoun.
+      --Here occurs a similar issue as for "they", though the form of the pronoun stays the same, but it can occur in all the different 
+      --genders when it comes to past verb forms or subject complements. Because as the author of this grammar I go by feminine forms, this 
+      --is the one I decided to give to this pronoun. By that I mean deciding to put it as first in variants, in case only the first option is 
+      --taken into account when generating sentences.
       a2 = NPGAgr Sg First Fem ;
-      g = Fem ;
+      g = variants { Fem ; Masc ; MascAnim ; Neut } ;
       n = Sg ;
       isPron = True ;
       } ;
@@ -493,7 +492,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Sg Second ;
       --Same as above, this can be of any gender. For variety I chose the Masculine here.
       a2 = NPGAgr Sg Second MascAnim ;
-      g = MascAnim ; 
+      g = variants { MascAnim ; Masc ; Fem ; Neut } ; 
       n = Sg ;
       isPron = True ;
       } ;
@@ -544,7 +543,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Pl First ;
       --Again, this works for both genders. Here I pick the feminine.
       a2 = NPGAgr Pl First Fem ;
-      g = Fem ;
+      g = variants { Fem ; Masc ; MascAnim ; Neut } ;
       n = Pl ;
       isPron = True ;
       } ;
@@ -562,7 +561,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
       a = NPAgr Pl Second ;
       a2 = NPGAgr Pl Second MascAnim ;
       --Once more, the same issue with gender; and again I go with MascAnim.
-      g = MascAnim ;
+      g = variants { MascAnim ; Masc ; Fem ; Neut } ; 
       n = Pl ;
       isPron = True ;
       } ;
@@ -626,7 +625,7 @@ concrete MiniGrammarPol of MiniGrammar = open MiniResPol, Prelude in {
     where_IAdv = {s = "gdzie"} ;
     why_IAdv = {s = variants {"czemu" ; "po co" ; "dlaczego"}} ; --same as above, this only differs slightly in terms of formality
 
-    have_V2 = (mkVerb "mieć" "miej" "mam" "masz" "ma" "mamy" "macie" "mają" "miał" "miał" "miel") ** {cp = [] ; rp = Acc ; rn = Dat} ;
+    have_V2 = (mkVerb "mieć" "miej" "mam" "masz" "ma" "mamy" "macie" "mają" "miał" "miał" "miel") ** {cp = [] ; rp = Acc ; rn = Gen} ;
 
     want_VV = mkVerb "chcieć" "chciej" "chcę" "chcesz" "chce" "chcemy" "chcecie" "chcą" "chciał" "chciał" "chciel" ;
     
