@@ -7,7 +7,12 @@ param
   Gender = MascAnim | Masc | Fem | Neut ;
   Person = First | Second | Third ;
   Conjugation = I | II | III | IV | Va | Vb | Vc | VIa | VIb | VIIa | VIIb | VIIIa | VIIIb | IX | Xa | Xb ; -- | Xc | XI not implemented because of irregularities
-
+  --It is worth mentioning here that verbs have an inherent feature of aspect: a verb is either perfective or imperfective. This is not marked
+  --by inflection, but instead verbs come in pairs (or families) where one verb describes the continuous action, and the other one the finished
+  --action. Perfective verbs cannot be used in the present tense to mean present tense; if they are used in it, they describe future (I will have
+  --done); imperfective verbs need a compound future tense (auxiliary be + infinitive). Since we do not do the future tense here, I omitted this
+  --distinction, and instead all of the verbs in the lexicon are given in the imperfective form (so that their present tense forms are actually
+  --that, present tense forms). 
   NPAgreement = NPAgr Number Person ; --needed for present verbs
   NPGAgreement = NPGAgr Number Person Gender ; --needed for past verbs
 
@@ -94,10 +99,9 @@ oper
               a + ("sia"|"cia"|"zia"|"dzia"|"nia") => case noun of {asi + "a" => mkNoun noun asi asi (asi + "ę") (asi + "ą") asi (asi + "u") plural gen (asi + "om") plural (asi + "ami") (asi + "ach") plural g } ; --babcia, babcie, babć
               fre + "ja" => mkNoun noun gen gen (fre + "ję") (fre + "ją") gen (fre + "jo") plural gen (fre + "jom") plural (fre + "jami") (fre + "jach") plural g ; --Freja, Freje, Frei
               --feminine nouns ending with "a" with a hard stem.
-              la + ("ba"|"pa"|"fa"|"wa"|"ma"|"ła"|"sa"|"za"|"na") => case noun of {lab + "a" => mkNoun noun plural (lab + "ie") (lab + "ę") (lab + "ą") (lab + "ie") (lab + "o") plural gen (lab + "om") plural (lab + "ami") (lab + "ach") plural g} ; --laba, laby, lab
+              la + ("ba"|"pa"|"fa"|"wa"|"ma"|"sa"|"za"|"na") => case noun of {lab + "a" => mkNoun noun plural (lab + "ie") (lab + "ę") (lab + "ą") (lab + "ie") (lab + "o") plural gen (lab + "om") plural (lab + "ami") (lab + "ach") plural g} ; --laba, laby, lab
               la + "ta" => mkNoun noun plural (la + "cie") (la + "tę") (la + "tą") (la + "cie") (la + "to") plural gen (la + "tom") plural (la + "tami") (la + "tach") plural g ; --łata, łaty, łat
               wo + "da" => mkNoun noun plural (wo+ "dzie") (wo + "dę") (wo + "dą") (wo + "dzie") (wo + "do") plural gen (wo + "dom") plural (wo + "dami") (wo + "dach") plural g ; --woda, wody, wód
-              kobie + "ta" => mkNoun noun plural (kobie + "cie") (kobie + "tę") (kobie + "tą") (kobie + "cie") (kobie + "to") plural gen (kobie + "tom") plural (kobie + "tami") (kobie + "tach") plural g ; --kobieta, kobiety, kobiet
               szko + "ła" => mkNoun noun plural (szko + "le") (szko + "łę") (szko + "łą") (szko + "le") (szko + "ło") plural gen (szko + "łom") plural (szko + "łami") (szko + "łach") plural g ; --szkoła, szkoły, szkół
               ope + "ra" => mkNoun noun plural (ope + "rze") (ope + "rę") (ope + "rą") (ope + "rze") (ope + "ro") plural gen (ope + "rom") plural (ope + "rami") (ope + "rach") plural g ; --opera, opery, oper
               --feminine nouns ending with "a" with a vowel stem.
@@ -132,8 +136,8 @@ oper
                 kar + ("pie"|"bie"|"mie"|"wie") => mkNoun noun (noun + "ia") (noun + "iowi") (noun + "ia") (noun + "iem") (noun + "iu") (noun + "iu") plural gen (noun + "iom") plural (noun + "iami") (noun + "iach") plural g ; --karp, karpie, karpi
                 --hard stem masculine nouns.
                 --these two below help with some free variation but there are exceptions to this rule.
-                sta + ("by"|"my"|"wy") => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; --staw, stawy,stawów
-                do + "my" => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g --dom, domy, domów
+                do + "my" => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "u") (noun + "u") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; --dom, domy, domów
+                sta + ("py"|"by"|"wy") => mkNoun noun (noun + "u") (noun + "owi") noun (noun + "em") (noun + "ie") (noun + "ie") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g --staw, stawy,stawów
               } ;
               rowe + "r" => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (noun + "ze") (noun + "ze") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; --rower, rowery, rowerów
               fia + "t" => mkNoun noun (noun + "a") (noun + "owi") noun (noun + "em") (fia + "cie") (fia + "cie") plural gen (noun + "om") plural (noun + "ami") (noun + "ach") plural g ; --fiat, fiaty, fiatów
